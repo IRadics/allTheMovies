@@ -1,0 +1,20 @@
+.movieScoreBar-container {
+  height: 25px;
+  padding: 1em;
+}
+
+.movieScoreBar-background {
+  background-color: gainsboro;
+  height: 100%;
+  border-radius: var(--primary-border-radius);
+  overflow: hidden;
+}
+
+.movieScoreBar-bar {
+  height: 100%;
+  text-align: center;
+}
+
+.movieScoreBar-bar-percentage {
+  font-weight: bold;
+}

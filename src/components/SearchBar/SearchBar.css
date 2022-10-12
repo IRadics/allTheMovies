@@ -1,0 +1,13 @@
+.searchBar {
+  padding: 1em;
+  margin: 1em;
+}
+
+.searchBar-container {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+.searchIcon:hover {
+  cursor: pointer;
+}

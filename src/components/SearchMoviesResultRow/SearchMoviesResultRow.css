@@ -1,0 +1,63 @@
+.searchMoviesResultRow > div {
+  padding: 6px;
+}
+
+.searchMoviesResultRow {
+  margin: 1em auto;
+  border: 1px solid black;
+  box-shadow: 1px 1px black;
+  border-radius: var(--primary-border-radius);
+  height: 300px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  background-color: VAR(--primary-component-background-color);
+}
+.searchMoviesResultRow-poster {
+  position: relative;
+  margin: auto;
+  height: 288px;
+  width: 192px;
+}
+
+.searchMoviesResultRow-poster-img {
+  border-radius: var(--primary-border-radius);
+  max-height: 100%;
+  max-width: 192px;
+}
+
+.searchMoviesResultRow-data {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.searchMoviesResultRow-data-overview {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -ms-box-orient: vertical;
+  box-orient: vertical;
+  -webkit-line-clamp: 6;
+  -moz-line-clamp: 6;
+  -ms-line-clamp: 6;
+  line-clamp: 6;
+  overflow: hidden;
+}
+
+.searchMoviesResultRow-footer {
+  margin-top: auto;
+}
+.searchMoviesResultRow-data-genres {
+  margin-top: auto;
+}
+
+.searchMoviesResultRow-score {
+  margin-top: auto;
+}
+
+.searchMoviesResultRow-score > .movieScoreBar-container {
+  padding-bottom: 0;
+}
