@@ -1,15 +1,12 @@
 import { sanitizeParameter } from "../sanitizeParameter";
-import {
-  WikipediaSearchError,
-  WikipediaSearchResults,
-} from "./wikipedia.types";
+import { WikipediaError, WikipediaSearchResults } from "./wikipedia.types";
 
 export function wikipediaSearch(
   searchTerm: string,
   limit: number,
   offset: number,
   successCallback: (results: WikipediaSearchResults) => void,
-  errorCallback?: (error: WikipediaSearchError) => void
+  errorCallback?: (error: WikipediaError) => void
 ) {
   fetch(
     `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=&list=search&formatversion=latest&srsearch=${sanitizeParameter(
@@ -18,7 +15,7 @@ export function wikipediaSearch(
   )
     .then((response) => response.json())
     .then((result) => {
-      if (result.warnings.search.warnings !== "") {
+      if (result.warnings?.search?.warnings) {
         console.log(result.warnings.search.warnings);
       }
 
@@ -26,6 +23,6 @@ export function wikipediaSearch(
     })
     .catch((error) => {
       console.error("Error:", error);
-      if (errorCallback) errorCallback(error as WikipediaSearchError);
+      if (errorCallback) errorCallback(error as WikipediaError);
     });
 }

@@ -6,7 +6,7 @@ export type WikipediaSearchResults = {
   batchcomplete: boolean;
   continue: Continue;
   query: Query;
-  warnings: Warnings;
+  warnings: WarningsSearch;
 };
 
 type Continue = {
@@ -33,19 +33,19 @@ type Searchinfo = {
   totalhits: number;
 };
 
-type Warnings = {
-  search: SearchWarning[];
+type WarningsSearch = {
+  search: Warnings[];
 };
 
-type SearchWarning = {
+type Warnings = {
   warnings: string;
 };
 
 /* 
-    Search Error
+    Error
 */
 
-export type WikipediaSearchError = {
+export type WikipediaError = {
   error: Error;
   servedby: string;
 };
@@ -54,4 +54,28 @@ type Error = {
   code: string;
   info: string;
   docref: string;
+};
+
+/*
+  Extract results
+*/
+export type WikipediaGetExtractResult = {
+  batchcomplete: boolean;
+  query: QueryGetExtractResults;
+  warnings: WarningsGetExtract;
+};
+
+type WarningsGetExtract = {
+  pages: Warnings[];
+};
+
+type QueryGetExtractResults = {
+  pages: PageGetExtractResults[];
+};
+
+type PageGetExtractResults = {
+  pageid: number;
+  ns: number;
+  title: string;
+  extract: string;
 };
