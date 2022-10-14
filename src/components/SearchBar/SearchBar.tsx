@@ -1,9 +1,7 @@
 import "./SearchBar.css";
-import React from "react";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
-
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 export const SearchBar = () => {
