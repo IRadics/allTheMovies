@@ -79,3 +79,31 @@ type PageGetExtractResults = {
   title: string;
   extract: string;
 };
+
+/*
+  GetExtLinks
+*/
+export type WikipediaGetExtLinksResults = {
+  continue: Continue;
+  query: QueryGetExtLinks;
+  warnings: WarningsGetExtLinks;
+};
+
+export type QueryGetExtLinks = {
+  pages: Page[];
+};
+
+export type Page = {
+  pageid: number;
+  ns: number;
+  title: string;
+  extlinks?: Extlink[];
+};
+
+export type Extlink = {
+  url: string;
+};
+
+type WarningsGetExtLinks = {
+  pages: Warnings[];
+};
