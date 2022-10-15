@@ -10,7 +10,7 @@ export const SearchBar = () => {
   const navigate = useNavigate();
 
   let onSubmit = () => {
-    navigate(`/search?${value}`);
+    if (value) navigate(`/search?${value}`);
   };
 
   return (
