@@ -19,6 +19,7 @@
   margin: auto;
   height: 288px;
   width: 192px;
+  display: flex;
 }
 
 .searchMoviesResultRow-poster-img {

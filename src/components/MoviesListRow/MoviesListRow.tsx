@@ -1,16 +1,14 @@
-import "./SearchMoviesResultRow.css";
+import "./MoviesListRow.css";
 import React from "react";
 import { MovieResultsFragment } from "../../graphql/generated-types";
 import { MovieScoreBar } from "../MovieScoreBar/MovieScoreBar";
 import { PosterPlaceHolder } from "../PosterPlaceHolder/PosterPlaceHolder";
 
-interface SearchMoviesResultRowProps {
+interface MoviesListRowProps {
   data: MovieResultsFragment;
 }
 
-export const SearchMoviesResultRow: React.FC<SearchMoviesResultRowProps> = ({
-  data,
-}) => {
+export const MoviesListRow: React.FC<MoviesListRowProps> = ({ data }) => {
   return (
     <div className="searchMoviesResultRow">
       <div className="searchMoviesResultRow-poster">
