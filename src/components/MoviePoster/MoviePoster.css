@@ -1,0 +1,36 @@
+.moviePoster {
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.moviePoster-placeHolder {
+  border-radius: var(--primary-border-radius);
+  font-size: 1.5em;
+  background-image: radial-gradient(rgb(134, 134, 134), rgb(63, 63, 63) 100%);
+  text-shadow: 1px 1px black, 1px -1px black, -1px -1px black, -1px 1px black;
+  color: whitesmoke;
+  box-shadow: 3px 1px black;
+}
+
+.moviePoster-placeHolder span {
+  margin-bottom: 1em;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.moviePoster-placeHolder-icon {
+  position: absolute;
+  opacity: 0.1;
+}
+
+.moviePoster-img {
+  border-radius: var(--primary-border-radius);
+  max-height: 100%;
+  max-width: 100%;
+  box-shadow: 3px 1px black;
+  object-fit: contain;
+}

@@ -2,7 +2,7 @@ import "./MoviesListRow.css";
 import React from "react";
 import { MovieResultsFragment } from "../../graphql/generated-types";
 import { MovieScoreBar } from "../MovieScoreBar/MovieScoreBar";
-import { PosterPlaceHolder } from "../PosterPlaceHolder/PosterPlaceHolder";
+import { MoviePoster } from "../MoviePoster/MoviePoster";
 
 interface MoviesListRowProps {
   data: MovieResultsFragment;
@@ -12,21 +12,13 @@ export const MoviesListRow: React.FC<MoviesListRowProps> = ({ data }) => {
   return (
     <div className="searchMoviesResultRow">
       <div className="searchMoviesResultRow-poster">
-        {data.poster?.medium ? (
-          <img
-            src={data.poster?.medium}
-            className="searchMoviesResultRow-poster-img"
-          ></img>
-        ) : (
-          <PosterPlaceHolder name={data.name}></PosterPlaceHolder>
-        )}
+        <MoviePoster imgUrl={data.poster?.medium} name={data.name} />
       </div>
       <div className="searchMoviesResultRow-data">
         <h2>{data.name}</h2>
         <span className="searchMoviesResultRow-data-overview">
           {data.overview}
         </span>
-
         <div className="searchMoviesResultRow-footer">
           <div className="searchMoviesResultRow-data-genres">
             {data.genres &&
