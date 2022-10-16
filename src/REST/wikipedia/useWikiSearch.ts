@@ -1,12 +1,16 @@
 import { sanitizeParameter } from "../sanitizeParameter";
-import { WikipediaError, WikipediaSearchResults } from "./wikipedia.types";
+import {
+  WikipediaError,
+  WikipediaSearchResults,
+  WikipediaSearchQuery,
+} from "./wikipedia.types";
 import { useEffect, useState } from "react";
 
 export function useWikiSearch(
   searchTerm: string,
   limit: number,
   offset?: number
-) {
+): WikipediaSearchQuery {
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<WikipediaSearchResults>();
   const [error, setError] = useState<WikipediaError>();

@@ -2,6 +2,12 @@
     Search Results
 */
 
+export type WikipediaSearchQuery = {
+  loading: boolean;
+  data: WikipediaSearchResults | undefined;
+  error: WikipediaError | undefined;
+};
+
 export type WikipediaSearchResults = {
   batchcomplete: boolean;
   continue: Continue;
@@ -59,6 +65,13 @@ type Error = {
 /*
   Extract results
 */
+
+export type WikipediaGetExtractQuery = {
+  loading: boolean;
+  data: WikipediaGetExtractResult | undefined;
+  error: WikipediaError | undefined;
+};
+
 export type WikipediaGetExtractResult = {
   batchcomplete: boolean;
   query: QueryGetExtractResults;
@@ -83,6 +96,12 @@ type PageGetExtractResults = {
 /*
   GetExtLinks
 */
+export type WikipediaGetExtLinksQuery = {
+  loading: boolean;
+  data: WikipediaGetExtLinksResults | undefined;
+  error: WikipediaError | undefined;
+};
+
 export type WikipediaGetExtLinksResults = {
   continue: Continue;
   query: QueryGetExtLinks;

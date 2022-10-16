@@ -1,7 +1,14 @@
-import { WikipediaGetExtLinksResults, WikipediaError } from "./wikipedia.types";
+import {
+  WikipediaGetExtLinksResults,
+  WikipediaError,
+  WikipediaGetExtLinksQuery,
+} from "./wikipedia.types";
 import { useEffect, useState } from "react";
 
-export function useWikiGetExtLinks(pageid: number, limit: number) {
+export function useWikiGetExtLinks(
+  pageid: number,
+  limit: number
+): WikipediaGetExtLinksQuery {
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<WikipediaGetExtLinksResults>();
   const [error, setError] = useState<WikipediaError>();

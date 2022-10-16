@@ -1,4 +1,8 @@
-import { WikipediaGetExtractResult, WikipediaError } from "./wikipedia.types";
+import {
+  WikipediaGetExtractResult,
+  WikipediaError,
+  WikipediaGetExtractQuery,
+} from "./wikipedia.types";
 import { useEffect, useState } from "react";
 
 interface wikipediaGetExtractOptions {
@@ -23,7 +27,7 @@ export function useWikiGetExtract(
   options?:
     | wikipediaGetExtractOptionsWithCharacterLimit
     | wikipediaGetExtractOptionsWithSentenceLimit
-) {
+): WikipediaGetExtractQuery {
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<WikipediaGetExtractResult>();
   const [error, setError] = useState<WikipediaError>();
