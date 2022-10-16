@@ -10,12 +10,13 @@ export type WikipediaSearchQuery = {
 
 export type WikipediaSearchResults = {
   batchcomplete: boolean;
-  continue: Continue;
+  continue: ContinueSearch;
   query: Query;
   warnings: WarningsSearch;
+  error: Error;
 };
 
-type Continue = {
+type ContinueSearch = {
   sroffset: number;
   continue: string;
 };
@@ -40,7 +41,7 @@ type Searchinfo = {
 };
 
 type WarningsSearch = {
-  search: Warnings[];
+  search: Warnings;
 };
 
 type Warnings = {
@@ -76,10 +77,17 @@ export type WikipediaGetExtractResult = {
   batchcomplete: boolean;
   query: QueryGetExtractResults;
   warnings: WarningsGetExtract;
+  continue: ContinueGetExtract;
+  error: Error;
+};
+
+type ContinueGetExtract = {
+  excontinue: number;
+  continue: string;
 };
 
 type WarningsGetExtract = {
-  pages: Warnings[];
+  extracts: Warnings;
 };
 
 type QueryGetExtractResults = {
@@ -103,9 +111,15 @@ export type WikipediaGetExtLinksQuery = {
 };
 
 export type WikipediaGetExtLinksResults = {
-  continue: Continue;
+  continue: ContinueGetExtLinks;
   query: QueryGetExtLinks;
   warnings: WarningsGetExtLinks;
+  error: Error;
+};
+
+type ContinueGetExtLinks = {
+  elcontinue: string;
+  continue: string;
 };
 
 export type QueryGetExtLinks = {
@@ -124,5 +138,5 @@ export type Extlink = {
 };
 
 type WarningsGetExtLinks = {
-  pages: Warnings[];
+  extlinks: Warnings;
 };

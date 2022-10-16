@@ -4,6 +4,8 @@ import {
   WikipediaGetExtractQuery,
 } from "./wikipedia.types";
 import { useEffect, useState } from "react";
+import mergeResponses from "../mergeResponses";
+import sanitizeParameter from "../sanitizeParameter";
 
 interface wikipediaGetExtractOptions {
   onlyIntro?: boolean;
@@ -31,6 +33,7 @@ export function useWikiGetExtract(
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<WikipediaGetExtractResult>();
   const [error, setError] = useState<WikipediaError>();
+  const [continueStr, setContinueStr] = useState<string>("");
 
   if (options) {
     var { onlyIntro, plainText, characterLimit, sentenceLimit } = options;
@@ -42,15 +45,32 @@ export function useWikiGetExtract(
         sentenceLimit ? "&exsentences=" + sentenceLimit : ""
       }${characterLimit ? "&exchars=" + characterLimit : ""}${
         onlyIntro ? "&exintro=1" : ""
-      }${plainText ? "&explaintext=1" : ""}&pageids=${pageid}`
+      }${plainText ? "&explaintext=1" : ""}&pageids=${pageid}${continueStr}`
     )
       .then((response) => response.json())
-      .then((result) => {
-        if (result.warnings?.pages?.warnings) {
-          console.log(result.warnings.pages.warnings);
+      .then((result: WikipediaGetExtractResult) => {
+        if (result.warnings?.extracts.warnings) {
+          console.log(result.warnings.extracts.warnings);
         }
-        setLoading(false);
-        setData(result);
+        if (result.error) {
+          console.error(result.error);
+        }
+
+        setData(
+          mergeResponses(data!, result, [
+            "extlinks",
+          ]) as WikipediaGetExtractResult
+        );
+        if (result?.continue) {
+          setContinueStr(
+            `&continue=${sanitizeParameter(
+              result?.continue.continue
+            )}&excontinue=${result?.continue?.excontinue}`
+          );
+        } else {
+          setLoading(false);
+          setContinueStr("");
+        }
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -58,7 +78,7 @@ export function useWikiGetExtract(
         setError(error);
       });
     // eslint-disable-next-line
-  }, []);
+  }, [continueStr]);
 
   return { loading, data, error };
 }

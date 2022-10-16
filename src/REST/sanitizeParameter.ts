@@ -1,6 +1,6 @@
 // src: https://stackoverflow.com/a/40415059/19653844
 
-export function sanitizeParameter(param: string): string {
+export default function sanitizeParameter(param: string): string {
   const replace = {
     "%": "%25",
     //"!": "%21",

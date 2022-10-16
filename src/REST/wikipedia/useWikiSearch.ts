@@ -1,4 +1,4 @@
-import { sanitizeParameter } from "../sanitizeParameter";
+import sanitizeParameter from "../sanitizeParameter";
 import {
   WikipediaError,
   WikipediaSearchResults,
@@ -21,9 +21,12 @@ export function useWikiSearch(
       )}&srlimit=${limit}${offset ? "&sroffset=" + offset : ""}`
     )
       .then((response) => response.json())
-      .then((result) => {
+      .then((result: WikipediaSearchResults) => {
         if (result.warnings?.search?.warnings) {
           console.log(result.warnings.search.warnings);
+        }
+        if (result.error) {
+          console.error(result.error);
         }
         setLoading(false);
         setData(result);
