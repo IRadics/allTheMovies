@@ -25,7 +25,9 @@ export const PageMovieInfo: React.FC = () => {
       ? `/${"0" + releaseDate.getMonth()}`
       : `/${releaseDate.getMonth()}`
     : "";
-  const releaseDateStr = `${releaseDate.getFullYear()}${releaseDateMonthStr}`;
+  const releaseDateStr = `${
+    releaseDate.getFullYear() ? releaseDate.getFullYear() : ""
+  }${releaseDateMonthStr}`;
 
   const {
     loading: relatedLoading,
@@ -37,7 +39,11 @@ export const PageMovieInfo: React.FC = () => {
     if (relatedLoading) {
       return <LoadingAnimation />;
     } else {
-      if (relatedData && !relatedError) {
+      if (
+        relatedData &&
+        !relatedError &&
+        relatedData.movie.recommended.length > 0
+      ) {
         return (
           <div>
             <div className="pageHeadText">Similar to {data?.movie.name}</div>
@@ -62,7 +68,7 @@ export const PageMovieInfo: React.FC = () => {
               <img
                 src={data?.movie.backdrop?.large}
                 className="movieInfo-backdrop"
-                alt="movieInfo-backdrop"
+                alt=""
               ></img>
               <MoviePoster
                 imgUrl={data?.movie.poster?.large}
