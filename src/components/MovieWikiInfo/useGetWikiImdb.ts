@@ -57,7 +57,7 @@ export const useGetWikiImdb = (searchTerm: string, releaseYear: number) => {
           3.5;
       });
 
-      let sorted = candidates
+      candidates
         .sort((x, b) => {
           return x.probability! - b.probability!;
         })
@@ -72,6 +72,8 @@ export const useGetWikiImdb = (searchTerm: string, releaseYear: number) => {
       }
       setLoading(false);
     }
+    // eslint-disable-next-line
   }, [extLinksQuery.loading]);
+
   return { loading, wikiPageId, imdbLink };
 };

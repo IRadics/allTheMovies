@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-import { text } from "stream/consumers";
 import { useWikiGetExtract } from "../../REST/wikipedia/useWikiGetExtract";
 import { ExternalLink } from "../ExternalLink/ExternalLink";
 import { LoadingAnimation } from "../LoadingAnimation/LoadingAnimation";
@@ -20,14 +18,13 @@ export const MovieExternalInfo: React.FC<MovieExternalInfoProps> = ({
     imdbLink,
   } = useGetWikiImdb(searchTerm, releaseYear);
 
-  const {
-    loading: loadingWikiExtract,
-    error,
-    data,
-  } = useWikiGetExtract(wikiPageId as number, {
-    onlyIntro: true,
-    plainText: true,
-  });
+  const { loading: loadingWikiExtract, data } = useWikiGetExtract(
+    wikiPageId as number,
+    {
+      onlyIntro: true,
+      plainText: true,
+    }
+  );
   const wikiExtract = data?.query.pages[0].extract;
 
   return (
