@@ -1,0 +1,36 @@
+fragment MovieData on Movie {
+  id
+  name
+  overview
+  tagline
+  cast(limit: 5) {
+    id
+    person {
+      name
+    }
+    role {
+      ... on Cast {
+        character
+      }
+    }
+  }
+  poster {
+    large
+  }
+  backdrop {
+    medium
+    large
+  }
+  genres {
+    id
+    name
+  }
+  releaseDate
+  score
+}
+
+query GetMovie($id: ID!) {
+  movie(id: $id) {
+    ...MovieData
+  }
+}
