@@ -5,7 +5,12 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 export const LoadingAnimation = () => {
   return (
     <div className="loadingAnimation">
-      <FontAwesomeIcon icon={faSpinner} size="3x" spin={true} />
+      <FontAwesomeIcon
+        icon={faSpinner}
+        size="3x"
+        spin={true}
+        className="loadingAnimation-icon"
+      />
     </div>
   );
 };
