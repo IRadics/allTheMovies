@@ -1,0 +1,18 @@
+fragment MovieResults on Movie {
+  id
+  name
+  overview
+  releaseDate
+  score
+  overview
+  genres {
+    id
+    name
+  }
+  poster {
+    small
+    medium
+    large
+    huge
+  }
+}

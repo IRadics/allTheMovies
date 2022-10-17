@@ -1,15 +1,21 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { LoadingAnimation } from "../../components/LoadingAnimation/LoadingAnimation";
 import { MovieExternalInfo } from "../../components/MovieWikiInfo/MovieExternalInfo";
 import { MoviePoster } from "../../components/MoviePoster/MoviePoster";
 import { MovieScoreBar } from "../../components/MovieScoreBar/MovieScoreBar";
-import { Cast, useGetMovieQuery } from "../../graphql/generated-types";
+import {
+  Cast,
+  useGetMovieQuery,
+  useGetRelatedMoviesQuery,
+} from "../../graphql/generated-types";
 import "./PageMovieInfo.css";
+import { MoviesList } from "../../components/MoviesList/MoviesList";
 
 export const PageMovieInfo: React.FC = () => {
-  let { movieId } = useParams();
+  const { movieId } = useParams();
+  const navigate = useNavigate();
 
-  const { loading, data, error } = useGetMovieQuery({
+  const { loading, data } = useGetMovieQuery({
     variables: { id: movieId! },
   });
 
@@ -20,6 +26,30 @@ export const PageMovieInfo: React.FC = () => {
       : `/${releaseDate.getMonth()}`
     : "";
   const releaseDateStr = `${releaseDate.getFullYear()}${releaseDateMonthStr}`;
+
+  const {
+    loading: relatedLoading,
+    data: relatedData,
+    error: relatedError,
+  } = useGetRelatedMoviesQuery({ variables: { id: movieId!, limit: 3 } });
+
+  const relatedMovies = () => {
+    if (relatedLoading) {
+      return <LoadingAnimation />;
+    } else {
+      if (relatedData && !relatedError) {
+        return (
+          <div>
+            <div className="pageHeadText">Similar to {data?.movie.name}</div>
+            <MoviesList list={relatedData.movie.recommended}></MoviesList>
+            <div className="pageHeadText">
+              <a onClick={() => navigate(`/related/${movieId}`)}>See more</a>
+            </div>
+          </div>
+        );
+      }
+    }
+  };
 
   return (
     <>
@@ -32,6 +62,7 @@ export const PageMovieInfo: React.FC = () => {
               <img
                 src={data?.movie.backdrop?.large}
                 className="movieInfo-backdrop"
+                alt="movieInfo-backdrop"
               ></img>
               <MoviePoster
                 imgUrl={data?.movie.poster?.large}
@@ -49,7 +80,7 @@ export const PageMovieInfo: React.FC = () => {
                   {data?.movie.tagline}
                 </div>
                 <div className="movieInfo-data-overview">
-                  {data?.movie.overview}
+                  <span>{data?.movie.overview}</span>
                 </div>
                 <div className="movieInfo-data-"></div>
                 <MovieScoreBar percentage={data?.movie.score!}></MovieScoreBar>
@@ -82,6 +113,7 @@ export const PageMovieInfo: React.FC = () => {
               }
             </div>
           </div>
+          {relatedMovies()}
         </div>
       )}
     </>

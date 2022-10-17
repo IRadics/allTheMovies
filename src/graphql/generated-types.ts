@@ -1203,6 +1203,15 @@ export type GetMovieQueryVariables = Exact<{
 
 export type GetMovieQuery = { __typename?: 'Query', movie: { __typename?: 'Movie', id: string, name: string, overview: string, tagline?: string | null, releaseDate?: any | null, score: number, cast: Array<{ __typename?: 'Credit', id: string, person?: { __typename?: 'Person', name: string } | null, role: { __typename?: 'Cast', character: string } | { __typename?: 'Crew' } }>, poster?: { __typename?: 'Poster', large?: any | null } | null, backdrop?: { __typename?: 'Backdrop', medium?: any | null, large?: any | null } | null, genres: Array<{ __typename?: 'Genre', id: string, name: string }> } };
 
+export type GetRelatedMoviesQueryVariables = Exact<{
+  id: Scalars['ID'];
+  page?: InputMaybe<Scalars['PageRange']>;
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type GetRelatedMoviesQuery = { __typename?: 'Query', movie: { __typename?: 'Movie', name: string, recommended: Array<{ __typename?: 'Movie', id: string, name: string, overview: string, releaseDate?: any | null, score: number, genres: Array<{ __typename?: 'Genre', id: string, name: string }>, poster?: { __typename?: 'Poster', small?: any | null, medium?: any | null, large?: any | null, huge?: any | null } | null }> } };
+
 export type MovieResultsFragment = { __typename?: 'Movie', id: string, name: string, overview: string, releaseDate?: any | null, score: number, genres: Array<{ __typename?: 'Genre', id: string, name: string }>, poster?: { __typename?: 'Poster', small?: any | null, medium?: any | null, large?: any | null, huge?: any | null } | null };
 
 export type SearchMoviesQueryVariables = Exact<{
@@ -1299,6 +1308,46 @@ export function useGetMovieLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetMovieQueryHookResult = ReturnType<typeof useGetMovieQuery>;
 export type GetMovieLazyQueryHookResult = ReturnType<typeof useGetMovieLazyQuery>;
 export type GetMovieQueryResult = Apollo.QueryResult<GetMovieQuery, GetMovieQueryVariables>;
+export const GetRelatedMoviesDocument = gql`
+    query GetRelatedMovies($id: ID!, $page: PageRange, $limit: Int) {
+  movie(id: $id) {
+    name
+    recommended(page: $page, limit: $limit) {
+      ...MovieResults
+    }
+  }
+}
+    ${MovieResultsFragmentDoc}`;
+
+/**
+ * __useGetRelatedMoviesQuery__
+ *
+ * To run a query within a React component, call `useGetRelatedMoviesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRelatedMoviesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRelatedMoviesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      page: // value for 'page'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useGetRelatedMoviesQuery(baseOptions: Apollo.QueryHookOptions<GetRelatedMoviesQuery, GetRelatedMoviesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRelatedMoviesQuery, GetRelatedMoviesQueryVariables>(GetRelatedMoviesDocument, options);
+      }
+export function useGetRelatedMoviesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRelatedMoviesQuery, GetRelatedMoviesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRelatedMoviesQuery, GetRelatedMoviesQueryVariables>(GetRelatedMoviesDocument, options);
+        }
+export type GetRelatedMoviesQueryHookResult = ReturnType<typeof useGetRelatedMoviesQuery>;
+export type GetRelatedMoviesLazyQueryHookResult = ReturnType<typeof useGetRelatedMoviesLazyQuery>;
+export type GetRelatedMoviesQueryResult = Apollo.QueryResult<GetRelatedMoviesQuery, GetRelatedMoviesQueryVariables>;
 export const SearchMoviesDocument = gql`
     query SearchMovies($query: String!) {
   searchMovies(query: $query) {

@@ -6,6 +6,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { PageSearchMovies } from "./pages/PageSearchMovies/PageSearchMovies";
 import { PageMovieInfo } from "./pages/PageMovieInfo/PageMovieInfo";
+import { PageListRelatedMovies } from "./pages/PageSearchRelatedMovies.tsx/PageListRelatedMovies";
 
 const apolloClient = new ApolloClient({
   uri: "https://tmdb.sandbox.zoosh.ie/dev/grphql",
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "movie/:movieId",
         element: <PageMovieInfo />,
+      },
+      {
+        path: "related/:parentMovieId",
+        element: <PageListRelatedMovies />,
       },
     ],
   },

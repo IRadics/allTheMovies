@@ -1,22 +1,3 @@
-fragment MovieResults on Movie {
-  id
-  name
-  overview
-  releaseDate
-  score
-  overview
-  genres {
-    id
-    name
-  }
-  poster {
-    small
-    medium
-    large
-    huge
-  }
-}
-
 query SearchMovies($query: String!) {
   searchMovies(query: $query) {
     ...MovieResults
