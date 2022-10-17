@@ -8,7 +8,7 @@ interface MoviesListProps {
 
 export const MoviesList: React.FC<MoviesListProps> = ({ list }) => {
   return (
-    <div>
+    <div className="moviesList-container">
       {list.map((movie, index) => {
         return <MoviesListRow data={movie} key={index}></MoviesListRow>;
       })}
