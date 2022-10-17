@@ -10,7 +10,7 @@ interface MoviesListRowProps {
 
 export const MoviesListRow: React.FC<MoviesListRowProps> = ({ data }) => {
   return (
-    <div className="searchMoviesResultRow">
+    <div className="searchMoviesResultRow componentCard">
       <div className="searchMoviesResultRow-poster">
         <MoviePoster imgUrl={data.poster?.medium} name={data.name} />
       </div>

@@ -11,20 +11,31 @@
 .moviePoster-placeHolder {
   border-radius: var(--primary-border-radius);
   font-size: 1.5em;
-  background-image: radial-gradient(rgb(134, 134, 134), rgb(63, 63, 63) 100%);
+  background-image: radial-gradient(
+    rgb(165, 164, 164),
+    var(--primary-component-background-color-lighter) 100%
+  );
   text-shadow: 1px 1px black, 1px -1px black, -1px -1px black, -1px 1px black;
   color: whitesmoke;
   box-shadow: 3px 1px black;
+  width: auto;
+  aspect-ratio: 0.665;
+  margin: 0;
+  justify-content: center !important;
 }
 
 .moviePoster-placeHolder span {
   margin-bottom: 1em;
   margin-right: 10px;
   margin-left: 10px;
+  z-index: 2;
 }
 .moviePoster-placeHolder-icon {
   position: absolute;
-  opacity: 0.1;
+  left: 10%;
+  opacity: 0.2;
+  color: var(--primary-component-background-color-darker);
+  width: 80%;
 }
 
 .moviePoster-img {

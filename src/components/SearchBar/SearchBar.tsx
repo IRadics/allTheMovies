@@ -30,7 +30,7 @@ export const SearchBar = () => {
         }}
       ></input>
       <div onClick={() => onSubmit()} className="searchIcon">
-        <FontAwesomeIcon icon={faMagnifyingGlass} size={"1x"} />
+        <FontAwesomeIcon icon={faMagnifyingGlass} size={"2x"} />
       </div>
     </form>
   );

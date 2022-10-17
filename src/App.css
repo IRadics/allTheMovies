@@ -1,6 +1,21 @@
 :root {
+  --header-height: 3em;
+}
+
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+  -moz-box-sizing: inherit;
+}
+
 body {
   background-color: VAR(--primary-main-background-color);
 }
@@ -8,24 +23,24 @@ body {
   text-align: center;
 }
 .App-header {
-  background-color: #282c34;
+  background-color: var(--primary-component-background-color);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  height: 2em;
-  position: sticky;
+  height: var(--header-height);
+  position: fixed;
   top: 0;
   z-index: 1000;
-}
-
-.App-link {
-  color: #61dafb;
+  width: 100%;
 }
 
 .mainBody {
-  width: 800px;
+  max-width: 1000px;
   margin: auto;
+  height: calc(100vh - 2 * var(--header-height));
+  overflow: visible;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: var(--header-height);
 }

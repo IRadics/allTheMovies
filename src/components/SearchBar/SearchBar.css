@@ -1,13 +1,33 @@
-.searchBar {
-  padding: 1em;
-  margin: 1em;
-}
-
 .searchBar-container {
   flex-direction: row;
   display: flex;
   align-items: center;
+  height: 100%;
 }
+
+.searchBar {
+  border-radius: 1em;
+  width: 30vw;
+  min-width: 20em;
+  height: 80%;
+  margin-right: 0.5em;
+  font-size: 1em;
+  border: 1px solid black;
+  padding: 1em;
+}
+
+.searchBar:focus-visible {
+  outline: black solid 1px;
+}
+
 .searchIcon:hover {
   cursor: pointer;
+  color: var(--primary-text-color-hover);
+}
+
+.searchIcon {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  font-size: 100%;
 }
