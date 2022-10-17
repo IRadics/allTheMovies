@@ -40,45 +40,43 @@ export function useWikiGetExtract(
   }
 
   useEffect(() => {
-    fetch(
-      `https://en.wikipedia.org/w/api.php?action=query&origin=*&format=json&prop=extracts&exsectionformat=plain&formatversion=latest${
-        sentenceLimit ? "&exsentences=" + sentenceLimit : ""
-      }${characterLimit ? "&exchars=" + characterLimit : ""}${
-        onlyIntro ? "&exintro=1" : ""
-      }${plainText ? "&explaintext=1" : ""}&pageids=${pageid}${continueStr}`
-    )
-      .then((response) => response.json())
-      .then((result: WikipediaGetExtractResult) => {
-        if (result.warnings?.extracts.warnings) {
-          console.log(result.warnings.extracts.warnings);
-        }
-        if (result.error) {
-          console.error(result.error);
-        }
+    if (pageid) {
+      fetch(
+        `https://en.wikipedia.org/w/api.php?action=query&origin=*&format=json&prop=extracts&exsectionformat=plain&formatversion=latest${
+          sentenceLimit ? "&exsentences=" + sentenceLimit : ""
+        }${characterLimit ? "&exchars=" + characterLimit : ""}${
+          onlyIntro ? "&exintro=1" : ""
+        }${plainText ? "&explaintext=1" : ""}&pageids=${pageid}${continueStr}`
+      )
+        .then((response) => response.json())
+        .then((result: WikipediaGetExtractResult) => {
+          if (result.warnings?.extracts.warnings) {
+            console.log(result.warnings.extracts.warnings);
+          }
+          if (result.error) {
+            console.error(result.error);
+          }
 
-        setData(
-          mergeResponses(data!, result, [
-            "extlinks",
-          ]) as WikipediaGetExtractResult
-        );
-        if (result?.continue) {
-          setContinueStr(
-            `&continue=${sanitizeParameter(
-              result?.continue.continue
-            )}&excontinue=${result?.continue?.excontinue}`
-          );
-        } else {
+          setData(mergeResponses(data!, result) as WikipediaGetExtractResult);
+          if (result?.continue) {
+            setContinueStr(
+              `&continue=${sanitizeParameter(
+                result?.continue.continue
+              )}&excontinue=${result?.continue?.excontinue}`
+            );
+          } else {
+            setLoading(false);
+            setContinueStr("");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
           setLoading(false);
-          setContinueStr("");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setLoading(false);
-        setError(error);
-      });
+          setError(error);
+        });
+    }
     // eslint-disable-next-line
-  }, [continueStr]);
+  }, [continueStr, pageid]);
 
   return { loading, data, error };
 }

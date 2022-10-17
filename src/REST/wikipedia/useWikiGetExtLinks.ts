@@ -17,7 +17,7 @@ export function useWikiGetExtLinks(
   const [continueStr, setContinueStr] = useState<string>("");
 
   useEffect(() => {
-    if (loading) {
+    if (loading && pageIds.length > 0) {
       fetch(
         `https://en.wikipedia.org/w/api.php?action=query&origin=*&format=json&prop=extlinks&list=&formatversion=latest&pageids=${pageIds.join(
           "|"
@@ -52,7 +52,7 @@ export function useWikiGetExtLinks(
     }
 
     // eslint-disable-next-line
-  }, [continueStr]);
+  }, [continueStr, pageIds]);
 
   return { loading, data, error };
 }

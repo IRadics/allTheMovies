@@ -15,29 +15,31 @@ export function useWikiSearch(
   const [data, setData] = useState<WikipediaSearchResults>();
   const [error, setError] = useState<WikipediaError>();
   useEffect(() => {
-    fetch(
-      `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=&list=search&formatversion=latest&srsearch=${sanitizeParameter(
-        searchTerm
-      )}&srlimit=${limit}${offset ? "&sroffset=" + offset : ""}`
-    )
-      .then((response) => response.json())
-      .then((result: WikipediaSearchResults) => {
-        if (result.warnings?.search?.warnings) {
-          console.log(result.warnings.search.warnings);
-        }
-        if (result.error) {
-          console.error(result.error);
-        }
-        setLoading(false);
-        setData(result);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setLoading(false);
-        setError(error);
-      });
+    if (searchTerm && limit) {
+      fetch(
+        `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=&list=search&formatversion=latest&srsearch=${sanitizeParameter(
+          searchTerm
+        )}&srlimit=${limit}${offset ? "&sroffset=" + offset : ""}`
+      )
+        .then((response) => response.json())
+        .then((result: WikipediaSearchResults) => {
+          if (result.warnings?.search?.warnings) {
+            console.log(result.warnings.search.warnings);
+          }
+          if (result.error) {
+            console.error(result.error);
+          }
+          setLoading(false);
+          setData(result);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          setLoading(false);
+          setError(error);
+        });
+    }
     // eslint-disable-next-line
-  }, []);
+  }, [searchTerm, limit]);
 
   return { loading, data, error };
 }
