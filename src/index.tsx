@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { PageSearchMovies } from "./pages/PageSearchMovies/PageSearchMovies";
+import { PageMovieInfo } from "./pages/PageMovieInfo/PageMovieInfo";
 
 const apolloClient = new ApolloClient({
   uri: "https://tmdb.sandbox.zoosh.ie/dev/grphql",
@@ -20,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "search",
         element: <PageSearchMovies />,
+      },
+      {
+        path: "movie/:movieId",
+        element: <PageMovieInfo />,
       },
     ],
   },

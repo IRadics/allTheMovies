@@ -1,0 +1,84 @@
+.movieInfo {
+  overflow: hidden;
+  margin-top: 1em;
+  width: 100%;
+  display: inline-block;
+}
+
+.movieInfo-header {
+  display: flex;
+  position: relative;
+  height: 40vh;
+  border-radius: var(--primary-border-radius), 0, var(--primary-border-radius),
+    0;
+  background-color: var(--primary-component-background-color-darker);
+  background-size: cover;
+  padding: 1em;
+  flex-direction: row;
+}
+
+.movieInfo-backdrop {
+  position: absolute;
+  width: 100%;
+  object-fit: cover;
+  object-position: bottom;
+  height: 100%;
+  left: 0;
+  top: 0;
+  opacity: 0.2;
+}
+
+.movieInfo-header .moviePoster {
+  align-self: flex-start;
+  height: 100%;
+  align-self: center;
+  margin: 0;
+  width: 30%;
+  z-index: 1;
+}
+
+.movieInfo-data {
+  width: 70%;
+  margin-left: 1em;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  text-align: left;
+}
+
+.movieInfo-data-title {
+  justify-self: left;
+
+  font-weight: bold;
+  font-size: 2.5em;
+}
+
+.movieInfo .movieScoreBar-container {
+  margin-top: auto;
+  padding-bottom: 0;
+}
+
+.movieInfo-data-overview {
+  margin-top: 1em;
+}
+
+.movieInfo-data-title-info {
+  font-size: 1.5em;
+}
+
+.movieInfo-data-title-tagline {
+  font-size: 1em;
+  margin-top: 1em;
+  height: fit-content;
+  font-weight: bold;
+}
+
+.movieInfo-body {
+  text-align: left;
+  padding: 1em;
+}
+
+.movieInfo-body-cast {
+  font-size: 1.3em;
+  white-space: pre;
+}

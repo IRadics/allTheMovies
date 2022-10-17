@@ -14,15 +14,21 @@ export const PageSearchMovies: React.FC = () => {
   const isResultReturned = results.data && results.data.searchMovies.length > 0;
 
   return (
-    <div className="pageSearchMovies">
+    <>
       {results.loading && <LoadingAnimation />}
-      {isResultReturned && (
-        <>
-          <h1>Search results for "{searchParams}"</h1>
-          <MoviesList list={results.data!.searchMovies} />
-        </>
-      )}
-      {!isResultReturned && <h1>No results</h1>}
-    </div>
+      <div className="pageSearchMovies page">
+        {isResultReturned && (
+          <>
+            <div className="pageHeadText">
+              Search results for "{searchParams}"
+            </div>
+            <MoviesList list={results.data!.searchMovies} />
+          </>
+        )}
+        {!isResultReturned && !results.loading && (
+          <div className="pageHeadText">No results</div>
+        )}
+      </div>
+    </>
   );
 };
