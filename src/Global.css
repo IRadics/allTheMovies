@@ -56,3 +56,30 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+/* responsive title classes */
+
+.rtitle1 {
+  font-weight: bold;
+  font-size: max(min(6vw, 2.5em), 1em);
+}
+
+.rtitle2 {
+  font-weight: bold;
+  font-size: max(min(3vw, 1.5em), 1em);
+}
+
+/* vertical scrollable class without scrollbar */
+
+.vscrollable {
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  min-width: 0;
+}
+
+.vscrollable::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}

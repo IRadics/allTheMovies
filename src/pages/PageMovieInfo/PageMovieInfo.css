@@ -44,17 +44,19 @@
   flex-direction: column;
   z-index: 1;
   text-align: left;
+  justify-content: space-between;
 }
 
-.movieInfo-data-title {
-  justify-self: left;
-
-  font-weight: bold;
-  font-size: 2.5em;
+@media only screen and (max-width: 500px) {
+  .movieInfo-header .moviePoster {
+    display: none;
+  }
+  .movieInfo-data {
+    width: 100%;
+  }
 }
 
 .movieInfo .movieScoreBar-container {
-  margin-top: auto;
   padding-bottom: 0;
 }
 
@@ -63,13 +65,11 @@
 }
 
 .movieInfo-data-title-info {
-  font-size: 1.5em;
+  margin-top: 0.2em;
 }
 
 .movieInfo-data-title-tagline {
-  font-size: 1em;
-  margin-top: 1em;
-  height: fit-content;
+  margin-top: 0.2em;
   font-weight: bold;
 }
 

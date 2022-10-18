@@ -74,21 +74,33 @@ export const PageMovieInfo: React.FC = () => {
                 imgUrl={data?.movie.poster?.large}
                 name={data?.movie.name!}
               />
+
               <div className="movieInfo-data">
-                <div className="movieInfo-data-title">{data?.movie.name}</div>
-                <div className="movieInfo-data-title-info">
-                  {releaseDateStr} |
-                  {data?.movie.genres.map((genre) => {
-                    return ` ${genre.name} |`;
-                  })}
+                <div className="vscrollable">
+                  <div className="movieInfo-data-title">
+                    <div className="movieInfo-data-title-main rtitle1">
+                      {data?.movie.name}
+                    </div>
+                    {(releaseDateStr || data?.movie.genres.length! > 0) && (
+                      <div className="movieInfo-data-title-info rtitle2">
+                        {releaseDateStr}{" "}
+                        {data?.movie.genres.map((genre) => {
+                          return `| ${genre.name} `;
+                        })}
+                      </div>
+                    )}
+                    {data?.movie.tagline && (
+                      <div className="movieInfo-data-title-tagline">
+                        {data?.movie.tagline}
+                      </div>
+                    )}
+                  </div>
+                  <div className="movieInfo-data-overview">
+                    <span>{data?.movie.overview}</span>
+                  </div>
                 </div>
-                <div className="movieInfo-data-title-tagline">
-                  {data?.movie.tagline}
-                </div>
-                <div className="movieInfo-data-overview">
-                  <span>{data?.movie.overview}</span>
-                </div>
-                <div className="movieInfo-data-"></div>
+
+                <div className="movieInfo-data-scoreBar"></div>
                 <MovieScoreBar percentage={data?.movie.score!}></MovieScoreBar>
               </div>
             </div>
