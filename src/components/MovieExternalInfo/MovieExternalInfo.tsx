@@ -4,19 +4,18 @@ import { LoadingAnimation } from "../LoadingAnimation/LoadingAnimation";
 import "./MovieExternalInfo.css";
 import { useGetWikiImdb } from "./useGetWikiImdb";
 
-interface MovieExternalInfoProps {
+export const MovieExternalInfo: React.FC<{
   searchTerm: string;
   releaseYear: number;
-}
-export const MovieExternalInfo: React.FC<MovieExternalInfoProps> = ({
-  searchTerm,
-  releaseYear,
-}) => {
+  onFetchSuccess?: (imdbLink: string, wikiLink: string) => void;
+}> = ({ searchTerm, releaseYear, onFetchSuccess }) => {
   const {
     loading: loadingWikiImdb,
     wikiPageId,
     imdbLink,
   } = useGetWikiImdb(searchTerm, releaseYear);
+
+  const wikiLink = `https://en.wikipedia.org/?curid=${wikiPageId}`;
 
   const { loading: loadingWikiExtract, data } = useWikiGetExtract(
     wikiPageId as number,
@@ -27,17 +26,12 @@ export const MovieExternalInfo: React.FC<MovieExternalInfoProps> = ({
   );
   const wikiExtract = data?.query.pages[0].extract;
 
+  if (onFetchSuccess && !loadingWikiImdb && !loadingWikiExtract) {
+    onFetchSuccess(imdbLink, wikiLink);
+  }
+
   return (
     <div className="movieExternalInfo">
-      {imdbLink && (
-        <div className="movieExternalInfo-imdbLink">
-          <ExternalLink
-            href={imdbLink}
-            text="IMDB page"
-            target="_blank"
-          ></ExternalLink>
-        </div>
-      )}
       <div className="movieExternalInfo-wiki">
         {!loadingWikiExtract && (
           <>
@@ -45,7 +39,7 @@ export const MovieExternalInfo: React.FC<MovieExternalInfoProps> = ({
             <div className="movieExternalInfo-wiki-extract"> {wikiExtract}</div>
             <div className="movieExternalInfo-wikiLink">
               <ExternalLink
-                href={`https://en.wikipedia.org/?curid=${wikiPageId}`}
+                href={wikiLink}
                 text="See more on Wikipedia"
                 target="_blank"
               ></ExternalLink>
