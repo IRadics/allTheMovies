@@ -1,0 +1,11 @@
+.MuiButtonGroup-root {
+  border-radius: var(--primary-border-radius);
+}
+
+.MuiButtonGroup-root > .MuiButton-root:first-child {
+  border-radius: var(--primary-border-radius) 0 0 var(--primary-border-radius);
+}
+
+.MuiButtonGroup-root > .MuiButton-root:last-child {
+  border-radius: 0 var(--primary-border-radius) var(--primary-border-radius) 0;
+}

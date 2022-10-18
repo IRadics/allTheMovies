@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
 import { LoadingAnimation } from "../../components/LoadingAnimation/LoadingAnimation";
-import { MovieExternalInfo } from "../../components/MovieWikiInfo/MovieExternalInfo";
+import { MovieExternalInfo } from "../../components/MovieExternalInfo/MovieExternalInfo";
 import { MoviePoster } from "../../components/MoviePoster/MoviePoster";
 import { MovieScoreBar } from "../../components/MovieScoreBar/MovieScoreBar";
 import {
@@ -10,10 +11,14 @@ import {
 } from "../../graphql/generated-types";
 import "./PageMovieInfo.css";
 import { MoviesList } from "../../components/MoviesList/MoviesList";
+import { ButtonGroup, Button } from "@mui/material";
 
 export const PageMovieInfo: React.FC = () => {
   const { movieId } = useParams();
   const navigate = useNavigate();
+
+  const [imdbLink, setImdbLink] = useState<string>("");
+  const [wikiLink, setwikiLink] = useState<string>("");
 
   const { loading, data } = useGetMovieQuery({
     variables: { id: movieId! },
@@ -49,12 +54,45 @@ export const PageMovieInfo: React.FC = () => {
             <div className="pageHeadText">Similar to {data?.movie.name}</div>
             <MoviesList list={relatedData.movie.recommended}></MoviesList>
             <div className="pageHeadText">
-              <a onClick={() => navigate(`/related/${movieId}`)}>See more</a>
+              <a onClick={() => navigate(`/related/${movieId}`)}>See more...</a>
             </div>
           </div>
         );
       }
     }
+  };
+
+  const buttons = () => {
+    return (
+      <ButtonGroup
+        variant="contained"
+        aria-label="outlined primary button group"
+      >
+        <Button
+          disabled={imdbLink === ""}
+          onClick={() => {
+            window.open(imdbLink, "_blank");
+          }}
+        >
+          IMDB
+        </Button>
+        <Button
+          disabled={wikiLink === ""}
+          onClick={() => {
+            window.open(wikiLink, "_blank");
+          }}
+        >
+          Wikipedia
+        </Button>
+        <Button
+          onClick={() => {
+            navigate(`/related/${movieId}`);
+          }}
+        >
+          Related
+        </Button>
+      </ButtonGroup>
+    );
   };
 
   return (
@@ -99,9 +137,12 @@ export const PageMovieInfo: React.FC = () => {
                     <span>{data?.movie.overview}</span>
                   </div>
                 </div>
-
-                <div className="movieInfo-data-scoreBar"></div>
-                <MovieScoreBar percentage={data?.movie.score!}></MovieScoreBar>
+                <div className="movieInfo-data-footer">
+                  <MovieScoreBar
+                    percentage={data?.movie.score!}
+                  ></MovieScoreBar>
+                  {buttons()}
+                </div>
               </div>
             </div>
             <div className="movieInfo-body">
@@ -123,12 +164,14 @@ export const PageMovieInfo: React.FC = () => {
                   })}
                 </table>
               </div>
-              {
-                <MovieExternalInfo
-                  searchTerm={data?.movie.name!}
-                  releaseYear={releaseDate.getFullYear()}
-                ></MovieExternalInfo>
-              }
+              <MovieExternalInfo
+                searchTerm={data?.movie.name!}
+                releaseYear={releaseDate.getFullYear()}
+                onFetchSuccess={(imdbLink, wikiLink) => {
+                  setImdbLink(imdbLink);
+                  setwikiLink(wikiLink);
+                }}
+              ></MovieExternalInfo>
             </div>
           </div>
           {relatedMovies()}

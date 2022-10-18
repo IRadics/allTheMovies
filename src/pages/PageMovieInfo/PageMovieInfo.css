@@ -56,10 +56,6 @@
   }
 }
 
-.movieInfo .movieScoreBar-container {
-  padding-bottom: 0;
-}
-
 .movieInfo-data-overview {
   margin-top: 1em;
 }
@@ -73,6 +69,11 @@
   font-weight: bold;
 }
 
+.movieInfo-data-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .movieInfo-body {
   text-align: left;
   padding: 1em;
