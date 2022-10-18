@@ -1,3 +1,4 @@
+import CircularProgressWithLabel from "../CircularProgressWithLabel/CircularProgressWithLabel";
 import "./MovieScoreBar.css";
 
 interface MovieScoreBarProps {
@@ -5,23 +6,22 @@ interface MovieScoreBarProps {
 }
 
 export const MovieScoreBar: React.FC<MovieScoreBarProps> = ({ percentage }) => {
+  const getColor = () => {
+    return `rgb(${255 * (1 - percentage / 10)},${255 * (percentage / 10)},0)`;
+  };
+
   return (
     <div className="movieScoreBar-container">
-      <div className="movieScoreBar-background">
-        <div
-          className="movieScoreBar-bar"
-          style={{
-            width: `${percentage * 10}%`,
-            backgroundColor: `rgb(${255 * (1 - percentage / 10)},${
-              255 * (percentage / 10)
-            },0)`,
-          }}
-        >
-          <div className="movieScoreBar-bar-percentage">
-            {`${Math.round(percentage * 10)}%`}
-          </div>
-        </div>
-      </div>
+      <span className="movieScoreBar-text">{"User\nScore"}</span>
+
+      <CircularProgressWithLabel
+        value={percentage * 10}
+        thickness={4}
+        sx={{
+          "& .MuiCircularProgress-circle": { color: getColor() },
+          zIndex: "2",
+        }}
+      />
     </div>
   );
 };

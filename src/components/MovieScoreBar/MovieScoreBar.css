@@ -1,15 +1,21 @@
-.movieScoreBar-background {
-  background-color: var(--primary-component-background-color-lighter);
-  height: 100%;
+.movieScoreBar-container {
+  display: flex;
+  background-color: transparent;
+  width: fit-content;
+  height: fit-content;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--primary-component-background-color-transparent);
+
   border-radius: var(--primary-border-radius);
-  overflow: hidden;
-}
 
-.movieScoreBar-bar {
-  height: 100%;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+.movieScoreBar-text {
+  white-space: pre-line;
+
+  padding-right: 10px;
+  padding-bottom: 3px;
   text-align: center;
-}
-
-.movieScoreBar-bar-percentage {
-  font-weight: bold;
 }
