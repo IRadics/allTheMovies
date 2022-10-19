@@ -1,4 +1,3 @@
-import "./PageSearchMovies.css";
 import { useSearchMoviesQuery } from "../../graphql/generated-types";
 import { LoadingAnimation } from "../../components/LoadingAnimation/LoadingAnimation";
 import { useSearchParams } from "react-router-dom";
