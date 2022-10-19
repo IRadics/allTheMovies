@@ -26,9 +26,10 @@ export interface wikipediaGetExtractOptionsWithSentenceLimit
 
 export function useWikiGetExtract(
   pageid: number,
-  options?:
-    | wikipediaGetExtractOptionsWithCharacterLimit
-    | wikipediaGetExtractOptionsWithSentenceLimit
+  options?: { onlyIntro?: boolean; plainText?: boolean } & (
+    | { sentenceLimit?: number; characterLimit?: never }
+    | { sentenceLimit?: number; characterLimit?: never }
+  )
 ): WikipediaGetExtractQuery {
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<WikipediaGetExtractResult>();

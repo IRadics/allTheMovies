@@ -3,12 +3,10 @@ import "./MoviePoster.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilm } from "@fortawesome/free-solid-svg-icons";
 
-interface MoviePosterProps {
-  imgUrl: string;
-  name: string;
-}
-
-export const MoviePoster: React.FC<MoviePosterProps> = ({ imgUrl, name }) => {
+export const MoviePoster: React.FC<{ imgUrl: string; name: string }> = ({
+  imgUrl,
+  name,
+}) => {
   const imgRef = useRef<HTMLImageElement>(null);
   const [imgValid, setImgValid] = useState(true);
 

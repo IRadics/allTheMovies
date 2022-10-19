@@ -1,11 +1,9 @@
 import CircularProgressWithLabel from "../CircularProgressWithLabel/CircularProgressWithLabel";
 import "./MovieScoreBar.css";
 
-interface MovieScoreBarProps {
-  percentage: number;
-}
-
-export const MovieScoreBar: React.FC<MovieScoreBarProps> = ({ percentage }) => {
+export const MovieScoreBar: React.FC<{ percentage: number }> = ({
+  percentage,
+}) => {
   const getColor = () => {
     return `rgb(${255 * (1 - percentage / 10)},${255 * (percentage / 10)},0)`;
   };

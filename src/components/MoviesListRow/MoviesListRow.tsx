@@ -5,11 +5,9 @@ import { MovieScoreBar } from "../MovieScoreBar/MovieScoreBar";
 import { MoviePoster } from "../MoviePoster/MoviePoster";
 import { useNavigate } from "react-router-dom";
 
-interface MoviesListRowProps {
-  data: MovieResultsFragment;
-}
-
-export const MoviesListRow: React.FC<MoviesListRowProps> = ({ data }) => {
+export const MoviesListRow: React.FC<{ data: MovieResultsFragment }> = ({
+  data,
+}) => {
   const navigate = useNavigate();
   return (
     <div className="searchMoviesResultRow componentCard">
