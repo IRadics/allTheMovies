@@ -1,6 +1,26 @@
-# Getting Started with Create React App
+# AllTheMovies
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React TypeScript web application to search movies utilizing the TMDB database via GraphQL API.
+The project also includes Wikipedia REST API calls to search a possible matching page and fetch its data.
+
+Additional libraries used for the project:
+* [Apollo GraphQL](https://www.apollographql.com/docs/react/)
+* [GraphQL code generator](https://www.the-guild.dev/graphql/codegen)
+* [Material UI](https://mui.com/)
+* [string-similarity-js](https://www.npmjs.com/package/string-similarity-js)
+* [lodash](https://lodash.com/)
+* [npm-run-all](https://www.npmjs.com/package/npm-run-all)
+* [FontAwesome](https://fontawesome.com/)
+
+I used [quicktype](https://quicktype.io/typescript) to generate interfaces/types for the Wikipedia API from the response JSON
+
+Run the app in development mode with `npm start`. 
+This will also start the GraphQL code generator which will watch the GraphQL folder to generate new types and hooks automatically.
+
+
+
+
+## This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
