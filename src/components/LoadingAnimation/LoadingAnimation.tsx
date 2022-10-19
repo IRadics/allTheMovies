@@ -1,16 +1,10 @@
 import "./LoadingAnimation.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { CircularProgress } from "@mui/material";
 
 export const LoadingAnimation = () => {
   return (
     <div className="loadingAnimation">
-      <FontAwesomeIcon
-        icon={faSpinner}
-        size="3x"
-        spin={true}
-        className="loadingAnimation-icon"
-      />
+      <CircularProgress className=".loadingAnimation-circle" size={"60px"} />
     </div>
   );
 };
