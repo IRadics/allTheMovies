@@ -7,6 +7,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { PageSearchMovies } from "./pages/PageSearchMovies/PageSearchMovies";
 import { PageMovieInfo } from "./pages/PageMovieInfo/PageMovieInfo";
 import { PageListRelatedMovies } from "./pages/PageSearchRelatedMovies.tsx/PageListRelatedMovies";
+import { PagePopularMovies } from "./pages/PagePopularMovies/PagePopularMovies";
+import { PageUpcomingMovies } from "./pages/PageUpcomingMovies/PageUpcomingMovies";
 
 const apolloClient = new ApolloClient({
   uri: "https://tmdb.sandbox.zoosh.ie/dev/grphql",
@@ -29,6 +31,18 @@ const router = createBrowserRouter([
       {
         path: "related/:parentMovieId",
         element: <PageListRelatedMovies />,
+      },
+      {
+        path: "popular",
+        element: <PagePopularMovies />,
+      },
+      {
+        path: "/",
+        element: <PagePopularMovies />,
+      },
+      {
+        path: "upcoming",
+        element: <PageUpcomingMovies />,
       },
     ],
   },

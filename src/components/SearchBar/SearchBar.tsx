@@ -1,13 +1,12 @@
 import "./SearchBar.css";
 import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate } from "react-router-dom";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import SearchIcon from "@mui/icons-material/Search";
+import { useNavigateIfNew } from "../../hooks/useNavigateIfNew";
 
 export const SearchBar = () => {
   const [value, setValue] = useState<string>();
 
-  const navigate = useNavigate();
+  const navigate = useNavigateIfNew();
 
   let onSubmit = () => {
     if (value) navigate(`/search?${value}`);
@@ -15,7 +14,6 @@ export const SearchBar = () => {
 
   return (
     <form
-      style={{ display: "flex" }}
       className={"searchBar-container"}
       onSubmit={(e) => {
         e.preventDefault();
@@ -29,8 +27,8 @@ export const SearchBar = () => {
           setValue(e.currentTarget.value);
         }}
       ></input>
-      <div onClick={() => onSubmit()} className="searchIcon">
-        <FontAwesomeIcon icon={faMagnifyingGlass} size={"2x"} />
+      <div onClick={() => onSubmit()} className="searchBar-icon">
+        <SearchIcon fontSize="large"></SearchIcon>
       </div>
     </form>
   );
