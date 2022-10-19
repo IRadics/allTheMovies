@@ -25,7 +25,13 @@
   display: flex;
   flex: 1;
   flex-direction: column;
+  justify-content: space-between;
 }
+
+.searchMoviesResultRow-data-title {
+  margin: 0.3em 0 0 0;
+}
+
 .searchMoviesResultRow-data-overview {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -34,23 +40,30 @@
   -moz-box-orient: vertical;
   -ms-box-orient: vertical;
   box-orient: vertical;
-  -webkit-line-clamp: 3;
-  -moz-line-clamp: 3;
-  -ms-line-clamp: 3;
-  line-clamp: 3;
-  padding-left: 1em;
-  padding-right: 1em;
+  -webkit-line-clamp: 4;
+  -moz-line-clamp: 4;
+  -ms-line-clamp: 4;
+  line-clamp: 4;
 }
 
 .searchMoviesResultRow-footer {
-  margin-top: auto;
-}
-.searchMoviesResultRow-data-genres {
-  margin-top: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .searchMoviesResultRow-score {
-  margin-top: auto;
+  flex: 1;
+}
+
+.searchMoviesResultRow-data-genres {
+  flex-grow: 2;
+  font-size: min(3vw, 1em);
+}
+
+.searchMoviesResultRow-data-flexDummy {
+  flex-grow: 1;
 }
 
 .searchMoviesResultRow-score > .movieScoreBar-container {

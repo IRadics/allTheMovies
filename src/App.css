@@ -6,6 +6,7 @@ html {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  max-width: 100vw;
 }
 
 *,
@@ -37,6 +38,7 @@ body {
 
 .mainBody {
   max-width: 1000px;
+  width: 100vw;
   margin: auto;
   height: calc(100vh - 2 * var(--header-height));
   overflow: visible;

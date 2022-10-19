@@ -18,7 +18,7 @@ export const MoviesListRow: React.FC<MoviesListRowProps> = ({ data }) => {
       </div>
       <div className="searchMoviesResultRow-data">
         <h2
-          className="clickableText rtitle2"
+          className="searchMoviesResultRow-data-title clickableText rtitle2"
           onClick={(e) => {
             e.preventDefault();
             navigate(`/movie/${data.id}`);
@@ -26,20 +26,20 @@ export const MoviesListRow: React.FC<MoviesListRowProps> = ({ data }) => {
         >
           {data.name}
         </h2>
-
         <span className="searchMoviesResultRow-data-overview">
           {data.overview}
         </span>
         <div className="searchMoviesResultRow-footer">
+          <div className="searchMoviesResultRow-score">
+            <MovieScoreBar percentage={data.score}></MovieScoreBar>
+          </div>
           <div className="searchMoviesResultRow-data-genres">
             {data.genres &&
               data.genres.map((genre) => {
                 return `${genre.name}, `;
               })}
           </div>
-          <div className="searchMoviesResultRow-score">
-            <MovieScoreBar percentage={data.score}></MovieScoreBar>
-          </div>
+          <div className="searchMoviesResultRow-data-flexDummy"></div>
         </div>
       </div>
     </div>

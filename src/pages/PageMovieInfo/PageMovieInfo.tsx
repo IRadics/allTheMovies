@@ -158,15 +158,16 @@ export const PageMovieInfo: React.FC = () => {
                   </p>
                 )}
                 <table>
-                  {data?.movie.cast.map((c, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{`${c.person?.name}:\t`}</td>
-                        <td>{`|\t`}</td>
-                        <td>{(c.role as Cast).character}</td>
-                      </tr>
-                    );
-                  })}
+                  <tbody>
+                    {data?.movie.cast.map((c, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{`${c.person?.name}:`}</td>
+                          <td>{(c.role as Cast).character}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
                 </table>
               </div>
               <MovieExternalInfo
