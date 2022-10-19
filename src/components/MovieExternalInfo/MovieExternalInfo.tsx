@@ -22,6 +22,7 @@ export const MovieExternalInfo: React.FC<{
     {
       onlyIntro: true,
       plainText: true,
+      sentenceLimit: 8,
     }
   );
   const wikiExtract = data?.query.pages[0].extract;
