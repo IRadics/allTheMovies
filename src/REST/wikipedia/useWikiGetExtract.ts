@@ -7,23 +7,28 @@ import { useEffect, useState } from "react";
 import mergeResponses from "../mergeResponses";
 import sanitizeParameter from "../sanitizeParameter";
 
-interface wikipediaGetExtractOptions {
-  onlyIntro?: boolean;
-  plainText?: boolean;
-}
-
-export interface wikipediaGetExtractOptionsWithCharacterLimit
-  extends wikipediaGetExtractOptions {
-  characterLimit?: number;
-  sentenceLimit?: never;
-}
-
-export interface wikipediaGetExtractOptionsWithSentenceLimit
-  extends wikipediaGetExtractOptions {
-  sentenceLimit?: number;
-  characterLimit?: never;
-}
-
+/**
+ * Extracts the text content from a wikipedia page
+ * @param pageid page ID of the wikipedia page
+ * @param options
+ * ```
+ *    {
+ *    onlyIntro, //gets only the text until the first wiki section
+ *    plainText, //gets the text in plain text, without any html/wiki formatting code
+ *
+ *    // limits the extracted text's lenght. Only one kind of limit can be used at once
+ *    sentenceLimit, // range: 1-20
+ *    characterLimit, // range: 1-1200
+ *    }
+ * ```
+ *
+ * @returns
+ * WikipediaGetExtractQuery
+ * ```
+ * {loading, data, error}
+ * ```
+ *
+ */
 export function useWikiGetExtract(
   pageid: number,
   options?: { onlyIntro?: boolean; plainText?: boolean } & (

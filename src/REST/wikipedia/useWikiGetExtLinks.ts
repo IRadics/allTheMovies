@@ -7,6 +7,17 @@ import { useEffect, useState } from "react";
 import mergeResponses from "../mergeResponses";
 import sanitizeParameter from "../sanitizeParameter";
 
+/**
+ * Extracts all the external links on a Wikipedia page
+ * @param pageIds array of Wiki page IDs
+ * @param limit limit of how many external links to get. Note: this applies to the whole query, not per page.
+ * @returns
+ * WikipediaGetExtLinksQuery
+ * ```
+ * {loading, data, error}
+ * ```
+ *
+ */
 export function useWikiGetExtLinks(
   pageIds: number[],
   limit?: number

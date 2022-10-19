@@ -6,6 +6,18 @@ import {
 } from "./wikipedia.types";
 import { useEffect, useState } from "react";
 
+/**
+ * Searches the wikipedia pages and returns them in order of relevance
+ * @param searchTerm array of Wiki page IDs
+ * @param limit limit of how many pages to return
+ * @param offset from which search result number should it return the results.
+ * @returns
+ * WikipediaSearchQuery
+ * ```
+ * {loading, data, error}
+ * ```
+ *
+ */
 export function useWikiSearch(
   searchTerm: string,
   limit: number,
