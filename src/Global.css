@@ -84,3 +84,14 @@ code {
   width: 0;
   height: 0;
 }
+
+.clickableText,
+.clickableText:visited,
+.clickableText:hover,
+.clickableText:active {
+  cursor: pointer;
+}
+
+.clickableText:hover {
+  color: var(--primary-text-color-hover);
+}

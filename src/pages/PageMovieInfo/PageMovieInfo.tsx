@@ -54,7 +54,12 @@ export const PageMovieInfo: React.FC = () => {
             <div className="pageHeadText">Similar to {data?.movie.name}</div>
             <MoviesList list={relatedData.movie.recommended}></MoviesList>
             <div className="pageHeadText">
-              <a onClick={() => navigate(`/related/${movieId}`)}>See more...</a>
+              <span
+                className="clickableText"
+                onClick={() => navigate(`/related/${movieId}`)}
+              >
+                See more...
+              </span>
             </div>
           </div>
         );

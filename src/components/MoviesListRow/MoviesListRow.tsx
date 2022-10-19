@@ -17,16 +17,16 @@ export const MoviesListRow: React.FC<MoviesListRowProps> = ({ data }) => {
         <MoviePoster imgUrl={data.poster?.medium} name={data.name} />
       </div>
       <div className="searchMoviesResultRow-data">
-        <span>
-          <a
-            onClick={(e) => {
-              e.preventDefault();
-              navigate(`/movie/${data.id}`);
-            }}
-          >
-            <h2>{data.name}</h2>
-          </a>
-        </span>
+        <h2
+          className="clickableText rtitle2"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate(`/movie/${data.id}`);
+          }}
+        >
+          {data.name}
+        </h2>
+
         <span className="searchMoviesResultRow-data-overview">
           {data.overview}
         </span>
