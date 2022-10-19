@@ -22,7 +22,6 @@ export const MoviePoster: React.FC<MoviePosterProps> = ({ imgUrl, name }) => {
           alt={`${name}-poster`}
           onError={(e) => {
             setImgValid(false);
-            console.log("error");
           }}
         ></img>
       </div>

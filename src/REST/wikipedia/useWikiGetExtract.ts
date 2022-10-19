@@ -51,7 +51,7 @@ export function useWikiGetExtract(
         .then((response) => response.json())
         .then((result: WikipediaGetExtractResult) => {
           if (result.warnings?.extracts.warnings) {
-            console.log(result.warnings.extracts.warnings);
+            console.warn(result.warnings.extracts.warnings);
           }
           if (result.error) {
             console.error(result.error);

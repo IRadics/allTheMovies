@@ -26,7 +26,7 @@ export function useWikiGetExtLinks(
         .then((response) => response.json())
         .then((result: WikipediaGetExtLinksResults) => {
           if (result.warnings?.extlinks.warnings) {
-            console.log(result.warnings.extlinks.warnings);
+            console.warn(result.warnings.extlinks.warnings);
           }
           if (result.error) {
             console.error(result.error);

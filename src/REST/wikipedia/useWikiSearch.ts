@@ -24,7 +24,7 @@ export function useWikiSearch(
         .then((response) => response.json())
         .then((result: WikipediaSearchResults) => {
           if (result.warnings?.search?.warnings) {
-            console.log(result.warnings.search.warnings);
+            console.warn(result.warnings.search.warnings);
           }
           if (result.error) {
             console.error(result.error);
