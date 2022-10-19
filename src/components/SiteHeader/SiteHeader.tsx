@@ -2,7 +2,6 @@ import "./SiteHeader.css";
 import Button from "@mui/material/Button";
 import LocalMoviesIcon from "@mui/icons-material/LocalMovies";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
 import { SearchBar } from "../SearchBar/SearchBar";
 import { useNavigateIfNew } from "../../hooks/useNavigateIfNew";
 
@@ -38,7 +37,7 @@ export const SiteHeader = () => {
                 textDecoration: "none",
               }}
             >
-              {"\u2001"}AllTheMovies
+              AllTheMovies
             </Typography>
           </div>
           <Button
