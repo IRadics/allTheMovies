@@ -20,14 +20,9 @@ const config: CodegenConfig = {
         "typescript-react-apollo",
       ],
     },
-    /*
-    "./graphql.schema.json": {
-      plugins: ["introspection"],
-    },
-    */
   },
-  debug: true,
-  verbose: true,
+  debug: false,
+  verbose: false,
 };
 
 export default config;
