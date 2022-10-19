@@ -152,7 +152,7 @@ export const PageMovieInfo: React.FC = () => {
             </div>
             <div className="movieInfo-body">
               <div className="movieInfo-body-cast">
-                {data?.movie.cast && (
+                {data?.movie?.cast && data?.movie?.cast.length > 0 && (
                   <p>
                     <b>Cast:</b>
                   </p>
