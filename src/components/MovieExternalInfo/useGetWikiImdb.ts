@@ -34,6 +34,7 @@ export const useGetWikiImdb = (searchTerm: string, releaseYear: number) => {
       });
       setCandidates(candidates.concat(pageInfo));
     }
+    // eslint-disable-next-line
   }, [wikiSearch?.loading]);
 
   useEffect(() => {

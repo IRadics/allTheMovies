@@ -15,6 +15,7 @@ export default function CircularProgressWithLabel(
     setTimeout(() => {
       setStarterValue(props.value);
     }, 400);
+    // eslint-disable-next-line
   }, []);
 
   const _props = {
