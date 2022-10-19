@@ -1194,6 +1194,18 @@ export type VoteAverageInput = {
   min?: InputMaybe<Scalars['ScoreMinimumRange']>;
 };
 
+export type FetchPopularMoviesQueryVariables = Exact<{
+  page?: InputMaybe<Scalars['PageRange']>;
+}>;
+
+
+export type FetchPopularMoviesQuery = { __typename?: 'Query', movies: Array<{ __typename?: 'Movie', id: string, name: string, overview: string, releaseDate?: any | null, score: number, genres: Array<{ __typename?: 'Genre', id: string, name: string }>, poster?: { __typename?: 'Poster', small?: any | null, medium?: any | null, large?: any | null, huge?: any | null } | null }> };
+
+export type FetchUpcomingMoviesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FetchUpcomingMoviesQuery = { __typename?: 'Query', movies: Array<{ __typename?: 'Movie', id: string, name: string, overview: string, releaseDate?: any | null, score: number, genres: Array<{ __typename?: 'Genre', id: string, name: string }>, poster?: { __typename?: 'Poster', small?: any | null, medium?: any | null, large?: any | null, huge?: any | null } | null }> };
+
 export type GetMovieQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -1273,6 +1285,75 @@ export const MovieResultsFragmentDoc = gql`
   }
 }
     `;
+export const FetchPopularMoviesDocument = gql`
+    query FetchPopularMovies($page: PageRange) {
+  movies: popularMovies(page: $page) {
+    ...MovieResults
+  }
+}
+    ${MovieResultsFragmentDoc}`;
+
+/**
+ * __useFetchPopularMoviesQuery__
+ *
+ * To run a query within a React component, call `useFetchPopularMoviesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFetchPopularMoviesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFetchPopularMoviesQuery({
+ *   variables: {
+ *      page: // value for 'page'
+ *   },
+ * });
+ */
+export function useFetchPopularMoviesQuery(baseOptions?: Apollo.QueryHookOptions<FetchPopularMoviesQuery, FetchPopularMoviesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FetchPopularMoviesQuery, FetchPopularMoviesQueryVariables>(FetchPopularMoviesDocument, options);
+      }
+export function useFetchPopularMoviesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FetchPopularMoviesQuery, FetchPopularMoviesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FetchPopularMoviesQuery, FetchPopularMoviesQueryVariables>(FetchPopularMoviesDocument, options);
+        }
+export type FetchPopularMoviesQueryHookResult = ReturnType<typeof useFetchPopularMoviesQuery>;
+export type FetchPopularMoviesLazyQueryHookResult = ReturnType<typeof useFetchPopularMoviesLazyQuery>;
+export type FetchPopularMoviesQueryResult = Apollo.QueryResult<FetchPopularMoviesQuery, FetchPopularMoviesQueryVariables>;
+export const FetchUpcomingMoviesDocument = gql`
+    query FetchUpcomingMovies {
+  movies: upcomingMovies {
+    ...MovieResults
+  }
+}
+    ${MovieResultsFragmentDoc}`;
+
+/**
+ * __useFetchUpcomingMoviesQuery__
+ *
+ * To run a query within a React component, call `useFetchUpcomingMoviesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFetchUpcomingMoviesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFetchUpcomingMoviesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFetchUpcomingMoviesQuery(baseOptions?: Apollo.QueryHookOptions<FetchUpcomingMoviesQuery, FetchUpcomingMoviesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FetchUpcomingMoviesQuery, FetchUpcomingMoviesQueryVariables>(FetchUpcomingMoviesDocument, options);
+      }
+export function useFetchUpcomingMoviesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FetchUpcomingMoviesQuery, FetchUpcomingMoviesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FetchUpcomingMoviesQuery, FetchUpcomingMoviesQueryVariables>(FetchUpcomingMoviesDocument, options);
+        }
+export type FetchUpcomingMoviesQueryHookResult = ReturnType<typeof useFetchUpcomingMoviesQuery>;
+export type FetchUpcomingMoviesLazyQueryHookResult = ReturnType<typeof useFetchUpcomingMoviesLazyQuery>;
+export type FetchUpcomingMoviesQueryResult = Apollo.QueryResult<FetchUpcomingMoviesQuery, FetchUpcomingMoviesQueryVariables>;
 export const GetMovieDocument = gql`
     query GetMovie($id: ID!) {
   movie(id: $id) {
