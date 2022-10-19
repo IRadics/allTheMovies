@@ -1,4 +1,3 @@
-import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { LoadingAnimation } from "../../components/LoadingAnimation/LoadingAnimation";
 import { MovieExternalInfo } from "../../components/MovieExternalInfo/MovieExternalInfo";
@@ -12,10 +11,12 @@ import {
 import "./PageMovieInfo.css";
 import { MoviesList } from "../../components/MoviesList/MoviesList";
 import { ButtonGroup, Button } from "@mui/material";
+import { useNavigateIfNew } from "../../hooks/useNavigateIfNew";
+import { useParams } from "react-router-dom";
 
 export const PageMovieInfo: React.FC = () => {
   const { movieId } = useParams();
-  const navigate = useNavigate();
+  const navigate = useNavigateIfNew();
 
   const [imdbLink, setImdbLink] = useState<string>("");
   const [wikiLink, setwikiLink] = useState<string>("");

@@ -3,12 +3,12 @@ import React from "react";
 import { MovieResultsFragment } from "../../graphql/generated-types";
 import { MovieScoreBar } from "../MovieScoreBar/MovieScoreBar";
 import { MoviePoster } from "../MoviePoster/MoviePoster";
-import { useNavigate } from "react-router-dom";
+import { useNavigateIfNew } from "../../hooks/useNavigateIfNew";
 
 export const MoviesListRow: React.FC<{ data: MovieResultsFragment }> = ({
   data,
 }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigateIfNew();
   return (
     <div className="searchMoviesResultRow componentCard">
       <div className="searchMoviesResultRow-poster">
