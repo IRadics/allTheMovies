@@ -8,7 +8,7 @@
 .movieInfo-header {
   display: flex;
   position: relative;
-  height: 40vh;
+  height: max(40vh, 300px);
   border-radius: var(--primary-border-radius), 0, var(--primary-border-radius),
     0;
   background-color: var(--primary-component-background-color-darker);
