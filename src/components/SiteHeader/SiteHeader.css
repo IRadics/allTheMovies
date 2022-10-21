@@ -68,6 +68,7 @@
   cursor: pointer;
   color: var(--primary-text-color-hover);
   border-color: var(--primary-text-color-hover);
+  transition-duration: 250ms;
 }
 
 @media only screen and (max-width: 600px) {
