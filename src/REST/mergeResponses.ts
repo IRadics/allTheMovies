@@ -14,7 +14,7 @@ export default function mergeResponses(
   arrayKeysToMerge: string[] = []
 ) {
   return mergeWith(target, source, (objValue, srcValue, key) => {
-    if (isArray(objValue) && key in arrayKeysToMerge) {
+    if (isArray(objValue) && arrayKeysToMerge.includes(key)) {
       return objValue.concat(srcValue);
     }
   });
