@@ -1,4 +1,3 @@
-import sanitizeParameter from "../../sanitizeParameter";
 import {
   WikipediaSearchResults,
   WikipediaSearchQuery,
@@ -35,7 +34,7 @@ export function useWikiSearch(
     origin: "*",
     formatversion: "latest",
     list: ["search"],
-    srsearch: sanitizeParameter(searchTerm),
+    srsearch: encodeURIComponent(searchTerm),
     srlimit: 10,
     sroffset: offset,
     srsort: "relevance",

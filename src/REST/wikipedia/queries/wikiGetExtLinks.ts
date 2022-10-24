@@ -1,5 +1,4 @@
 import mergeResponses from "../../mergeResponses";
-import sanitizeParameter from "../../sanitizeParameter";
 import parseWikiQueryParams from "../functions/parseWikiQueryParams";
 import {
   WikipediaGetExtLinksResults,
@@ -40,8 +39,8 @@ export default async function wikiGetExtLinks(
         }
 
         if (!limitSet && !result.batchcomplete) {
-          params.continue = sanitizeParameter(data.continue?.continue!);
-          params.elcontinue = sanitizeParameter(data.continue?.elcontinue!);
+          params.continue = encodeURIComponent(data.continue?.continue!);
+          params.elcontinue = encodeURIComponent(data.continue?.elcontinue!);
 
           fetchQuery();
         } else {

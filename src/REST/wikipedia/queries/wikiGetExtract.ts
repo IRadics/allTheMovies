@@ -1,5 +1,4 @@
 import mergeResponses from "../../mergeResponses";
-import sanitizeParameter from "../../sanitizeParameter";
 import parseWikiQueryParams from "../functions/parseWikiQueryParams";
 import {
   WikipediaGetExtractResult,
@@ -32,7 +31,7 @@ export default async function wikiGetExtract(
         }
 
         if (!result.batchcomplete) {
-          params.continue = sanitizeParameter(data.continue?.continue!);
+          params.continue = encodeURIComponent(data.continue?.continue!);
           params.excontinue = data.continue?.excontinue;
           fetchQuery();
         } else {

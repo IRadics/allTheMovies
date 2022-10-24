@@ -1,5 +1,4 @@
 import mergeResponses from "../../mergeResponses";
-import sanitizeParameter from "../../sanitizeParameter";
 import parseWikiQueryParams from "../functions/parseWikiQueryParams";
 import {
   WikipediaQueryError,
@@ -34,7 +33,7 @@ export default async function wikiSearch(
         }
 
         if (!limitSet && !result.batchcomplete) {
-          params.continue = sanitizeParameter(data.continue?.continue!);
+          params.continue = encodeURIComponent(data.continue?.continue!);
           params.sroffset = data.continue?.sroffset;
           fetchQuery();
         } else {

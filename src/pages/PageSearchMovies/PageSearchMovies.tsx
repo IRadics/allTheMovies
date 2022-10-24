@@ -2,7 +2,6 @@ import { useSearchMoviesQuery } from "../../graphql/generated-types";
 import { LoadingAnimation } from "../../components/LoadingAnimation/LoadingAnimation";
 import { useSearchParams } from "react-router-dom";
 import { MoviesList } from "../../components/MoviesList/MoviesList";
-import { url } from "inspector";
 
 export const PageSearchMovies: React.FC = () => {
   let [searchParams] = useSearchParams();
