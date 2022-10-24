@@ -4,16 +4,17 @@
 
 export type WikipediaSearchQuery = {
   loading: boolean;
-  data: WikipediaSearchResults | undefined;
-  error: WikipediaError | undefined;
+  data?: WikipediaSearchResults;
+  error?: WikipediaQueryError;
 };
 
 export type WikipediaSearchResults = {
-  batchcomplete: boolean;
-  continue: ContinueSearch;
-  query: Query;
-  warnings: WarningsSearch;
-  error: Error;
+  batchcomplete?: boolean;
+  continue?: ContinueSearch;
+  query?: Query;
+  warnings?: WarningsSearch;
+  error?: WikipediaError;
+  servedby?: string;
 };
 
 type ContinueSearch = {
@@ -52,16 +53,13 @@ type Warnings = {
     Error
 */
 
-export type WikipediaError = {
-  error: Error;
-  servedby: string;
-};
-
-type Error = {
+type WikipediaError = {
   code: string;
   info: string;
   docref: string;
 };
+
+export type WikipediaQueryError = WikipediaError | string;
 
 /*
   Extract results
@@ -69,16 +67,17 @@ type Error = {
 
 export type WikipediaGetExtractQuery = {
   loading: boolean;
-  data: WikipediaGetExtractResult | undefined;
-  error: WikipediaError | undefined;
+  data?: WikipediaGetExtractResult;
+  error?: WikipediaQueryError;
+  servedby?: string;
 };
 
 export type WikipediaGetExtractResult = {
-  batchcomplete: boolean;
-  query: QueryGetExtractResults;
-  warnings: WarningsGetExtract;
-  continue: ContinueGetExtract;
-  error: Error;
+  batchcomplete?: boolean;
+  query?: QueryGetExtractResults;
+  warnings?: WarningsGetExtract;
+  continue?: ContinueGetExtract;
+  error?: WikipediaError;
 };
 
 type ContinueGetExtract = {
@@ -91,7 +90,7 @@ type WarningsGetExtract = {
 };
 
 type QueryGetExtractResults = {
-  pages: PageGetExtractResults[];
+  pages: PageGetExtractResults[] | undefined;
 };
 
 type PageGetExtractResults = {
@@ -106,15 +105,17 @@ type PageGetExtractResults = {
 */
 export type WikipediaGetExtLinksQuery = {
   loading: boolean;
-  data: WikipediaGetExtLinksResults | undefined;
-  error: WikipediaError | undefined;
+  data?: WikipediaGetExtLinksResults;
+  error?: WikipediaQueryError;
+  servedby?: string;
 };
 
 export type WikipediaGetExtLinksResults = {
-  continue: ContinueGetExtLinks;
-  query: QueryGetExtLinks;
-  warnings: WarningsGetExtLinks;
-  error: Error;
+  continue?: ContinueGetExtLinks;
+  query?: QueryGetExtLinks;
+  warnings?: WarningsGetExtLinks;
+  error?: WikipediaError;
+  batchcomplete?: boolean;
 };
 
 type ContinueGetExtLinks = {

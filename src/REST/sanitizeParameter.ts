@@ -37,7 +37,8 @@ export default function sanitizeParameter(param: string): string {
   };
 
   for (const key in replace) {
-    param = param.replaceAll(key, replace[key as keyof typeof replace]);
+    if (param)
+      param = param.replaceAll(key, replace[key as keyof typeof replace]);
   }
   return param;
 }

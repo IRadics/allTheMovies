@@ -1,4 +1,4 @@
-import { useWikiGetExtract } from "../../REST/wikipedia/useWikiGetExtract";
+import { useWikiGetExtract } from "../../REST/wikipedia/hooks/useWikiGetExtract";
 import { ExternalLink } from "../ExternalLink/ExternalLink";
 import { LoadingAnimation } from "../LoadingAnimation/LoadingAnimation";
 import "./MovieExternalInfo.css";
@@ -11,21 +11,32 @@ export const MovieExternalInfo: React.FC<{
 }> = ({ searchTerm, releaseYear, onFetchSuccess }) => {
   const {
     loading: loadingWikiImdb,
+    error: errorWikiImdb,
     wikiPageId,
     imdbLink,
   } = useGetWikiImdb(searchTerm, releaseYear);
 
-  const wikiLink = `https://en.wikipedia.org/?curid=${wikiPageId}`;
+  const wikiLink = wikiPageId
+    ? `https://en.wikipedia.org/?curid=${wikiPageId}`
+    : "";
 
-  const { loading: loadingWikiExtract, data } = useWikiGetExtract(
-    wikiPageId as number,
-    {
-      onlyIntro: true,
-      plainText: true,
-      sentenceLimit: 8,
-    }
-  );
-  const wikiExtract = data?.query.pages[0].extract;
+  const {
+    loading: loadingWikiExtract,
+    data: dataWikiExtract,
+    error: errorWikiExtract,
+  } = useWikiGetExtract(wikiPageId as number, {
+    onlyIntro: true,
+    plainText: true,
+    sentenceLimit: 8,
+  });
+
+  const isLoading = loadingWikiExtract || loadingWikiImdb;
+
+  const isError = errorWikiExtract || errorWikiImdb;
+
+  const wikiExtract = errorWikiExtract
+    ? "Error fetching data from Wikipedia"
+    : dataWikiExtract?.query?.pages![0].extract;
 
   if (onFetchSuccess && !loadingWikiImdb && !loadingWikiExtract) {
     onFetchSuccess(imdbLink, wikiLink);
@@ -34,23 +45,23 @@ export const MovieExternalInfo: React.FC<{
   return (
     <div className="movieExternalInfo">
       <div className="movieExternalInfo-wiki">
-        {!loadingWikiExtract && (
+        {!loadingWikiExtract && wikiExtract && (
           <>
             <div className="movieExternalInfo-wiki-title">From Wikipedia:</div>
             <div className="movieExternalInfo-wiki-extract"> {wikiExtract}</div>
-            <div className="movieExternalInfo-wikiLink">
-              <ExternalLink
-                href={wikiLink}
-                text="See more on Wikipedia"
-                target="_blank"
-              ></ExternalLink>
-            </div>
+            {wikiLink && (
+              <div className="movieExternalInfo-wikiLink">
+                <ExternalLink
+                  href={wikiLink}
+                  text="See more on Wikipedia"
+                  target="_blank"
+                ></ExternalLink>
+              </div>
+            )}
           </>
         )}
       </div>
-      {((loadingWikiExtract && wikiPageId) || loadingWikiImdb) && (
-        <LoadingAnimation />
-      )}
+      {isLoading && !isError && <LoadingAnimation />}
     </div>
   );
 };
