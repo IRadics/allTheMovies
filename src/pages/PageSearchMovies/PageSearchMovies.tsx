@@ -2,6 +2,7 @@ import { useSearchMoviesQuery } from "../../graphql/generated-types";
 import { LoadingAnimation } from "../../components/LoadingAnimation/LoadingAnimation";
 import { useSearchParams } from "react-router-dom";
 import { MoviesList } from "../../components/MoviesList/MoviesList";
+import { url } from "inspector";
 
 export const PageSearchMovies: React.FC = () => {
   let [searchParams] = useSearchParams();
@@ -11,6 +12,7 @@ export const PageSearchMovies: React.FC = () => {
   });
 
   const isResultReturned = results.data && results.data.searchMovies.length > 0;
+  const searchParamsText = searchParams.entries().next().value[0];
 
   return (
     <>
@@ -19,7 +21,7 @@ export const PageSearchMovies: React.FC = () => {
         {isResultReturned && (
           <>
             <div className="pageHeadText">
-              Search results for "{searchParams}"
+              Search results for "{searchParamsText}"
             </div>
             <MoviesList list={results.data!.searchMovies} />
           </>
