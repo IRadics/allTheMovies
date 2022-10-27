@@ -24,8 +24,10 @@ function App() {
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
           <SiteHeader />
-          <div className="mainBody">
-            <Outlet />
+          <div className="mainBody-parentScroll" id="mainBody-parentScroll">
+            <div className="mainBody">
+              <Outlet />
+            </div>
           </div>
         </ThemeProvider>
       </StyledEngineProvider>
