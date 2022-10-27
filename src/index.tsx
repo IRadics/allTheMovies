@@ -12,7 +12,21 @@ import { PageUpcomingMovies } from "./pages/PageUpcomingMovies/PageUpcomingMovie
 
 const apolloClient = new ApolloClient({
   uri: "https://tmdb.sandbox.zoosh.ie/dev/grphql",
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Poster: {
+        merge: true,
+      },
+      Movie: {
+        keyFields: ["id"],
+        fields: {
+          recommended: {
+            keyArgs: ["id"],
+          },
+        },
+      },
+    },
+  }),
 });
 
 const router = createBrowserRouter([

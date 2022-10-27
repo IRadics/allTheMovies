@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LoadingAnimation } from "../../components/LoadingAnimation/LoadingAnimation";
 import { MovieExternalInfo } from "../../components/MovieExternalInfo/MovieExternalInfo";
 import { MoviePoster } from "../../components/MoviePoster/MoviePoster";
@@ -13,11 +13,17 @@ import { MoviesList } from "../../components/MoviesList/MoviesList";
 import { ButtonGroup, Button } from "@mui/material";
 import { useNavigateIfNew } from "../../hooks/useNavigateIfNew";
 import { useParams } from "react-router-dom";
+import { useBottomReached } from "../../hooks/useBottomReached";
+import ExtendingLineAnimation from "../../components/ExtendingLineAnimation/ExtendingLineAnimation";
+import { QueryResult } from "@apollo/client";
 
 export const PageMovieInfo: React.FC = () => {
   const { movieId } = useParams();
   const navigate = useNavigateIfNew();
 
+  const fetchMoreDelay = 2000;
+
+  const relatedFetchedAll = useRef<boolean | null>(false);
   const [imdbLink, setImdbLink] = useState<string>("");
   const [wikiLink, setwikiLink] = useState<string>("");
 
@@ -36,36 +42,54 @@ export const PageMovieInfo: React.FC = () => {
   }${releaseDateMonthStr}`;
 
   const {
+    fetchMore: relatedFetchmore,
     loading: relatedLoading,
     data: relatedData,
     error: relatedError,
-  } = useGetRelatedMoviesQuery({ variables: { id: movieId!, limit: 3 } });
+  } = useGetRelatedMoviesQuery({
+    notifyOnNetworkStatusChange: true,
+    variables: { id: movieId!, limit: 3 },
+  });
+
+  const isOnBottom = useBottomReached(
+    document.getElementById("mainBody-parentScroll")!,
+    () => {
+      if (!relatedFetchedAll.current) {
+        relatedFetchedAll.current = true;
+        relatedFetchmore({ variables: { limit: undefined, page: undefined } });
+      }
+    },
+    fetchMoreDelay
+  );
+
+  // setting fetchedAll to false if  movie ID changes
+  useEffect(() => {
+    relatedFetchedAll.current = false;
+  }, [movieId]);
 
   const relatedMovies = () => {
-    if (relatedLoading) {
-      return <LoadingAnimation />;
-    } else {
-      if (
-        relatedData &&
-        !relatedError &&
-        relatedData.movie.recommended.length > 0
-      ) {
-        return (
-          <div>
-            <div className="pageHeadText">Similar to {data?.movie.name}</div>
-            <MoviesList list={relatedData.movie.recommended}></MoviesList>
-            <div className="pageHeadText">
-              <span
-                className="clickableText"
-                onClick={() => navigate(`/related/${movieId}`)}
-              >
-                See more...
-              </span>
-            </div>
-          </div>
-        );
-      }
-    }
+    return (
+      <>
+        {relatedData &&
+          !relatedError &&
+          relatedData.movie?.recommended?.length > 0 && (
+            <>
+              <div className="pageHeadText">Similar to {data?.movie.name}</div>
+              <MoviesList list={relatedData.movie.recommended}></MoviesList>
+            </>
+          )}
+        <div className="movieInfo-footerLoadingContainer">
+          {!relatedFetchedAll.current && !relatedLoading && isOnBottom && (
+            <ExtendingLineAnimation
+              animationTime={fetchMoreDelay}
+              color={"#FFFFFF"}
+              height={"2px"}
+            />
+          )}
+          {relatedLoading && <LoadingAnimation />}
+        </div>
+      </>
+    );
   };
 
   const buttons = () => {
@@ -125,7 +149,7 @@ export const PageMovieInfo: React.FC = () => {
                     <div className="movieInfo-data-title-main rtitle1">
                       {data?.movie.name}
                     </div>
-                    {(releaseDateStr || data?.movie.genres.length! > 0) && (
+                    {(releaseDateStr || data?.movie?.genres?.length! > 0) && (
                       <div className="movieInfo-data-title-info rtitle2">
                         {releaseDateStr}{" "}
                         {data?.movie.genres.map((genre) => {

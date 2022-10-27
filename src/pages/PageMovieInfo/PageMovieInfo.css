@@ -93,3 +93,8 @@
 .movieInfo-body-cast tr {
   white-space: break-spaces;
 }
+
+.movieInfo-footerLoadingContainer {
+  padding-top: 2em;
+  height: 5em;
+}

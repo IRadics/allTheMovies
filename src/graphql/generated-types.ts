@@ -1220,7 +1220,7 @@ export type GetRelatedMoviesQueryVariables = Exact<{
 }>;
 
 
-export type GetRelatedMoviesQuery = { __typename?: 'Query', movie: { __typename?: 'Movie', name: string, recommended: Array<{ __typename?: 'Movie', id: string, name: string, overview: string, releaseDate?: any | null, score: number, genres: Array<{ __typename?: 'Genre', id: string, name: string }>, poster?: { __typename?: 'Poster', small?: any | null, medium?: any | null, large?: any | null, huge?: any | null } | null }> } };
+export type GetRelatedMoviesQuery = { __typename?: 'Query', movie: { __typename?: 'Movie', id: string, name: string, recommended: Array<{ __typename?: 'Movie', id: string, name: string, overview: string, releaseDate?: any | null, score: number, genres: Array<{ __typename?: 'Genre', id: string, name: string }>, poster?: { __typename?: 'Poster', small?: any | null, medium?: any | null, large?: any | null, huge?: any | null } | null }> } };
 
 export type MovieDataFragment = { __typename?: 'Movie', id: string, name: string, overview: string, tagline?: string | null, releaseDate?: any | null, score: number, cast: Array<{ __typename?: 'Credit', id: string, person?: { __typename?: 'Person', name: string } | null, role: { __typename?: 'Cast', character: string } | { __typename?: 'Crew' } }>, poster?: { __typename?: 'Poster', large?: any | null } | null, backdrop?: { __typename?: 'Backdrop', medium?: any | null, large?: any | null } | null, genres: Array<{ __typename?: 'Genre', id: string, name: string }> };
 
@@ -1392,6 +1392,7 @@ export type GetMovieQueryResult = Apollo.QueryResult<GetMovieQuery, GetMovieQuer
 export const GetRelatedMoviesDocument = gql`
     query GetRelatedMovies($id: ID!, $page: PageRange, $limit: Int) {
   movie(id: $id) {
+    id
     name
     recommended(page: $page, limit: $limit) {
       ...MovieResults

@@ -1,5 +1,6 @@
 query GetRelatedMovies($id: ID!, $page: PageRange, $limit: Int) {
   movie(id: $id) {
+    id
     name
     recommended(page: $page, limit: $limit) {
       ...MovieResults
