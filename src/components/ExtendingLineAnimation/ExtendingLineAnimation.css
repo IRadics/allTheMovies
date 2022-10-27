@@ -1,0 +1,19 @@
+.extendingLineAnimation-anim {
+  margin: auto;
+  background-color: var(--extendingLineAnimation-color);
+  height: var(--extendingLineAnimation-height);
+  border-radius: var(--extendingLineAnimation-borderRadius);
+  animation-name: extendingLine;
+  animation-duration: var(--extendingLineAnimation-time);
+}
+
+@keyframes extendingLine {
+  from {
+    margin-left: 90%;
+    margin-right: 90%;
+  }
+  to {
+    margin-left: 0%;
+    margin-right: 0%;
+  }
+}
