@@ -116,6 +116,7 @@ export const PageMovieInfo: React.FC = () => {
       !fetchedExternalIds ||
       loadingWikiExtract ||
       (fetchedExternalIds &&
+        wikiPageId &&
         dataWikiExtract?.query?.pages![0].pageid !== wikiPageId)
     ) {
       return <LoadingAnimation />;
