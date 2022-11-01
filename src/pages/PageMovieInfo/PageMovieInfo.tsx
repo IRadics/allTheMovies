@@ -1,45 +1,66 @@
 import { useEffect, useRef, useState } from "react";
 import { LoadingAnimation } from "../../components/LoadingAnimation/LoadingAnimation";
-import { MovieExternalInfo } from "../../components/MovieExternalInfo/MovieExternalInfo";
-import { MoviePoster } from "../../components/MoviePoster/MoviePoster";
-import { MovieScoreBar } from "../../components/MovieScoreBar/MovieScoreBar";
 import {
   Cast,
+  GetMovieQuery,
+  MovieDataFragment,
   useGetMovieQuery,
   useGetRelatedMoviesQuery,
 } from "../../graphql/generated-types";
 import "./PageMovieInfo.css";
 import { MoviesList } from "../../components/MoviesList/MoviesList";
-import { ButtonGroup, Button } from "@mui/material";
-import { useNavigateIfNew } from "../../hooks/useNavigateIfNew";
 import { useParams } from "react-router-dom";
 import { useBottomReached } from "../../hooks/useBottomReached";
 import ExtendingLineAnimation from "../../components/ExtendingLineAnimation/ExtendingLineAnimation";
-import { QueryResult } from "@apollo/client";
+import MovieInfoHeader from "../../components/MovieInfoHeader/MovieInfoHeader";
+import getWikiImdb from "./getWikiImdb";
+import { useWikiGetExtract } from "../../REST/wikipedia/hooks/useWikiGetExtract";
 
 export const PageMovieInfo: React.FC = () => {
   const { movieId } = useParams();
-  const navigate = useNavigateIfNew();
 
   const fetchMoreDelay = 2000;
 
   const relatedFetchedAll = useRef<boolean | null>(false);
-  const [imdbLink, setImdbLink] = useState<string>("");
-  const [wikiLink, setwikiLink] = useState<string>("");
+  const [imdbUrl, setImdbUrl] = useState<string>("");
+  const [wikiPageId, setWikiPageId] = useState<number | undefined>(undefined);
+  const [fetchedExternalIds, setfetchedExternalIds] = useState<boolean>(false);
+
+  // setting fetchedAll to false if movie ID changes
+  useEffect(() => {
+    relatedFetchedAll.current = false;
+    setfetchedExternalIds(false);
+    setWikiPageId(undefined);
+    setImdbUrl("");
+  }, [movieId]);
+
+  const getExternalInfo = (data: GetMovieQuery) => {
+    const releaseDate = new Date(Date.parse(data?.movie.releaseDate));
+    getWikiImdb(
+      data.movie.name,
+      releaseDate.getFullYear(),
+      (wikiPageId, imdbUrl) => {
+        setfetchedExternalIds(true);
+        setImdbUrl(imdbUrl);
+        setWikiPageId(wikiPageId);
+      },
+      () => {
+        setfetchedExternalIds(true);
+      }
+    );
+  };
+
+  const { loading: loadingWikiExtract, data: dataWikiExtract } =
+    useWikiGetExtract(wikiPageId as number, {
+      onlyIntro: true,
+      plainText: true,
+      sentenceLimit: 8,
+    });
 
   const { loading, data } = useGetMovieQuery({
     variables: { id: movieId! },
+    onCompleted: getExternalInfo,
   });
-
-  const releaseDate = new Date(Date.parse(data?.movie.releaseDate));
-  const releaseDateMonthStr = releaseDate.getMonth()
-    ? releaseDate.getMonth().toString.length < 1
-      ? `/${"0" + releaseDate.getMonth()}`
-      : `/${releaseDate.getMonth()}`
-    : "";
-  const releaseDateStr = `${
-    releaseDate.getFullYear() ? releaseDate.getFullYear() : ""
-  }${releaseDateMonthStr}`;
 
   const {
     fetchMore: relatedFetchmore,
@@ -62,11 +83,6 @@ export const PageMovieInfo: React.FC = () => {
     fetchMoreDelay
   );
 
-  // setting fetchedAll to false if  movie ID changes
-  useEffect(() => {
-    relatedFetchedAll.current = false;
-  }, [movieId]);
-
   const relatedMovies = () => {
     return (
       <>
@@ -75,7 +91,10 @@ export const PageMovieInfo: React.FC = () => {
           relatedData.movie?.recommended?.length > 0 && (
             <>
               <div className="pageHeadText">Similar to {data?.movie.name}</div>
-              <MoviesList list={relatedData.movie.recommended}></MoviesList>
+              <MoviesList
+                list={relatedData.movie.recommended}
+                key={movieId}
+              ></MoviesList>
             </>
           )}
         <div className="movieInfo-footerLoadingContainer">
@@ -92,37 +111,28 @@ export const PageMovieInfo: React.FC = () => {
     );
   };
 
-  const buttons = () => {
-    return (
-      <ButtonGroup
-        variant="contained"
-        aria-label="outlined primary button group"
-      >
-        <Button
-          disabled={imdbLink === ""}
-          onClick={() => {
-            window.open(imdbLink, "_blank");
-          }}
-        >
-          IMDB
-        </Button>
-        <Button
-          disabled={wikiLink === ""}
-          onClick={() => {
-            window.open(wikiLink, "_blank");
-          }}
-        >
-          Wikipedia
-        </Button>
-        <Button
-          onClick={() => {
-            navigate(`/related/${movieId}`);
-          }}
-        >
-          Related
-        </Button>
-      </ButtonGroup>
-    );
+  const wikiInfo = () => {
+    if (
+      !fetchedExternalIds ||
+      loadingWikiExtract ||
+      (fetchedExternalIds &&
+        dataWikiExtract?.query?.pages![0].pageid !== wikiPageId)
+    ) {
+      return <LoadingAnimation />;
+    } else {
+      if (
+        dataWikiExtract?.query?.pages![0].extract &&
+        dataWikiExtract?.query?.pages![0].pageid === wikiPageId
+      )
+        return (
+          <>
+            <div className="movieInfo-wiki-title">From Wikipedia:</div>
+            <div className="movieInfo-wiki-text">
+              {dataWikiExtract?.query?.pages![0].extract}
+            </div>
+          </>
+        );
+    }
   };
 
   return (
@@ -130,51 +140,13 @@ export const PageMovieInfo: React.FC = () => {
       {loading ? (
         <LoadingAnimation />
       ) : (
-        <div className="pageMovieInfo page">
+        <div className="pageMovieInfo page" key={movieId}>
           <div className="movieInfo componentCard">
-            <div className="movieInfo-header" style={{}}>
-              <img
-                src={data?.movie.backdrop?.large}
-                className="movieInfo-backdrop"
-                alt=""
-              ></img>
-              <MoviePoster
-                imgUrl={data?.movie.poster?.large}
-                name={data?.movie.name!}
-              />
-
-              <div className="movieInfo-data">
-                <div className="vscrollable">
-                  <div className="movieInfo-data-title">
-                    <div className="movieInfo-data-title-main rtitle1">
-                      {data?.movie.name}
-                    </div>
-                    {(releaseDateStr || data?.movie?.genres?.length! > 0) && (
-                      <div className="movieInfo-data-title-info rtitle2">
-                        {releaseDateStr}{" "}
-                        {data?.movie.genres.map((genre) => {
-                          return `| ${genre.name} `;
-                        })}
-                      </div>
-                    )}
-                    {data?.movie.tagline && (
-                      <div className="movieInfo-data-title-tagline">
-                        {data?.movie.tagline}
-                      </div>
-                    )}
-                  </div>
-                  <div className="movieInfo-data-overview">
-                    <span>{data?.movie.overview}</span>
-                  </div>
-                </div>
-                <div className="movieInfo-data-footer">
-                  <MovieScoreBar
-                    percentage={data?.movie.score!}
-                  ></MovieScoreBar>
-                  {buttons()}
-                </div>
-              </div>
-            </div>
+            <MovieInfoHeader
+              movie={data?.movie as MovieDataFragment}
+              wikiPageId={wikiPageId ? wikiPageId : 0}
+              imdbUrl={imdbUrl}
+            ></MovieInfoHeader>
             <div className="movieInfo-body">
               <div className="movieInfo-body-cast">
                 {data?.movie?.cast && data?.movie?.cast.length > 0 && (
@@ -186,7 +158,7 @@ export const PageMovieInfo: React.FC = () => {
                   <tbody>
                     {data?.movie.cast.map((c, index) => {
                       return (
-                        <tr key={index}>
+                        <tr key={c.id}>
                           <td>{`${c.person?.name}:`}</td>
                           <td>{(c.role as Cast).character}</td>
                         </tr>
@@ -195,14 +167,7 @@ export const PageMovieInfo: React.FC = () => {
                   </tbody>
                 </table>
               </div>
-              <MovieExternalInfo
-                searchTerm={data?.movie.name!}
-                releaseYear={releaseDate.getFullYear()}
-                onFetchSuccess={(imdbLink, wikiLink) => {
-                  setImdbLink(imdbLink);
-                  setwikiLink(wikiLink);
-                }}
-              ></MovieExternalInfo>
+              {wikiInfo()}
             </div>
           </div>
           {relatedMovies()}

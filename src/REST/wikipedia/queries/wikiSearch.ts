@@ -21,7 +21,7 @@ export default async function wikiSearch(
     )
       .then((response) => response.json())
       .then((result: WikipediaSearchResults) => {
-        if (result.warnings?.search.warnings) {
+        if (result.warnings?.search?.warnings) {
           console.warn(result.warnings.search.warnings);
         }
         if (result.error) {
