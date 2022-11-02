@@ -10,12 +10,14 @@ import { useEffect, useRef, useState } from "react";
 export function useBottomReached(
   element: HTMLElement,
   callback?: (e: Event) => void,
-  delay?: number
+  delay?: number,
+  enabled: boolean = true
 ) {
   const [isOnBottom, setIsOnBottom] = useState<boolean>(false);
 
   let timeoutHandler = useRef<NodeJS.Timeout | undefined>(undefined);
 
+  const isEnabled = useRef<boolean>(enabled);
   const setState = useRef<Function>((state: boolean) => {
     setIsOnBottom(state);
   });
@@ -30,35 +32,41 @@ export function useBottomReached(
     // eslint-disable-next-line
   }, [element]);
 
+  useEffect(() => {
+    isEnabled.current = enabled;
+  }, [enabled]);
+
   const isBottom = (element: HTMLElement) => {
     return element.scrollHeight - element.scrollTop <= element.clientHeight;
   };
 
   const trackScrolling = (e: Event) => {
-    if (delay) {
-      if (isBottom(element)) {
-        setState.current(true);
+    if (isEnabled.current) {
+      if (delay) {
+        if (isBottom(element)) {
+          setState.current(true);
 
-        if (timeoutHandler.current) {
-          clearTimeout(timeoutHandler.current);
+          if (timeoutHandler.current) {
+            clearTimeout(timeoutHandler.current);
+          }
+          timeoutHandler.current = setTimeout(() => {
+            if (callback) callback(e);
+          }, delay);
+        } else {
+          setState.current(false);
+
+          if (timeoutHandler.current !== undefined) {
+            clearTimeout(timeoutHandler.current);
+            timeoutHandler.current = undefined;
+          }
         }
-        timeoutHandler.current = setTimeout(() => {
+      } else {
+        if (isBottom(element)) {
+          setState.current(true);
           if (callback) callback(e);
-        }, delay);
-      } else {
-        setState.current(false);
-
-        if (timeoutHandler.current !== undefined) {
-          clearTimeout(timeoutHandler.current);
-          timeoutHandler.current = undefined;
+        } else {
+          setState.current(false);
         }
-      }
-    } else {
-      if (isBottom(element)) {
-        setState.current(true);
-        if (callback) callback(e);
-      } else {
-        setState.current(false);
       }
     }
   };
