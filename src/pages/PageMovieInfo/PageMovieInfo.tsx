@@ -19,7 +19,7 @@ import { useWikiGetExtract } from "../../REST/wikipedia/hooks/useWikiGetExtract"
 export const PageMovieInfo: React.FC = () => {
   const { movieId } = useParams();
 
-  const fetchMoreDelay = 2000;
+  const fetchMoreDelay = 1500;
 
   const relatedFetchedAll = useRef<boolean | null>(false);
   const [imdbUrl, setImdbUrl] = useState<string>("");
