@@ -21,12 +21,12 @@ export const PageMovieInfo: React.FC = () => {
 
   const fetchMoreDelay = 1500;
 
-  const relatedFetchedAll = useRef<boolean | null>(false);
+  const relatedFetchedAll = useRef<boolean>(false);
   const [imdbUrl, setImdbUrl] = useState<string>("");
   const [wikiPageId, setWikiPageId] = useState<number | undefined>(undefined);
   const [fetchedExternalIds, setfetchedExternalIds] = useState<boolean>(false);
 
-  // setting fetchedAll to false if movie ID changes
+  // reset if movieId changes
   useEffect(() => {
     relatedFetchedAll.current = false;
     setfetchedExternalIds(false);
@@ -80,7 +80,8 @@ export const PageMovieInfo: React.FC = () => {
         relatedFetchmore({ variables: { limit: undefined, page: undefined } });
       }
     },
-    fetchMoreDelay
+    fetchMoreDelay,
+    !relatedFetchedAll.current
   );
 
   const relatedMovies = () => {
