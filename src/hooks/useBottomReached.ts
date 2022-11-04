@@ -37,7 +37,7 @@ export function useBottomReached(
   }, [enabled]);
 
   const isBottom = (element: HTMLElement) => {
-    return element.scrollHeight - element.scrollTop <= element.clientHeight;
+    return element.scrollHeight - element.scrollTop <= element.clientHeight + 1;
   };
 
   const trackScrolling = (e: Event) => {
