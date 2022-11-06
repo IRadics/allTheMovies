@@ -19,14 +19,14 @@ import { useWikiGetExtract } from "../../REST/wikipedia/hooks/useWikiGetExtract"
 export const PageMovieInfo: React.FC = () => {
   const { movieId } = useParams();
 
-  const fetchMoreDelay = 2000;
+  const fetchMoreDelay = 1500;
 
-  const relatedFetchedAll = useRef<boolean | null>(false);
+  const relatedFetchedAll = useRef<boolean>(false);
   const [imdbUrl, setImdbUrl] = useState<string>("");
   const [wikiPageId, setWikiPageId] = useState<number | undefined>(undefined);
   const [fetchedExternalIds, setfetchedExternalIds] = useState<boolean>(false);
 
-  // setting fetchedAll to false if movie ID changes
+  // reset if movieId changes
   useEffect(() => {
     relatedFetchedAll.current = false;
     setfetchedExternalIds(false);
@@ -80,7 +80,8 @@ export const PageMovieInfo: React.FC = () => {
         relatedFetchmore({ variables: { limit: undefined, page: undefined } });
       }
     },
-    fetchMoreDelay
+    fetchMoreDelay,
+    !relatedFetchedAll.current
   );
 
   const relatedMovies = () => {
@@ -116,6 +117,7 @@ export const PageMovieInfo: React.FC = () => {
       !fetchedExternalIds ||
       loadingWikiExtract ||
       (fetchedExternalIds &&
+        wikiPageId &&
         dataWikiExtract?.query?.pages![0].pageid !== wikiPageId)
     ) {
       return <LoadingAnimation />;

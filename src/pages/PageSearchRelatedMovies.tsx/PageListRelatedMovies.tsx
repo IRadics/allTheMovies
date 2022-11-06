@@ -9,6 +9,8 @@ export const PageListRelatedMovies: React.FC = () => {
 
   const results = useGetRelatedMoviesQuery({
     variables: { id: parentMovieId! },
+    fetchPolicy: "cache-and-network",
+    returnPartialData: true,
   });
 
   const isResultReturned =
@@ -16,7 +18,6 @@ export const PageListRelatedMovies: React.FC = () => {
 
   return (
     <>
-      {results.loading && <LoadingAnimation />}
       <div className="pageSearchMovies page">
         {isResultReturned && (
           <>
@@ -30,6 +31,7 @@ export const PageListRelatedMovies: React.FC = () => {
           <div className="pageHeadText">No results</div>
         )}
       </div>
+      {results.loading && <LoadingAnimation />}
     </>
   );
 };
