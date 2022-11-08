@@ -1,0 +1,10 @@
+fragment MovieConnectionMin on MovieConnection {
+  ...MovieConnectionInfo
+  edges {
+    node {
+      ... on Movie {
+        ...MovieMin
+      }
+    }
+  }
+}

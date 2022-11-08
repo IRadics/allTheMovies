@@ -2,19 +2,24 @@ import "./PageListRelatedMovies.css";
 import { LoadingAnimation } from "../../components/LoadingAnimation/LoadingAnimation";
 import { MoviesList } from "../../components/MoviesList/MoviesList";
 import { useParams } from "react-router-dom";
-import { useGetRelatedMoviesQuery } from "../../graphql/generated-types";
+import {
+  MovieFragment,
+  useGetRecommendedMoviesQuery,
+} from "../../graphql/generated-types";
 
 export const PageListRelatedMovies: React.FC = () => {
   let { parentMovieId } = useParams();
 
-  const results = useGetRelatedMoviesQuery({
+  const results = useGetRecommendedMoviesQuery({
     variables: { id: parentMovieId! },
     fetchPolicy: "cache-and-network",
     returnPartialData: true,
   });
 
-  const isResultReturned =
-    results.data && results.data.movie.recommended.length > 0;
+  const movies = results?.data?.movies?.movie?.recommendations?.edges?.map(
+    (e) => e?.node
+  );
+  const isResultReturned = movies && movies.length > 0;
 
   return (
     <>
@@ -22,9 +27,9 @@ export const PageListRelatedMovies: React.FC = () => {
         {isResultReturned && (
           <>
             <div className="pageHeadText">
-              Similiar movies to {results.data?.movie.name}
+              Similiar movies to {results.data?.movies.movie.title}
             </div>
-            <MoviesList list={results.data!.movie.recommended} />
+            <MoviesList list={movies as MovieFragment[]} />
           </>
         )}
         {!isResultReturned && !results.loading && (

@@ -1,0 +1,9 @@
+fragment CastMin on CastCreditWithPerson {
+  id
+  character
+  value {
+    id
+    name
+    profilePicture: profilePicture(size: W185)
+  }
+}

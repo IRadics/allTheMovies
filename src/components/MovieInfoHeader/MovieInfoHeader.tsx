@@ -1,14 +1,14 @@
 import Button from "@mui/material/Button/Button";
 import ButtonGroup from "@mui/material/ButtonGroup/ButtonGroup";
 import BCN from "../../functions/buildCssClassName";
-import { MovieDataFragment } from "../../graphql/generated-types";
+import { MovieFragment } from "../../graphql/generated-types";
 import { useNavigateIfNew } from "../../hooks/useNavigateIfNew";
 import { MoviePoster } from "../MoviePoster/MoviePoster";
 import { MovieScoreBar } from "../MovieScoreBar/MovieScoreBar";
 import "./MovieInfoHeader.css";
 
 const MovieInfoHeader: React.FC<{
-  movie: MovieDataFragment;
+  movie: MovieFragment;
   imdbUrl: string;
   wikiPageId: number;
   className?: string;
@@ -64,11 +64,11 @@ const MovieInfoHeader: React.FC<{
   return (
     <div className={BCN("", "movieInfoHeader", className)}>
       <img
-        src={movie.backdrop?.large}
+        src={movie.backdropLarge}
         className={BCN("-backdrop", "movieInfoHeader", className)}
         alt=""
       ></img>
-      <MoviePoster imgUrl={movie.poster?.large} name={movie.name!} />
+      <MoviePoster imgUrl={movie.posterLarge} name={movie.title!} />
 
       <div className={BCN("-data", "movieInfoHeader", className)}>
         <div className={BCN("-data-title", "movieInfoHeader", className)}>
@@ -77,7 +77,7 @@ const MovieInfoHeader: React.FC<{
               BCN("-data-title-main", "movieInfoHeader", className) + " rtitle1"
             }
           >
-            {movie.name}
+            {movie.title}
           </div>
           {(releaseDateStr || movie?.genres?.length! > 0) && (
             <div
@@ -113,7 +113,7 @@ const MovieInfoHeader: React.FC<{
         </div>
 
         <div className={BCN("-data-footer", "movieInfoHeader", className)}>
-          <MovieScoreBar percentage={movie.score!}></MovieScoreBar>
+          <MovieScoreBar percentage={movie.rating!}></MovieScoreBar>
           {buttons()}
         </div>
       </div>

@@ -1,0 +1,12 @@
+fragment MovieMin on Movie {
+  id
+  title
+  overview
+  releaseDate
+  rating
+  genres {
+    id
+    name
+  }
+  posterMedium: poster(size: W342)
+}

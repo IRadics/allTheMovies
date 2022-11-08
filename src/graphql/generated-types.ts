@@ -13,865 +13,1047 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  DateTime: any;
-  EmailAddress: any;
-  ISODate: any;
-  LanguageCode: any;
-  PageRange: any;
-  RegionCode: any;
-  ScoreMaximumRange: any;
-  ScoreMinimumRange: any;
+  Date: any;
   URL: any;
 };
 
-export type Backdrop = Image & {
-  __typename?: 'Backdrop';
-  colors?: Maybe<ExtractedColors>;
-  custom?: Maybe<Scalars['URL']>;
-  file?: Maybe<Scalars['String']>;
-  /** w1280 */
-  large?: Maybe<Scalars['URL']>;
-  /** w780 */
-  medium?: Maybe<Scalars['URL']>;
-  original?: Maybe<Scalars['URL']>;
-  /** w300 */
-  small?: Maybe<Scalars['URL']>;
-  svg?: Maybe<Scalars['URL']>;
+export type AlternativeTitle = {
+  __typename?: 'AlternativeTitle';
+  iso3166_1: Scalars['String'];
+  title: Scalars['String'];
+  type: Scalars['String'];
 };
 
+export type AnyImage = BackdropSizeDetailImage | LogoSizeDetailImage | PosterSizeDetailImage | ProfileSizeDetailImage | StillSizeDetailImage;
 
-export type BackdropcustomArgs = {
-  base64?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Palette>;
-  size?: InputMaybe<Scalars['String']>;
-  svg?: InputMaybe<Scalars['Boolean']>;
-};
-
-
-export type BackdroporiginalArgs = {
-  base64?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Palette>;
-  svg?: InputMaybe<Scalars['Boolean']>;
-};
-
-
-export type BackdropsvgArgs = {
-  base64?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Palette>;
-  size?: InputMaybe<Scalars['String']>;
-};
-
-export enum CacheControlScope {
-  PRIVATE = 'PRIVATE',
-  PUBLIC = 'PUBLIC'
+export enum BackdropSize {
+  Original = 'Original',
+  W300 = 'W300',
+  W780 = 'W780',
+  W1280 = 'W1280'
 }
 
-export type Cast = {
-  __typename?: 'Cast';
+export type BackdropSizeDetailImage = {
+  __typename?: 'BackdropSizeDetailImage';
+  aspectRatio: Scalars['Float'];
+  height: Scalars['Int'];
+  image: Scalars['URL'];
+  iso639_1?: Maybe<Scalars['String']>;
+  voteAverage: Scalars['Float'];
+  voteCount: Scalars['Int'];
+  width: Scalars['Int'];
+};
+
+
+export type BackdropSizeDetailImageimageArgs = {
+  size: BackdropSize;
+};
+
+export type CastCreditWithMovie = ICreditWithMovie & {
+  __typename?: 'CastCreditWithMovie';
   character: Scalars['String'];
-  credit: Credit;
+  id: Scalars['String'];
+  value: Movie;
 };
 
-export type Collection = {
-  __typename?: 'Collection';
-  backdrop?: Maybe<Backdrop>;
-  id: Scalars['ID'];
-  images: Array<MediaImage>;
-  name: Scalars['String'];
-  overview: Scalars['String'];
-  parts: Array<Movie>;
-  poster?: Maybe<Poster>;
+export type CastCreditWithMovieOrTV = ICreditWithMovieOrTV & {
+  __typename?: 'CastCreditWithMovieOrTV';
+  character: Scalars['String'];
+  id: Scalars['String'];
+  value: MovieOrTV;
 };
 
-
-export type CollectionpartsArgs = {
-  language?: InputMaybe<Translations>;
+export type CastCreditWithPerson = ICreditWithPerson & {
+  __typename?: 'CastCreditWithPerson';
+  character: Scalars['String'];
+  id: Scalars['String'];
+  value: Person;
 };
 
-export type Company = {
-  __typename?: 'Company';
-  country: Country;
-  description: Scalars['String'];
-  headquarters: Scalars['String'];
-  homepage: Scalars['URL'];
-  id: Scalars['ID'];
-  images: Array<Logo>;
-  logo: Logo;
-  name: Scalars['String'];
-  parentCompany?: Maybe<Company>;
+export type CastCreditWithTVShow = ICreditWithTVShow & {
+  __typename?: 'CastCreditWithTVShow';
+  character: Scalars['String'];
+  id: Scalars['String'];
+  value: TVShow;
 };
 
-export type Country = {
-  __typename?: 'Country';
-  code: Scalars['String'];
-  name: Scalars['String'];
+export type CreditWithMovie = ICreditWithMovie & {
+  __typename?: 'CreditWithMovie';
+  id: Scalars['String'];
+  value: Movie;
 };
 
-export type Credit = {
-  __typename?: 'Credit';
-  id: Scalars['ID'];
-  media: Media;
-  person?: Maybe<Person>;
-  role: CreditType;
+export type CreditWithMovieOrTV = ICreditWithMovieOrTV & {
+  __typename?: 'CreditWithMovieOrTV';
+  id: Scalars['String'];
+  value: MovieOrTV;
 };
 
-export type CreditType = Cast | Crew;
+export type CreditWithPerson = ICreditWithPerson & {
+  __typename?: 'CreditWithPerson';
+  id: Scalars['String'];
+  value: Person;
+};
 
-export type Crew = {
-  __typename?: 'Crew';
-  credit: Credit;
+export type CreditWithTVShow = ICreditWithTVShow & {
+  __typename?: 'CreditWithTVShow';
+  id: Scalars['String'];
+  value: TVShow;
+};
+
+export type CreditsWithMovie = {
+  __typename?: 'CreditsWithMovie';
+  cast: Array<CastCreditWithMovie>;
+  crew: Array<CrewCreditWithMovie>;
+  id: Scalars['Int'];
+};
+
+export type CreditsWithMovieOrTV = {
+  __typename?: 'CreditsWithMovieOrTV';
+  cast: Array<CastCreditWithMovieOrTV>;
+  crew: Array<CrewCreditWithMovieOrTV>;
+  id: Scalars['Int'];
+};
+
+export type CreditsWithPerson = ICreditsWithPerson & {
+  __typename?: 'CreditsWithPerson';
+  cast: Array<CastCreditWithPerson>;
+  crew: Array<CrewCreditWithPerson>;
+  id: Scalars['Int'];
+};
+
+export type CreditsWithTVShow = {
+  __typename?: 'CreditsWithTVShow';
+  cast: Array<CastCreditWithTVShow>;
+  crew: Array<CrewCreditWithTVShow>;
+  id: Scalars['Int'];
+};
+
+export type CrewCreditWithMovie = ICreditWithMovie & {
+  __typename?: 'CrewCreditWithMovie';
   department: Scalars['String'];
+  id: Scalars['String'];
   job: Scalars['String'];
+  value: Movie;
 };
 
-/** Used to filter Dates. Has no effect if both inputs are omited. */
-export type DateRangeInput = {
-  /** Include from the given Date forward */
-  from?: InputMaybe<Scalars['ISODate']>;
-  /** Include up to the given Date */
-  to?: InputMaybe<Scalars['ISODate']>;
+export type CrewCreditWithMovieOrTV = ICreditWithMovieOrTV & {
+  __typename?: 'CrewCreditWithMovieOrTV';
+  department: Scalars['String'];
+  id: Scalars['String'];
+  job: Scalars['String'];
+  value: MovieOrTV;
 };
 
-export enum Direction {
-  /** Ascending, ie: 1..2..3.. or A..B..C.. */
-  ASC = 'ASC',
-  /** Descending, ie: 3..2..1.. or C..B..A.. */
-  DESC = 'DESC'
-}
-
-export type DiscoverMoviesFilter = {
-  includeAdult?: InputMaybe<Scalars['Boolean']>;
-  includeVideo?: InputMaybe<Scalars['Boolean']>;
-  language?: InputMaybe<Translations>;
-  primaryReleaseDate?: InputMaybe<DateRangeInput>;
-  primaryReleaseYear?: InputMaybe<Scalars['Int']>;
-  region?: InputMaybe<Scalars['RegionCode']>;
-  releaseDate?: InputMaybe<DateRangeInput>;
-  voteAverage?: InputMaybe<VoteAverageInput>;
-  voteCount?: InputMaybe<NumberRangeInput>;
-  withCast?: InputMaybe<IDListInput>;
-  withCompanies?: InputMaybe<IDListInput>;
-  withCrew?: InputMaybe<IDListInput>;
-  withGenres?: InputMaybe<IDListInput>;
-  withKeywords?: InputMaybe<KeywordInput>;
-  withOriginalLanguage?: InputMaybe<Translations>;
-  withPeople?: InputMaybe<IDListInput>;
-  withReleaseType?: InputMaybe<ReleaseTypeInput>;
-  withRuntime?: InputMaybe<NumberRangeInput>;
-  year?: InputMaybe<Scalars['Int']>;
+export type CrewCreditWithPerson = ICreditWithPerson & {
+  __typename?: 'CrewCreditWithPerson';
+  department: Scalars['String'];
+  id: Scalars['String'];
+  job: Scalars['String'];
+  value: Person;
 };
 
-export enum DiscoverMoviesSortBy {
-  OriginalTitle = 'OriginalTitle',
-  Popularity = 'Popularity',
-  PrimaryReleaseDate = 'PrimaryReleaseDate',
-  ReleaseDate = 'ReleaseDate',
-  Revenue = 'Revenue',
-  VoteAverage = 'VoteAverage',
-  VoteCount = 'VoteCount'
-}
-
-export type DiscoverMoviesSortInput = {
-  by?: InputMaybe<DiscoverMoviesSortBy>;
-  direction?: InputMaybe<Direction>;
+export type CrewCreditWithTVShow = ICreditWithTVShow & {
+  __typename?: 'CrewCreditWithTVShow';
+  department: Scalars['String'];
+  id: Scalars['String'];
+  job: Scalars['String'];
+  value: TVShow;
 };
 
-export type DiscoverTVFilter = {
-  airDate?: InputMaybe<DateRangeInput>;
-  firstAired?: InputMaybe<DateRangeInput>;
-  firstAiredYear?: InputMaybe<Scalars['Int']>;
-  includeUnaired?: InputMaybe<Scalars['Boolean']>;
-  language?: InputMaybe<Translations>;
-  screenedTheatrically?: InputMaybe<Scalars['Boolean']>;
-  timeZone?: InputMaybe<Scalars['String']>;
-  voteAverage?: InputMaybe<VoteAverageInput>;
-  voteCount?: InputMaybe<NumberRangeInput>;
-  withCompanies?: InputMaybe<IDListInput>;
-  withGenres?: InputMaybe<IDListInput>;
-  withKeywords?: InputMaybe<KeywordInput>;
-  withNetworks?: InputMaybe<IDListInput>;
-  withOriginalLanguage?: InputMaybe<Translations>;
-  withRuntime?: InputMaybe<NumberRangeInput>;
-};
-
-export enum DiscoverTVSortBy {
-  FirstAirDate = 'FirstAirDate',
-  Popularity = 'Popularity',
-  VoteAverage = 'VoteAverage'
-}
-
-export type DiscoverTVSortInput = {
-  by?: InputMaybe<DiscoverTVSortBy>;
-  direction?: InputMaybe<Direction>;
-};
-
-export type Episode = {
-  __typename?: 'Episode';
-  aired: Scalars['DateTime'];
-  cast: Array<Credit>;
-  crew: Array<Credit>;
-  guests: Array<Credit>;
-  id: Scalars['ID'];
-  images: Array<Still>;
-  name: Scalars['String'];
-  number: Scalars['Int'];
-  overview: Scalars['String'];
-  score: Scalars['Float'];
-  season: Season;
-  series: TV;
-  still?: Maybe<Still>;
-  videos: Array<Video>;
-  votes: Scalars['Int'];
+export type Discover = {
+  __typename?: 'Discover';
+  movies: DiscoverMovies;
+  tv: DiscoverTV;
 };
 
 
-export type EpisodecastArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
+export type DiscovermoviesArgs = {
+  input?: InputMaybe<MovieDiscoverInput>;
 };
 
 
-export type EpisodecrewArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
+export type DiscovertvArgs = {
+  input?: InputMaybe<TVDiscoverInput>;
+};
+
+export type DiscoverDateFilter = {
+  max?: InputMaybe<Scalars['Date']>;
+  min?: InputMaybe<Scalars['Date']>;
+};
+
+export type DiscoverFloatFilter = {
+  max?: InputMaybe<Scalars['Float']>;
+  min?: InputMaybe<Scalars['Float']>;
+};
+
+export type DiscoverIncludeExcludeFilter = {
+  exclude?: InputMaybe<Array<Scalars['ID']>>;
+  include?: InputMaybe<Array<Scalars['ID']>>;
+};
+
+export type DiscoverIncludeFilter = {
+  include: Array<Scalars['ID']>;
+};
+
+export type DiscoverInput = {
+  cast?: InputMaybe<DiscoverIncludeFilter>;
+  companies?: InputMaybe<DiscoverIncludeExcludeFilter>;
+  crew?: InputMaybe<DiscoverIncludeFilter>;
+  genres?: InputMaybe<DiscoverIncludeExcludeFilter>;
+  keywords?: InputMaybe<DiscoverIncludeExcludeFilter>;
+  people?: InputMaybe<DiscoverIncludeFilter>;
+  rating?: InputMaybe<DiscoverFloatFilter>;
+  runtime?: InputMaybe<DiscoverIntFilter>;
+  streamingOptions?: InputMaybe<StreamingOptions>;
+  voteCount?: InputMaybe<DiscoverIntFilter>;
+};
+
+export type DiscoverIntFilter = {
+  max?: InputMaybe<Scalars['Int']>;
+  min?: InputMaybe<Scalars['Int']>;
+};
+
+export type DiscoverMovies = {
+  __typename?: 'DiscoverMovies';
+  latest: MovieConnection;
+  popular: MovieConnection;
+  topRated: MovieConnection;
 };
 
 
-export type EpisodeguestsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type EpisodevideosArgs = {
-  filter?: InputMaybe<VideoFilter>;
+export type DiscoverMovieslatestArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  language?: InputMaybe<Translations>;
+  last?: InputMaybe<Scalars['Int']>;
 };
 
-export enum EpisodeVideoType {
-  BehindtheScenes = 'BehindtheScenes',
-  Bloopers = 'Bloopers',
-  Clip = 'Clip',
-  Featurette = 'Featurette',
-  OpeningCredits = 'OpeningCredits',
-  Recap = 'Recap',
-  Teaser = 'Teaser',
-  Trailer = 'Trailer'
+
+export type DiscoverMoviespopularArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type DiscoverMoviestopRatedArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+export type DiscoverTV = {
+  __typename?: 'DiscoverTV';
+  latest: TVShowConnection;
+  onTheAir: TVShowConnection;
+  popular: TVShowConnection;
+  topRated: TVShowConnection;
+};
+
+
+export type DiscoverTVlatestArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type DiscoverTVonTheAirArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type DiscoverTVpopularArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type DiscoverTVtopRatedArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+export type Episode = IStreamable & Node & {
+  __typename?: 'Episode';
+  airDate?: Maybe<Scalars['Date']>;
+  credits: EpisodeCreditsWithPerson;
+  crew: Array<CrewCreditWithPerson>;
+  episodeNumber: Scalars['Int'];
+  externalIds: IExternalIDS;
+  guestStars: Array<CastCreditWithPerson>;
+  /** The id of the object */
+  id: Scalars['ID'];
+  images: EpisodeImages;
+  name: Scalars['String'];
+  next?: Maybe<Episode>;
+  overview: Scalars['String'];
+  previous?: Maybe<Episode>;
+  productionCode: Scalars['String'];
+  searchStreamingOptions: Array<StreamingResultForProvideer>;
+  season: Season;
+  seasonNumber: Scalars['Int'];
+  show: TVShow;
+  still?: Maybe<Scalars['URL']>;
+  streamingOptions?: Maybe<Array<StreamingOption>>;
+  translations: Array<TranslationWithTranslatedMovieInfo>;
+  videos: Array<Video>;
+  voteAverage: Scalars['Float'];
+  voteCount: Scalars['Int'];
+};
+
+
+export type EpisodesearchStreamingOptionsArgs = {
+  countries?: InputMaybe<Array<Scalars['ID']>>;
+  providers: Array<Scalars['ID']>;
+};
+
+
+export type EpisodestillArgs = {
+  size: StillSize;
+};
+
+
+export type EpisodestreamingOptionsArgs = {
+  country?: InputMaybe<Scalars['ID']>;
+};
+
+export type EpisodeCreditsWithPerson = ICreditsWithPerson & {
+  __typename?: 'EpisodeCreditsWithPerson';
+  cast: Array<CastCreditWithPerson>;
+  crew: Array<CrewCreditWithPerson>;
+  guestStars: Array<CastCreditWithPerson>;
+  id: Scalars['Int'];
+  url: Scalars['URL'];
+};
+
+export type EpisodeImages = {
+  __typename?: 'EpisodeImages';
+  stills: Array<StillSizeDetailImage>;
+};
+
+export type ExternalIDS = IExternalIDS & {
+  __typename?: 'ExternalIDS';
+  facebook?: Maybe<Scalars['String']>;
+  imdb?: Maybe<Scalars['String']>;
+  instagram?: Maybe<Scalars['String']>;
+  twitter?: Maybe<Scalars['String']>;
+};
+
+export enum ExternalSource {
+  Facebook = 'Facebook',
+  Freebase = 'Freebase',
+  Imdb = 'Imdb',
+  Instagram = 'Instagram',
+  Tvdb = 'Tvdb',
+  Tvrage = 'Tvrage',
+  Twitter = 'Twitter'
 }
 
-export type ExtractedColors = {
-  __typename?: 'ExtractedColors';
-  darkMuted?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  darkVibrant?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  lightMuted?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  lightVibrant?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  muted?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  vibrant?: Maybe<Array<Maybe<Scalars['Int']>>>;
+export type FromExternalIds = {
+  __typename?: 'FromExternalIds';
+  movies: Array<Movie>;
+  people: Array<Person>;
+  tv: Array<TVShow>;
+};
+
+export type FullExternalIDS = IExternalIDS & {
+  __typename?: 'FullExternalIDS';
+  facebook?: Maybe<Scalars['String']>;
+  imdb?: Maybe<Scalars['String']>;
+  instagram?: Maybe<Scalars['String']>;
+  tmdb: Scalars['Int'];
+  twitter?: Maybe<Scalars['String']>;
 };
 
 export enum Gender {
   Female = 'Female',
   Male = 'Male',
-  Unknown = 'Unknown'
+  UnknownOrNonBinary = 'UnknownOrNonBinary'
 }
 
-export type Genre = {
+export type Genre = Node & {
   __typename?: 'Genre';
+  discover: Discover;
+  /** The id of the object */
   id: Scalars['ID'];
   name: Scalars['String'];
 };
 
-export type IDListInput = {
-  exclude?: InputMaybe<Array<Scalars['ID']>>;
-  include?: InputMaybe<Array<Scalars['ID']>>;
+
+export type GenrediscoverArgs = {
+  input?: InputMaybe<DiscoverInput>;
 };
 
-export type Image = {
-  /** A hash of extracted colors from the image. */
-  colors?: Maybe<ExtractedColors>;
-  /** Returns a URL for an image with the given dimensions or a generated SVG as either a URL or a base64 encoded data URI. */
-  custom?: Maybe<Scalars['URL']>;
-  /** The filename of the image. Used to construct URLs given a base URL and a size. */
-  file?: Maybe<Scalars['String']>;
-  /** Returns a URL for an image in it's original size or a generated SVG as either a URL or a base64 encoded data URI. */
-  original?: Maybe<Scalars['URL']>;
-  /** Returns either a URL to or a base64 encoded data URI of the image. */
-  svg?: Maybe<Scalars['URL']>;
+export type GenreConnection = {
+  __typename?: 'GenreConnection';
+  edges?: Maybe<Array<Maybe<GenreEdge>>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
-
-export type ImagecustomArgs = {
-  base64?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Palette>;
-  size?: InputMaybe<Scalars['String']>;
-  svg?: InputMaybe<Scalars['Boolean']>;
+export type GenreEdge = {
+  __typename?: 'GenreEdge';
+  cursor: Scalars['String'];
+  node?: Maybe<Genre>;
 };
 
-
-export type ImageoriginalArgs = {
-  base64?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Palette>;
-  svg?: InputMaybe<Scalars['Boolean']>;
+export type Genres = {
+  __typename?: 'Genres';
+  all: GenreConnection;
+  genre: Genre;
 };
 
 
-export type ImagesvgArgs = {
-  base64?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Palette>;
-  size?: InputMaybe<Scalars['String']>;
+export type GenresallArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
 };
 
-export type Job = {
-  __typename?: 'Job';
-  department: Scalars['String'];
-  name: Scalars['String'];
+
+export type GenresgenreArgs = {
+  id: Scalars['ID'];
 };
 
-export type Keyword = {
+export type ICreditWithMovie = {
+  id: Scalars['String'];
+  value: Movie;
+};
+
+export type ICreditWithMovieOrTV = {
+  id: Scalars['String'];
+  value: MovieOrTV;
+};
+
+export type ICreditWithPerson = {
+  id: Scalars['String'];
+  value: Person;
+};
+
+export type ICreditWithTVShow = {
+  id: Scalars['String'];
+  value: TVShow;
+};
+
+export type ICreditsWithPerson = {
+  cast: Array<CastCreditWithPerson>;
+  crew: Array<CrewCreditWithPerson>;
+  id: Scalars['Int'];
+};
+
+export type IExternalIDS = {
+  facebook?: Maybe<Scalars['String']>;
+  imdb?: Maybe<Scalars['String']>;
+  instagram?: Maybe<Scalars['String']>;
+  twitter?: Maybe<Scalars['String']>;
+};
+
+export type IStreamable = {
+  searchStreamingOptions: Array<StreamingResultForProvideer>;
+  streamingOptions?: Maybe<Array<StreamingOption>>;
+};
+
+
+export type IStreamablesearchStreamingOptionsArgs = {
+  countries?: InputMaybe<Array<Scalars['ID']>>;
+  providers: Array<Scalars['ID']>;
+};
+
+
+export type IStreamablestreamingOptionsArgs = {
+  country?: InputMaybe<Scalars['ID']>;
+};
+
+export type Keyword = Node & {
   __typename?: 'Keyword';
+  discover: Discover;
+  /** The id of the object */
   id: Scalars['ID'];
   name: Scalars['String'];
 };
 
-export type KeywordInput = {
-  exclude?: InputMaybe<Array<Scalars['ID']>>;
-  excludeLogic?: InputMaybe<Logic>;
-  include?: InputMaybe<Array<Scalars['ID']>>;
-  includeLogic?: InputMaybe<Logic>;
+
+export type KeyworddiscoverArgs = {
+  input?: InputMaybe<DiscoverInput>;
 };
 
-export type Language = {
-  __typename?: 'Language';
-  code: Scalars['String'];
-  name: Scalars['String'];
-};
-
-export enum Logic {
-  AND = 'AND',
-  OR = 'OR'
+export enum LogoSize {
+  Original = 'Original',
+  W45 = 'W45',
+  W92 = 'W92',
+  W154 = 'W154',
+  W185 = 'W185',
+  W300 = 'W300',
+  W500 = 'W500'
 }
 
-export type Logo = Image & {
-  __typename?: 'Logo';
-  colors?: Maybe<ExtractedColors>;
-  custom?: Maybe<Scalars['URL']>;
-  file?: Maybe<Scalars['String']>;
-  /** w500 */
-  huge?: Maybe<Scalars['URL']>;
-  /** w45 */
-  icon?: Maybe<Scalars['URL']>;
-  /** w300 */
-  large?: Maybe<Scalars['URL']>;
-  /** w185 */
-  medium?: Maybe<Scalars['URL']>;
-  original?: Maybe<Scalars['URL']>;
-  /** w154 */
-  small?: Maybe<Scalars['URL']>;
-  svg?: Maybe<Scalars['URL']>;
-  /** w92 */
-  tiny?: Maybe<Scalars['URL']>;
+export type LogoSizeDetailImage = {
+  __typename?: 'LogoSizeDetailImage';
+  aspectRatio: Scalars['Float'];
+  height: Scalars['Int'];
+  image: Scalars['URL'];
+  iso639_1?: Maybe<Scalars['String']>;
+  voteAverage: Scalars['Float'];
+  voteCount: Scalars['Int'];
+  width: Scalars['Int'];
 };
 
 
-export type LogocustomArgs = {
-  base64?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Palette>;
-  size?: InputMaybe<Scalars['String']>;
-  svg?: InputMaybe<Scalars['Boolean']>;
+export type LogoSizeDetailImageimageArgs = {
+  size: LogoSize;
 };
 
-
-export type LogooriginalArgs = {
-  base64?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Palette>;
-  svg?: InputMaybe<Scalars['Boolean']>;
+export type MediaImages = {
+  __typename?: 'MediaImages';
+  backdrops: Array<BackdropSizeDetailImage>;
+  posters: Array<PosterSizeDetailImage>;
 };
 
-
-export type LogosvgArgs = {
-  base64?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Palette>;
-  size?: InputMaybe<Scalars['String']>;
-};
-
-export type Media = Movie | TV;
-
-export type MediaImage = Backdrop | Poster;
-
-export enum MediaType {
-  Movie = 'Movie',
-  TV = 'TV'
-}
-
-export type Movie = {
+export type Movie = IStreamable & Node & {
   __typename?: 'Movie';
-  adult: Scalars['Boolean'];
-  backdrop?: Maybe<Backdrop>;
-  budget: Scalars['Int'];
-  cast: Array<Credit>;
-  collection?: Maybe<Collection>;
-  country: Array<Country>;
-  crew: Array<Credit>;
+  alternativeTitles: Array<AlternativeTitle>;
+  backdrop?: Maybe<Scalars['URL']>;
+  budget?: Maybe<Scalars['Int']>;
+  credits: ICreditsWithPerson;
+  externalIds: FullExternalIDS;
   genres: Array<Genre>;
   homepage?: Maybe<Scalars['URL']>;
+  /** The id of the object */
   id: Scalars['ID'];
-  images: Array<MediaImage>;
+  images: MediaImages;
+  imdbID?: Maybe<Scalars['String']>;
+  isAdult: Scalars['Boolean'];
+  isVideo: Scalars['Boolean'];
   keywords: Array<Keyword>;
-  languages: Array<Language>;
-  name: Scalars['String'];
+  numberOfRatings: Scalars['Int'];
+  originalLanguage: Scalars['String'];
+  originalTitle: Scalars['String'];
   overview: Scalars['String'];
-  popularity: Scalars['Float'];
-  poster?: Maybe<Poster>;
-  productionCompanies: Array<Company>;
-  recommended: Array<Movie>;
-  releaseDate?: Maybe<Scalars['DateTime']>;
-  revenue: Scalars['String'];
-  reviews: Array<Review>;
-  runtime?: Maybe<Scalars['Int']>;
-  score: Scalars['Float'];
-  similar: Array<Movie>;
-  socialMedia?: Maybe<SocialMedia>;
-  status: ReleaseStatus;
-  tagline?: Maybe<Scalars['String']>;
+  popularityIndex?: Maybe<Scalars['Float']>;
+  poster?: Maybe<Scalars['URL']>;
+  productionCompanies: Array<ProductionCompany>;
+  productionCountries: Array<ProductionCountry>;
+  rating: Scalars['Float'];
+  recommendations: MovieConnection;
+  releaseDate?: Maybe<Scalars['Date']>;
+  revenue?: Maybe<Scalars['Int']>;
+  reviews: ReviewConnection;
+  runtime: Scalars['Int'];
+  searchStreamingOptions: Array<StreamingResultForProvideer>;
+  similar: MovieConnection;
+  spokenLanguages: Array<SpokenLanguage>;
+  status: Status;
+  streamingOptions?: Maybe<Array<StreamingOption>>;
+  tagline: Scalars['String'];
+  title: Scalars['String'];
+  translations: Array<TranslationWithTranslatedMovieInfo>;
   videos: Array<Video>;
-  votes: Scalars['Int'];
 };
 
 
-export type MoviecastArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
+export type MoviebackdropArgs = {
+  size: BackdropSize;
 };
 
 
-export type MoviecollectionArgs = {
-  language?: InputMaybe<Translations>;
+export type MovieposterArgs = {
+  size: PosterSize;
 };
 
 
-export type MoviecrewArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type MovierecommendedArgs = {
-  language?: InputMaybe<Translations>;
-  limit?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['PageRange']>;
+export type MovierecommendationsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
 };
 
 
 export type MoviereviewsArgs = {
-  language?: InputMaybe<Translations>;
-  limit?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['PageRange']>;
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type MoviesearchStreamingOptionsArgs = {
+  countries?: InputMaybe<Array<Scalars['ID']>>;
+  providers: Array<Scalars['ID']>;
 };
 
 
 export type MoviesimilarArgs = {
-  language?: InputMaybe<Translations>;
-  limit?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['PageRange']>;
-};
-
-
-export type MovievideosArgs = {
-  filter?: InputMaybe<VideoFilter>;
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  language?: InputMaybe<Translations>;
+  last?: InputMaybe<Scalars['Int']>;
 };
 
-export enum MovieVideoType {
-  BehindtheScenes = 'BehindtheScenes',
-  Bloopers = 'Bloopers',
-  Clip = 'Clip',
-  Featurette = 'Featurette',
-  Teaser = 'Teaser',
-  Trailer = 'Trailer'
-}
 
-export type Network = {
-  __typename?: 'Network';
-  country: Scalars['String'];
-  headquarters: Scalars['String'];
-  homepage: Scalars['URL'];
+export type MoviestreamingOptionsArgs = {
+  country?: InputMaybe<Scalars['ID']>;
+};
+
+export type MovieConnection = {
+  __typename?: 'MovieConnection';
+  edges?: Maybe<Array<Maybe<MovieEdge>>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type MovieDiscoverInput = {
+  includeAdult?: InputMaybe<Scalars['Boolean']>;
+  includeVideo?: InputMaybe<Scalars['Boolean']>;
+  releaseDate?: InputMaybe<DiscoverDateFilter>;
+};
+
+export type MovieEdge = {
+  __typename?: 'MovieEdge';
+  cursor: Scalars['String'];
+  node?: Maybe<Movie>;
+};
+
+export type MovieOrTV = Movie | TVShow;
+
+export type MovieOrTVOrPeople = Movie | Person | TVShow;
+
+export type MovieOrTVOrPeopleConnection = {
+  __typename?: 'MovieOrTVOrPeopleConnection';
+  edges?: Maybe<Array<Maybe<MovieOrTVOrPeopleEdge>>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type MovieOrTVOrPeopleEdge = {
+  __typename?: 'MovieOrTVOrPeopleEdge';
+  cursor: Scalars['String'];
+  node?: Maybe<MovieOrTVOrPeople>;
+};
+
+export type Movies = {
+  __typename?: 'Movies';
+  movie: Movie;
+  nowPlaying: MovieConnection;
+  popular: MovieConnection;
+  productionCompany: ProductionCompany;
+  search: MovieConnection;
+  topRated: MovieConnection;
+  trending: MovieConnection;
+  upcoming: MovieConnection;
+};
+
+
+export type MoviesmovieArgs = {
   id: Scalars['ID'];
-  images: Array<Logo>;
+};
+
+
+export type MoviesnowPlayingArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type MoviespopularArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type MoviesproductionCompanyArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MoviessearchArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  term: Scalars['String'];
+};
+
+
+export type MoviestopRatedArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type MoviestrendingArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  timeWindow?: TimeWindow;
+};
+
+
+export type MoviesupcomingArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+export type Network = Node & {
+  __typename?: 'Network';
+  /** The id of the object */
+  id: Scalars['ID'];
+  logo?: Maybe<Scalars['URL']>;
   name: Scalars['String'];
+  originCountry: Scalars['String'];
+  tv: DiscoverTV;
 };
 
-/** Used to filter video runtimes in Minutes */
-export type NumberRangeInput = {
-  max?: InputMaybe<Scalars['Int']>;
-  min?: InputMaybe<Scalars['Int']>;
+
+export type NetworklogoArgs = {
+  size: LogoSize;
 };
 
-export enum Palette {
-  darkMuted = 'darkMuted',
-  darkVibrant = 'darkVibrant',
-  lightMuted = 'lightMuted',
-  lightVibrant = 'lightVibrant',
-  muted = 'muted',
-  vibrant = 'vibrant'
-}
 
-export type Person = {
+export type NetworktvArgs = {
+  input?: InputMaybe<TVDiscoverInput>;
+  otherFilters?: InputMaybe<DiscoverInput>;
+};
+
+export type Node = {
+  /** The id of the object */
+  id: Scalars['ID'];
+};
+
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  endCursor?: Maybe<Scalars['String']>;
+  hasNextPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean'];
+  startCursor?: Maybe<Scalars['String']>;
+};
+
+export type People = {
+  __typename?: 'People';
+  person: Person;
+  popular: PersonConnection;
+  search: PersonConnection;
+  trending: PersonConnection;
+};
+
+
+export type PeoplepersonArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type PeoplepopularArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type PeoplesearchArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  term: Scalars['String'];
+};
+
+
+export type PeopletrendingArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  timeWindow?: TimeWindow;
+};
+
+export type Person = Node & {
   __typename?: 'Person';
-  adult: Scalars['Boolean'];
-  aliases: Array<Scalars['String']>;
-  appearsIn: Array<Media>;
+  alsoKnownAs: Array<Scalars['String']>;
   biography: Scalars['String'];
-  birthday?: Maybe<Scalars['DateTime']>;
-  birthplace?: Maybe<Scalars['String']>;
-  credits: Array<Credit>;
-  diedOn?: Maybe<Scalars['DateTime']>;
+  birthday?: Maybe<Scalars['Date']>;
+  credits: PersonCredits;
+  deathday?: Maybe<Scalars['Date']>;
+  discover: Discover;
+  externalIds: FullExternalIDS;
   gender: Gender;
   homepage?: Maybe<Scalars['URL']>;
+  /** The id of the object */
   id: Scalars['ID'];
-  images: Array<Photo>;
-  knownFor: Scalars['String'];
+  images: Array<ProfileSizeDetailImage>;
+  imdbID?: Maybe<Scalars['String']>;
+  isAdult: Scalars['Boolean'];
+  knownFor: Array<MovieOrTV>;
+  knownForDepartment: Scalars['String'];
   name: Scalars['String'];
-  photo: Photo;
-  socialMedia?: Maybe<SocialMedia>;
-  taggedImages: Array<MediaImage>;
-  workedOn: Array<Media>;
+  placeOfBirth?: Maybe<Scalars['String']>;
+  popularityIndex: Scalars['Float'];
+  profilePicture?: Maybe<Scalars['URL']>;
+  taggedImages: TaggedImageConnection;
+  translations: Array<TranslationWithTranslatedPersonInfo>;
 };
 
 
-export type PersonappearsInArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
+export type PersondiscoverArgs = {
+  input?: InputMaybe<DiscoverInput>;
 };
 
 
-export type PersoncreditsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  type: Array<MediaType>;
+export type PersonprofilePictureArgs = {
+  size: ProfileSize;
 };
 
 
-export type PersonworkedOnArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
+export type PersontaggedImagesArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
 };
 
-export type Photo = Image & {
-  __typename?: 'Photo';
-  colors?: Maybe<ExtractedColors>;
-  custom?: Maybe<Scalars['URL']>;
-  file?: Maybe<Scalars['String']>;
-  /** h632 */
-  large?: Maybe<Scalars['URL']>;
-  /** w185 */
-  medium?: Maybe<Scalars['URL']>;
-  original?: Maybe<Scalars['URL']>;
-  /** w45 */
-  small?: Maybe<Scalars['URL']>;
-  svg?: Maybe<Scalars['URL']>;
+export type PersonConnection = {
+  __typename?: 'PersonConnection';
+  edges?: Maybe<Array<Maybe<PersonEdge>>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
-
-export type PhotocustomArgs = {
-  base64?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Palette>;
-  size?: InputMaybe<Scalars['String']>;
-  svg?: InputMaybe<Scalars['Boolean']>;
+export type PersonCredits = {
+  __typename?: 'PersonCredits';
+  all: CreditsWithMovieOrTV;
+  movies: CreditsWithMovie;
+  tv: CreditsWithTVShow;
 };
 
-
-export type PhotooriginalArgs = {
-  base64?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Palette>;
-  svg?: InputMaybe<Scalars['Boolean']>;
+export type PersonEdge = {
+  __typename?: 'PersonEdge';
+  cursor: Scalars['String'];
+  node?: Maybe<Person>;
 };
 
+export enum PosterSize {
+  Original = 'Original',
+  W92 = 'W92',
+  W154 = 'W154',
+  W185 = 'W185',
+  W342 = 'W342',
+  W500 = 'W500',
+  W780 = 'W780'
+}
 
-export type PhotosvgArgs = {
-  base64?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Palette>;
-  size?: InputMaybe<Scalars['String']>;
-};
-
-export type Poster = Image & {
-  __typename?: 'Poster';
-  colors?: Maybe<ExtractedColors>;
-  custom?: Maybe<Scalars['URL']>;
-  file?: Maybe<Scalars['String']>;
-  /** w780 */
-  huge?: Maybe<Scalars['URL']>;
-  /** w500 */
-  large?: Maybe<Scalars['URL']>;
-  /** w342 */
-  medium?: Maybe<Scalars['URL']>;
-  original?: Maybe<Scalars['URL']>;
-  /** w185 */
-  small?: Maybe<Scalars['URL']>;
-  svg?: Maybe<Scalars['URL']>;
-  /** w92 */
-  thumbnail?: Maybe<Scalars['URL']>;
-  /** w154 */
-  tiny?: Maybe<Scalars['URL']>;
+export type PosterSizeDetailImage = {
+  __typename?: 'PosterSizeDetailImage';
+  aspectRatio: Scalars['Float'];
+  height: Scalars['Int'];
+  image: Scalars['URL'];
+  iso639_1?: Maybe<Scalars['String']>;
+  voteAverage: Scalars['Float'];
+  voteCount: Scalars['Int'];
+  width: Scalars['Int'];
 };
 
 
-export type PostercustomArgs = {
-  base64?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Palette>;
-  size?: InputMaybe<Scalars['String']>;
-  svg?: InputMaybe<Scalars['Boolean']>;
+export type PosterSizeDetailImageimageArgs = {
+  size: PosterSize;
+};
+
+export type Price = {
+  __typename?: 'Price';
+  amount: Scalars['Float'];
+  currency: Scalars['String'];
+};
+
+export type ProductionCompany = Node & {
+  __typename?: 'ProductionCompany';
+  discover: Discover;
+  /** The id of the object */
+  id: Scalars['ID'];
+  logo?: Maybe<Scalars['URL']>;
+  name: Scalars['String'];
+  originCountry: Scalars['String'];
 };
 
 
-export type PosteroriginalArgs = {
-  base64?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Palette>;
-  svg?: InputMaybe<Scalars['Boolean']>;
+export type ProductionCompanydiscoverArgs = {
+  input?: InputMaybe<DiscoverInput>;
 };
 
 
-export type PostersvgArgs = {
-  base64?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Palette>;
-  size?: InputMaybe<Scalars['String']>;
+export type ProductionCompanylogoArgs = {
+  size: LogoSize;
+};
+
+export type ProductionCountry = {
+  __typename?: 'ProductionCountry';
+  iso3166_1: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export enum ProfileSize {
+  H632 = 'H632',
+  Original = 'Original',
+  W45 = 'W45',
+  W185 = 'W185'
+}
+
+export type ProfileSizeDetailImage = {
+  __typename?: 'ProfileSizeDetailImage';
+  aspectRatio: Scalars['Float'];
+  height: Scalars['Int'];
+  image: Scalars['URL'];
+  iso639_1?: Maybe<Scalars['String']>;
+  voteAverage: Scalars['Float'];
+  voteCount: Scalars['Int'];
+  width: Scalars['Int'];
+};
+
+
+export type ProfileSizeDetailImageimageArgs = {
+  size: ProfileSize;
 };
 
 export type Query = {
   __typename?: 'Query';
-  airingThisWeek: Array<TV>;
-  airingToday: Array<TV>;
-  collection: Collection;
-  countries: Array<Country>;
-  discoverMovies: Array<Movie>;
-  discoverTV: Array<TV>;
-  jobs: Array<Job>;
-  languages: Array<Language>;
-  latestMovie: Movie;
-  latestPerson: Person;
-  latestTV: TV;
-  movie: Movie;
-  movieGenres: Array<Genre>;
-  movies: Array<Movie>;
-  nowPlaying: Array<Movie>;
-  people: Array<Person>;
-  person: Person;
-  popularMovies: Array<Movie>;
-  popularPeople: Array<Person>;
-  popularTV: Array<TV>;
-  review: Review;
-  reviews: Array<Review>;
-  search: Array<SearchResult>;
-  searchMovies: Array<Movie>;
-  searchPeople: Array<Person>;
-  searchTV: Array<TV>;
-  shows: Array<TV>;
-  timezones: Array<Timezone>;
-  topRatedMovies: Array<Movie>;
-  topRatedTV: Array<TV>;
-  trending: Array<SearchResult>;
-  trendingMovies: Array<Movie>;
-  trendingPeople: Array<Person>;
-  trendingTV: Array<TV>;
+  discover: Discover;
+  find: FromExternalIds;
+  genres: Genres;
+  movies: Movies;
+  /** Fetches an object given its ID */
+  node?: Maybe<Node>;
+  people: People;
+  search: MovieOrTVOrPeopleConnection;
+  streaming: Streaming;
+  trending: MovieOrTVOrPeopleConnection;
   tv: TV;
-  tvGenres: Array<Genre>;
-  upcomingMovies: Array<Movie>;
 };
 
 
-export type QueryairingThisWeekArgs = {
-  language?: InputMaybe<Translations>;
-  page?: InputMaybe<Scalars['PageRange']>;
+export type QuerydiscoverArgs = {
+  input?: InputMaybe<DiscoverInput>;
 };
 
 
-export type QueryairingTodayArgs = {
-  language?: InputMaybe<Translations>;
-  page?: InputMaybe<Scalars['PageRange']>;
+export type QueryfindArgs = {
+  externalId: Scalars['String'];
+  source: ExternalSource;
 };
 
 
-export type QuerycollectionArgs = {
+export type QuerynodeArgs = {
   id: Scalars['ID'];
-  language?: InputMaybe<Translations>;
-};
-
-
-export type QuerydiscoverMoviesArgs = {
-  filter?: InputMaybe<DiscoverMoviesFilter>;
-  language?: InputMaybe<Translations>;
-  page?: InputMaybe<Scalars['PageRange']>;
-  sortBy?: InputMaybe<DiscoverMoviesSortInput>;
-};
-
-
-export type QuerydiscoverTVArgs = {
-  filter?: InputMaybe<DiscoverTVFilter>;
-  language?: InputMaybe<Translations>;
-  page?: InputMaybe<Scalars['PageRange']>;
-  sortBy?: InputMaybe<DiscoverTVSortInput>;
-};
-
-
-export type QuerylatestMovieArgs = {
-  language?: InputMaybe<Translations>;
-};
-
-
-export type QuerylatestPersonArgs = {
-  language?: InputMaybe<Translations>;
-};
-
-
-export type QuerylatestTVArgs = {
-  language?: InputMaybe<Translations>;
-};
-
-
-export type QuerymovieArgs = {
-  id: Scalars['ID'];
-  language?: InputMaybe<Translations>;
-};
-
-
-export type QuerymovieGenresArgs = {
-  language?: InputMaybe<Translations>;
-};
-
-
-export type QuerymoviesArgs = {
-  ids?: InputMaybe<Array<Scalars['ID']>>;
-  language?: InputMaybe<Translations>;
-};
-
-
-export type QuerynowPlayingArgs = {
-  language?: InputMaybe<Translations>;
-  page?: InputMaybe<Scalars['PageRange']>;
-};
-
-
-export type QuerypeopleArgs = {
-  ids?: InputMaybe<Array<Scalars['ID']>>;
-  language?: InputMaybe<Translations>;
-};
-
-
-export type QuerypersonArgs = {
-  id: Scalars['ID'];
-  language?: InputMaybe<Translations>;
-};
-
-
-export type QuerypopularMoviesArgs = {
-  language?: InputMaybe<Translations>;
-  page?: InputMaybe<Scalars['PageRange']>;
-};
-
-
-export type QuerypopularPeopleArgs = {
-  language?: InputMaybe<Translations>;
-  page?: InputMaybe<Scalars['PageRange']>;
-};
-
-
-export type QuerypopularTVArgs = {
-  language?: InputMaybe<Translations>;
-  page?: InputMaybe<Scalars['PageRange']>;
-};
-
-
-export type QueryreviewArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type QueryreviewsArgs = {
-  ids?: InputMaybe<Array<Scalars['ID']>>;
 };
 
 
 export type QuerysearchArgs = {
-  language?: InputMaybe<Translations>;
-  page?: InputMaybe<Scalars['PageRange']>;
-  query: Scalars['String'];
-};
-
-
-export type QuerysearchMoviesArgs = {
-  language?: InputMaybe<Translations>;
-  page?: InputMaybe<Scalars['PageRange']>;
-  query: Scalars['String'];
-};
-
-
-export type QuerysearchPeopleArgs = {
-  language?: InputMaybe<Translations>;
-  page?: InputMaybe<Scalars['PageRange']>;
-  query: Scalars['String'];
-};
-
-
-export type QuerysearchTVArgs = {
-  language?: InputMaybe<Translations>;
-  page?: InputMaybe<Scalars['PageRange']>;
-  query: Scalars['String'];
-};
-
-
-export type QueryshowsArgs = {
-  ids?: InputMaybe<Array<Scalars['ID']>>;
-  language?: InputMaybe<Translations>;
-};
-
-
-export type QuerytopRatedMoviesArgs = {
-  language?: InputMaybe<Translations>;
-  page?: InputMaybe<Scalars['PageRange']>;
-};
-
-
-export type QuerytopRatedTVArgs = {
-  language?: InputMaybe<Translations>;
-  page?: InputMaybe<Scalars['PageRange']>;
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  term: Scalars['String'];
 };
 
 
 export type QuerytrendingArgs = {
-  page?: InputMaybe<Scalars['PageRange']>;
-  timeframe?: InputMaybe<TrendingTimeframe>;
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  timeWindow?: TimeWindow;
 };
 
-
-export type QuerytrendingMoviesArgs = {
-  page?: InputMaybe<Scalars['PageRange']>;
-  timeframe?: InputMaybe<TrendingTimeframe>;
+export type Review = {
+  __typename?: 'Review';
+  author: Scalars['String'];
+  content: Scalars['String'];
+  id: Scalars['String'];
+  url: Scalars['String'];
 };
 
-
-export type QuerytrendingPeopleArgs = {
-  page?: InputMaybe<Scalars['PageRange']>;
-  timeframe?: InputMaybe<TrendingTimeframe>;
+export type ReviewConnection = {
+  __typename?: 'ReviewConnection';
+  edges?: Maybe<Array<Maybe<ReviewEdge>>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
-
-export type QuerytrendingTVArgs = {
-  page?: InputMaybe<Scalars['PageRange']>;
-  timeframe?: InputMaybe<TrendingTimeframe>;
+export type ReviewEdge = {
+  __typename?: 'ReviewEdge';
+  cursor: Scalars['String'];
+  node?: Maybe<Review>;
 };
 
-
-export type QuerytvArgs = {
+export type Season = IStreamable & Node & {
+  __typename?: 'Season';
+  airDate?: Maybe<Scalars['Date']>;
+  credits: ICreditsWithPerson;
+  episode: Episode;
+  episodeCount: Scalars['Int'];
+  episodes: Array<Episode>;
+  externalIds: IExternalIDS;
+  /** The id of the object */
   id: Scalars['ID'];
-  language?: InputMaybe<Translations>;
+  images: MediaImages;
+  name: Scalars['String'];
+  overview?: Maybe<Scalars['String']>;
+  poster?: Maybe<Scalars['URL']>;
+  searchStreamingOptions: Array<StreamingResultForProvideer>;
+  seasonNumber: Scalars['Int'];
+  show: TVShow;
+  streamingOptions?: Maybe<Array<StreamingOption>>;
+  videos: Array<Video>;
 };
 
 
-export type QuerytvGenresArgs = {
-  language?: InputMaybe<Translations>;
+export type SeasonepisodeArgs = {
+  number: Scalars['Int'];
 };
 
 
-export type QueryupcomingMoviesArgs = {
-  language?: InputMaybe<Translations>;
-  page?: InputMaybe<Scalars['PageRange']>;
+export type SeasonposterArgs = {
+  size: PosterSize;
 };
 
-export enum ReleaseStatus {
-  Canceled = 'Canceled',
+
+export type SeasonsearchStreamingOptionsArgs = {
+  countries?: InputMaybe<Array<Scalars['ID']>>;
+  providers: Array<Scalars['ID']>;
+};
+
+
+export type SeasonstreamingOptionsArgs = {
+  country?: InputMaybe<Scalars['ID']>;
+};
+
+export type SpokenLanguage = {
+  __typename?: 'SpokenLanguage';
+  iso639_1: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export enum Status {
+  Cancelled = 'Cancelled',
   InProduction = 'InProduction',
   Planned = 'Planned',
   PostProduction = 'PostProduction',
@@ -879,419 +1061,600 @@ export enum ReleaseStatus {
   Rumored = 'Rumored'
 }
 
-export type ReleaseTypeInput = {
-  /** How to combine the Release Types list, default: OR */
-  logic?: InputMaybe<Logic>;
-  /** Duplicate Release Types will be filtered */
-  types?: InputMaybe<Array<ReleaseStatus>>;
-};
-
-export type Review = {
-  __typename?: 'Review';
-  author: Scalars['String'];
-  content: Scalars['String'];
-  id: Scalars['ID'];
-  language?: Maybe<Language>;
-  media: Media;
-  url: Scalars['URL'];
-};
-
-export type SearchResult = Movie | Person | TV;
-
-export type Season = {
-  __typename?: 'Season';
-  aired: Scalars['DateTime'];
-  cast: Array<Credit>;
-  crew: Array<Credit>;
-  episodeCount: Scalars['Int'];
-  episodes: Array<Episode>;
-  id: Scalars['ID'];
-  images: Array<Poster>;
-  name: Scalars['String'];
-  number: Scalars['Int'];
-  overview: Scalars['String'];
-  poster?: Maybe<Poster>;
-  series: TV;
-  videos: Array<Video>;
-};
-
-
-export type SeasoncastArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type SeasoncrewArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type SeasonvideosArgs = {
-  filter?: InputMaybe<VideoFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  language?: InputMaybe<Translations>;
-};
-
-export enum SeasonVideoType {
-  BehindtheScenes = 'BehindtheScenes',
-  Bloopers = 'Bloopers',
-  Clip = 'Clip',
-  Featurette = 'Featurette',
-  OpeningCredits = 'OpeningCredits',
-  Recap = 'Recap',
-  Teaser = 'Teaser',
-  Trailer = 'Trailer'
+export enum StillSize {
+  Original = 'Original',
+  W92 = 'W92',
+  W185 = 'W185',
+  W300 = 'W300'
 }
 
-export type SocialMedia = {
-  __typename?: 'SocialMedia';
-  facebook?: Maybe<Scalars['URL']>;
+export type StillSizeDetailImage = {
+  __typename?: 'StillSizeDetailImage';
+  aspectRatio: Scalars['Float'];
+  height: Scalars['Int'];
+  image: Scalars['URL'];
+  iso639_1?: Maybe<Scalars['String']>;
+  voteAverage: Scalars['Float'];
+  voteCount: Scalars['Int'];
+  width: Scalars['Int'];
+};
+
+
+export type StillSizeDetailImageimageArgs = {
+  size: StillSize;
+};
+
+export type Streamable = IStreamable & {
+  __typename?: 'Streamable';
+  searchStreamingOptions: Array<StreamingResultForProvideer>;
+  streamingOptions?: Maybe<Array<StreamingOption>>;
+};
+
+
+export type StreamablesearchStreamingOptionsArgs = {
+  countries?: InputMaybe<Array<Scalars['ID']>>;
+  providers: Array<Scalars['ID']>;
+};
+
+
+export type StreamablestreamingOptionsArgs = {
+  country?: InputMaybe<Scalars['ID']>;
+};
+
+export type Streaming = {
+  __typename?: 'Streaming';
+  allProviders: Array<StreamingProvider>;
+  countries: Array<StreamingCountry>;
+  myCountry?: Maybe<StreamingCountry>;
+  providers: Array<StreamingProvider>;
+};
+
+
+export type StreamingprovidersArgs = {
+  country?: InputMaybe<Scalars['ID']>;
+};
+
+export type StreamingCountry = Node & {
+  __typename?: 'StreamingCountry';
+  emoji: Scalars['String'];
+  /** The id of the object */
   id: Scalars['ID'];
-  imdb?: Maybe<Scalars['URL']>;
-  instagram?: Maybe<Scalars['URL']>;
-  twitter?: Maybe<Scalars['URL']>;
+  iso3166_2: Scalars['String'];
+  name: Scalars['String'];
 };
 
-export type Still = Image & {
-  __typename?: 'Still';
-  colors?: Maybe<ExtractedColors>;
-  custom?: Maybe<Scalars['URL']>;
-  file?: Maybe<Scalars['String']>;
-  /** w300 */
-  large?: Maybe<Scalars['URL']>;
-  /** w185 */
-  medium?: Maybe<Scalars['URL']>;
-  original?: Maybe<Scalars['URL']>;
-  /** w92 */
-  small?: Maybe<Scalars['URL']>;
-  svg?: Maybe<Scalars['URL']>;
+export type StreamingCountryOption = {
+  __typename?: 'StreamingCountryOption';
+  country: StreamingCountry;
+  option: StreamingOption;
+};
+
+export type StreamingLinks = {
+  __typename?: 'StreamingLinks';
+  androidTV?: Maybe<Scalars['URL']>;
+  fireTV?: Maybe<Scalars['URL']>;
+  tvOS?: Maybe<Scalars['URL']>;
+  web?: Maybe<Scalars['URL']>;
+};
+
+export enum StreamingMonetizationType {
+  Ads = 'Ads',
+  Buy = 'Buy',
+  Cinema = 'Cinema',
+  Flatrate = 'Flatrate',
+  Free = 'Free',
+  Rent = 'Rent'
+}
+
+export type StreamingOption = {
+  __typename?: 'StreamingOption';
+  bestOffering: StreamingOptionOffering;
+  offerings: Array<StreamingOptionOffering>;
+  provider?: Maybe<StreamingProvider>;
 };
 
 
-export type StillcustomArgs = {
-  base64?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Palette>;
-  size?: InputMaybe<Scalars['String']>;
-  svg?: InputMaybe<Scalars['Boolean']>;
+export type StreamingOptionproviderArgs = {
+  country?: InputMaybe<Scalars['ID']>;
+};
+
+export type StreamingOptionOffering = {
+  __typename?: 'StreamingOptionOffering';
+  links: StreamingLinks;
+  price?: Maybe<Price>;
+  resolution: VideoResolution;
+  type: StreamingMonetizationType;
+};
+
+export type StreamingOptions = {
+  country?: InputMaybe<Scalars['ID']>;
+  monetizationTypes?: InputMaybe<Array<StreamingMonetizationType>>;
+  streamingProviders: Array<Scalars['ID']>;
+};
+
+export type StreamingProvider = Node & {
+  __typename?: 'StreamingProvider';
+  iconURL: Scalars['URL'];
+  /** The id of the object */
+  id: Scalars['ID'];
+  monetizationTypes: Array<StreamingMonetizationType>;
+  name: Scalars['String'];
+  slug: Scalars['String'];
+};
+
+export type StreamingResultForProvideer = {
+  __typename?: 'StreamingResultForProvideer';
+  bestOption: StreamingCountryOption;
+  options: Array<StreamingCountryOption>;
+  provider?: Maybe<StreamingProvider>;
 };
 
 
-export type StilloriginalArgs = {
-  base64?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Palette>;
-  svg?: InputMaybe<Scalars['Boolean']>;
-};
-
-
-export type StillsvgArgs = {
-  base64?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Palette>;
-  size?: InputMaybe<Scalars['String']>;
+export type StreamingResultForProvideerproviderArgs = {
+  country?: InputMaybe<Scalars['ID']>;
 };
 
 export type TV = {
   __typename?: 'TV';
-  backdrop?: Maybe<Backdrop>;
-  cast: Array<Credit>;
-  country: Array<Country>;
-  createdBy: Array<Person>;
-  crew: Array<Credit>;
-  episodeCount: Scalars['Int'];
+  airingToday: TVShowConnection;
+  episode: Episode;
+  network: Network;
+  onTheAir: TVShowConnection;
+  popular: TVShowConnection;
+  search: TVShowConnection;
+  season: Season;
+  show: TVShow;
+  topRated: TVShowConnection;
+  trending: TVShowConnection;
+  upcoming: TVShowConnection;
+};
+
+
+export type TVairingTodayArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type TVepisodeArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type TVnetworkArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type TVonTheAirArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type TVpopularArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type TVsearchArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  term: Scalars['String'];
+};
+
+
+export type TVseasonArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type TVshowArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type TVtopRatedArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type TVtrendingArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  timeWindow?: TimeWindow;
+};
+
+
+export type TVupcomingArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+export type TVDiscoverInput = {
+  airDate?: InputMaybe<DiscoverDateFilter>;
+  firstAirDate?: InputMaybe<DiscoverDateFilter>;
+  networks?: InputMaybe<DiscoverIncludeFilter>;
+};
+
+export type TVShow = IStreamable & Node & {
+  __typename?: 'TVShow';
+  alternativeTitles: Array<AlternativeTitle>;
+  backdrop?: Maybe<Scalars['URL']>;
+  createdBy: Array<ICreditWithPerson>;
+  credits: ICreditsWithPerson;
+  episodeRunTime: Array<Scalars['Int']>;
   episodes: Array<Episode>;
-  firstAired: Scalars['DateTime'];
+  externalIds: FullExternalIDS;
+  firstAirDate?: Maybe<Scalars['Date']>;
   genres: Array<Genre>;
   homepage?: Maybe<Scalars['URL']>;
+  /** The id of the object */
   id: Scalars['ID'];
-  images: Array<MediaImage>;
+  images: MediaImages;
   inProduction: Scalars['Boolean'];
-  language: Language;
-  languages: Array<Language>;
-  lastAired: Scalars['DateTime'];
+  keywords: Array<Keyword>;
+  languages: Array<Scalars['String']>;
+  lastAirDate?: Maybe<Scalars['Date']>;
+  lastEpisodeToAir?: Maybe<Episode>;
   name: Scalars['String'];
   networks: Array<Network>;
+  nextEpisodeToAir?: Maybe<Episode>;
+  numberOfEpisodes: Scalars['Int'];
+  numberOfRatings: Scalars['Int'];
+  numberOfSeasons: Scalars['Int'];
+  originCountry: Array<Scalars['String']>;
+  originalLanguage: Scalars['String'];
   originalName: Scalars['String'];
   overview: Scalars['String'];
-  popularity: Scalars['Float'];
-  poster?: Maybe<Poster>;
-  productionCompanies: Array<Company>;
-  recommended: Array<TV>;
-  reviews: Array<Review>;
-  runtime: Array<Scalars['Int']>;
-  score: Scalars['Float'];
-  seasonCount: Scalars['Int'];
+  popularityIndex?: Maybe<Scalars['Float']>;
+  poster?: Maybe<Scalars['URL']>;
+  productionCompanies: Array<Network>;
+  rating: Scalars['Float'];
+  recommendations: TVShowConnection;
+  reviews: ReviewConnection;
+  searchStreamingOptions: Array<StreamingResultForProvideer>;
+  season: Season;
   seasons: Array<Season>;
-  similar: Array<TV>;
-  socialMedia?: Maybe<SocialMedia>;
-  status: TVStatus;
-  type: TVType;
+  similar: TVShowConnection;
+  status: Scalars['String'];
+  streamingOptions?: Maybe<Array<StreamingOption>>;
+  topRatedEpisode?: Maybe<Episode>;
+  translations: Array<TranslationWithTranslatedMovieInfo>;
+  type: Scalars['String'];
   videos: Array<Video>;
-  votes: Scalars['Int'];
 };
 
 
-export type TVcastArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
+export type TVShowbackdropArgs = {
+  size: BackdropSize;
 };
 
 
-export type TVcrewArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
+export type TVShowposterArgs = {
+  size: PosterSize;
 };
 
 
-export type TVrecommendedArgs = {
-  language?: InputMaybe<Translations>;
-  limit?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['PageRange']>;
-};
-
-
-export type TVreviewsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['PageRange']>;
-};
-
-
-export type TVsimilarArgs = {
-  language?: InputMaybe<Translations>;
-  limit?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['PageRange']>;
-};
-
-
-export type TVvideosArgs = {
-  filter?: InputMaybe<VideoFilter>;
+export type TVShowrecommendationsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
-  language?: InputMaybe<Translations>;
+  last?: InputMaybe<Scalars['Int']>;
 };
 
-export enum TVStatus {
-  Canceled = 'Canceled',
-  Ended = 'Ended',
-  InProduction = 'InProduction',
-  Pilot = 'Pilot',
-  Planned = 'Planned',
-  ReturningSeries = 'ReturningSeries'
-}
 
-export enum TVType {
-  Documentary = 'Documentary',
-  Miniseries = 'Miniseries',
-  News = 'News',
-  Reality = 'Reality',
-  Scripted = 'Scripted',
-  TalkShow = 'TalkShow'
-}
-
-export enum TVVideoType {
-  BehindtheScenes = 'BehindtheScenes',
-  Bloopers = 'Bloopers',
-  Clip = 'Clip',
-  Featurette = 'Featurette',
-  OpeningCredits = 'OpeningCredits',
-  Teaser = 'Teaser',
-  Trailer = 'Trailer'
-}
-
-export type Timezone = {
-  __typename?: 'Timezone';
-  code: Scalars['String'];
-  zone: Scalars['String'];
+export type TVShowreviewsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
 };
 
-export enum Translations {
-  Bangla = 'Bangla',
-  Basque = 'Basque',
-  BokmalNorwegian = 'BokmalNorwegian',
-  BrazilianPortuguese = 'BrazilianPortuguese',
-  Bulgarian = 'Bulgarian',
-  CanadianFrench = 'CanadianFrench',
-  Catalan = 'Catalan',
-  Chamorro = 'Chamorro',
-  ChineseSimplified = 'ChineseSimplified',
-  ChineseTraditional = 'ChineseTraditional',
-  Czech = 'Czech',
-  Danish = 'Danish',
-  Dutch = 'Dutch',
-  English = 'English',
-  Esperanto = 'Esperanto',
-  Farsi = 'Farsi',
-  Finnish = 'Finnish',
-  French = 'French',
-  Georgian = 'Georgian',
-  German = 'German',
-  Greek = 'Greek',
-  Hebrew = 'Hebrew',
-  Hindi = 'Hindi',
-  Hungarian = 'Hungarian',
-  Indonesian = 'Indonesian',
-  Italian = 'Italian',
-  Japanese = 'Japanese',
-  Kannada = 'Kannada',
-  Korean = 'Korean',
-  Lithuanian = 'Lithuanian',
-  Malayalam = 'Malayalam',
-  MexicanSpanish = 'MexicanSpanish',
-  Norwegian = 'Norwegian',
-  Polish = 'Polish',
-  Portuguese = 'Portuguese',
-  Romanian = 'Romanian',
-  Russian = 'Russian',
-  SaudiArabianArabic = 'SaudiArabianArabic',
-  Serbian = 'Serbian',
-  Slovak = 'Slovak',
-  Slovenian = 'Slovenian',
-  Spanish = 'Spanish',
-  Swedish = 'Swedish',
-  Tamil = 'Tamil',
-  Telugu = 'Telugu',
-  Thai = 'Thai',
-  Turkish = 'Turkish',
-  UAEArabic = 'UAEArabic',
-  Ukrainian = 'Ukrainian',
-  Vietnamese = 'Vietnamese'
-}
 
-export enum TrendingTimeframe {
+export type TVShowsearchStreamingOptionsArgs = {
+  countries?: InputMaybe<Array<Scalars['ID']>>;
+  providers: Array<Scalars['ID']>;
+};
+
+
+export type TVShowseasonArgs = {
+  number: Scalars['Int'];
+};
+
+
+export type TVShowsimilarArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type TVShowstreamingOptionsArgs = {
+  country?: InputMaybe<Scalars['ID']>;
+};
+
+export type TVShowConnection = {
+  __typename?: 'TVShowConnection';
+  edges?: Maybe<Array<Maybe<TVShowEdge>>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type TVShowEdge = {
+  __typename?: 'TVShowEdge';
+  cursor: Scalars['String'];
+  node?: Maybe<TVShow>;
+};
+
+export type TaggedImage = {
+  __typename?: 'TaggedImage';
+  image: AnyImage;
+  media: MovieOrTV;
+};
+
+export type TaggedImageConnection = {
+  __typename?: 'TaggedImageConnection';
+  edges?: Maybe<Array<Maybe<TaggedImageEdge>>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type TaggedImageEdge = {
+  __typename?: 'TaggedImageEdge';
+  cursor: Scalars['String'];
+  node?: Maybe<TaggedImage>;
+};
+
+export enum TimeWindow {
   Day = 'Day',
   Week = 'Week'
 }
 
+export type TranslatedMovieInfo = {
+  __typename?: 'TranslatedMovieInfo';
+  overview: Scalars['String'];
+  title: Scalars['String'];
+};
+
+export type TranslatedPersonInfo = {
+  __typename?: 'TranslatedPersonInfo';
+  biography: Scalars['String'];
+};
+
+export type TranslationWithTranslatedMovieInfo = {
+  __typename?: 'TranslationWithTranslatedMovieInfo';
+  info: TranslatedMovieInfo;
+  iso639_1: Scalars['String'];
+  iso3166_1: Scalars['String'];
+  language?: Maybe<Scalars['String']>;
+  localizedLanguage?: Maybe<Scalars['String']>;
+};
+
+export type TranslationWithTranslatedPersonInfo = {
+  __typename?: 'TranslationWithTranslatedPersonInfo';
+  info: TranslatedPersonInfo;
+  iso639_1: Scalars['String'];
+  iso3166_1: Scalars['String'];
+  language?: Maybe<Scalars['String']>;
+  localizedLanguage?: Maybe<Scalars['String']>;
+};
+
 export type Video = {
   __typename?: 'Video';
-  country: Country;
-  id: Scalars['ID'];
+  id: Scalars['String'];
+  iso639_1: Scalars['String'];
+  iso3166_1: Scalars['String'];
   key: Scalars['String'];
-  language: Language;
+  links?: Maybe<StreamingLinks>;
   name: Scalars['String'];
   site: Scalars['String'];
-  /** One of value: 360, 480, 720, 1080 */
   size: Scalars['Int'];
-  type: VideoType;
+  thumbnail?: Maybe<Scalars['URL']>;
+  type: Scalars['String'];
 };
 
-export type VideoFilter = {
-  site?: InputMaybe<Array<Scalars['String']>>;
-  type?: InputMaybe<Array<VideoType>>;
-};
-
-export enum VideoType {
-  BehindtheScenes = 'BehindtheScenes',
-  Bloopers = 'Bloopers',
-  Clip = 'Clip',
-  Featurette = 'Featurette',
-  OpeningCredits = 'OpeningCredits',
-  Recap = 'Recap',
-  Teaser = 'Teaser',
-  Trailer = 'Trailer'
+export enum VideoResolution {
+  Bluray = 'Bluray',
+  Dvd = 'Dvd',
+  Hd = 'Hd',
+  Sd = 'Sd',
+  Theatre = 'Theatre',
+  UltraHd = 'UltraHd'
 }
 
-/** Used to filter User Scores by Average Votes */
-export type VoteAverageInput = {
-  /** Integer between 1 and 10 */
-  max?: InputMaybe<Scalars['ScoreMaximumRange']>;
-  /** Integer between 0 and 10 */
-  min?: InputMaybe<Scalars['ScoreMinimumRange']>;
-};
+export type CastMinFragment = { __typename?: 'CastCreditWithPerson', id: string, character: string, value: { __typename?: 'Person', id: string, name: string, profilePicture?: any | null } };
+
+export type CrewMinFragment = { __typename?: 'CrewCreditWithPerson', department: string, job: string, id: string, value: { __typename?: 'Person', id: string, name: string, profilePicture?: any | null } };
+
+export type MovieFragment = { __typename?: 'Movie', id: string, title: string, overview: string, tagline: string, releaseDate?: any | null, rating: number, posterLarge?: any | null, backdropLarge?: any | null, credits: { __typename?: 'CreditsWithPerson', cast: Array<{ __typename?: 'CastCreditWithPerson', id: string, character: string, value: { __typename?: 'Person', id: string, name: string, profilePicture?: any | null } }>, crew: Array<{ __typename?: 'CrewCreditWithPerson', department: string, job: string, id: string, value: { __typename?: 'Person', id: string, name: string, profilePicture?: any | null } }> } | { __typename?: 'EpisodeCreditsWithPerson', cast: Array<{ __typename?: 'CastCreditWithPerson', id: string, character: string, value: { __typename?: 'Person', id: string, name: string, profilePicture?: any | null } }>, crew: Array<{ __typename?: 'CrewCreditWithPerson', department: string, job: string, id: string, value: { __typename?: 'Person', id: string, name: string, profilePicture?: any | null } }> }, genres: Array<{ __typename?: 'Genre', id: string, name: string }> };
+
+export type MovieConnectionInfoFragment = { __typename?: 'MovieConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null } };
+
+export type MovieConnectionMinFragment = { __typename?: 'MovieConnection', totalCount: number, edges?: Array<{ __typename?: 'MovieEdge', node?: { __typename?: 'Movie', id: string, title: string, overview: string, releaseDate?: any | null, rating: number, posterMedium?: any | null, genres: Array<{ __typename?: 'Genre', id: string, name: string }> } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null } };
+
+export type MovieMinFragment = { __typename?: 'Movie', id: string, title: string, overview: string, releaseDate?: any | null, rating: number, posterMedium?: any | null, genres: Array<{ __typename?: 'Genre', id: string, name: string }> };
 
 export type FetchPopularMoviesQueryVariables = Exact<{
-  page?: InputMaybe<Scalars['PageRange']>;
+  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type FetchPopularMoviesQuery = { __typename?: 'Query', movies: Array<{ __typename?: 'Movie', id: string, name: string, overview: string, releaseDate?: any | null, score: number, genres: Array<{ __typename?: 'Genre', id: string, name: string }>, poster?: { __typename?: 'Poster', small?: any | null, medium?: any | null, large?: any | null, huge?: any | null } | null }> };
+export type FetchPopularMoviesQuery = { __typename?: 'Query', movies: { __typename?: 'Movies', popular: { __typename?: 'MovieConnection', totalCount: number, edges?: Array<{ __typename?: 'MovieEdge', node?: { __typename?: 'Movie', id: string, title: string, overview: string, releaseDate?: any | null, rating: number, posterMedium?: any | null, genres: Array<{ __typename?: 'Genre', id: string, name: string }> } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null } } } };
 
-export type FetchUpcomingMoviesQueryVariables = Exact<{ [key: string]: never; }>;
+export type FetchUpcomingMoviesQueryVariables = Exact<{
+  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']>;
+}>;
 
 
-export type FetchUpcomingMoviesQuery = { __typename?: 'Query', movies: Array<{ __typename?: 'Movie', id: string, name: string, overview: string, releaseDate?: any | null, score: number, genres: Array<{ __typename?: 'Genre', id: string, name: string }>, poster?: { __typename?: 'Poster', small?: any | null, medium?: any | null, large?: any | null, huge?: any | null } | null }> };
+export type FetchUpcomingMoviesQuery = { __typename?: 'Query', movies: { __typename?: 'Movies', upcoming: { __typename?: 'MovieConnection', totalCount: number, edges?: Array<{ __typename?: 'MovieEdge', node?: { __typename?: 'Movie', id: string, title: string, overview: string, releaseDate?: any | null, rating: number, posterMedium?: any | null, genres: Array<{ __typename?: 'Genre', id: string, name: string }> } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null } } } };
 
 export type GetMovieQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetMovieQuery = { __typename?: 'Query', movie: { __typename?: 'Movie', id: string, name: string, overview: string, tagline?: string | null, releaseDate?: any | null, score: number, cast: Array<{ __typename?: 'Credit', id: string, person?: { __typename?: 'Person', name: string } | null, role: { __typename?: 'Cast', character: string } | { __typename?: 'Crew' } }>, poster?: { __typename?: 'Poster', large?: any | null } | null, backdrop?: { __typename?: 'Backdrop', medium?: any | null, large?: any | null } | null, genres: Array<{ __typename?: 'Genre', id: string, name: string }> } };
+export type GetMovieQuery = { __typename?: 'Query', movies: { __typename?: 'Movies', movie: { __typename?: 'Movie', id: string, title: string, overview: string, tagline: string, releaseDate?: any | null, rating: number, posterLarge?: any | null, backdropLarge?: any | null, credits: { __typename?: 'CreditsWithPerson', cast: Array<{ __typename?: 'CastCreditWithPerson', id: string, character: string, value: { __typename?: 'Person', id: string, name: string, profilePicture?: any | null } }>, crew: Array<{ __typename?: 'CrewCreditWithPerson', department: string, job: string, id: string, value: { __typename?: 'Person', id: string, name: string, profilePicture?: any | null } }> } | { __typename?: 'EpisodeCreditsWithPerson', cast: Array<{ __typename?: 'CastCreditWithPerson', id: string, character: string, value: { __typename?: 'Person', id: string, name: string, profilePicture?: any | null } }>, crew: Array<{ __typename?: 'CrewCreditWithPerson', department: string, job: string, id: string, value: { __typename?: 'Person', id: string, name: string, profilePicture?: any | null } }> }, genres: Array<{ __typename?: 'Genre', id: string, name: string }> } } };
 
-export type GetRelatedMoviesQueryVariables = Exact<{
+export type GetRecommendedMoviesQueryVariables = Exact<{
   id: Scalars['ID'];
-  page?: InputMaybe<Scalars['PageRange']>;
-  limit?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type GetRelatedMoviesQuery = { __typename?: 'Query', movie: { __typename?: 'Movie', id: string, name: string, recommended: Array<{ __typename?: 'Movie', id: string, name: string, overview: string, releaseDate?: any | null, score: number, genres: Array<{ __typename?: 'Genre', id: string, name: string }>, poster?: { __typename?: 'Poster', small?: any | null, medium?: any | null, large?: any | null, huge?: any | null } | null }> } };
+export type GetRecommendedMoviesQuery = { __typename?: 'Query', movies: { __typename?: 'Movies', movie: { __typename?: 'Movie', id: string, title: string, recommendations: { __typename?: 'MovieConnection', totalCount: number, edges?: Array<{ __typename?: 'MovieEdge', node?: { __typename?: 'Movie', id: string, title: string, overview: string, releaseDate?: any | null, rating: number, posterMedium?: any | null, genres: Array<{ __typename?: 'Genre', id: string, name: string }> } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null } } } } };
 
-export type MovieDataFragment = { __typename?: 'Movie', id: string, name: string, overview: string, tagline?: string | null, releaseDate?: any | null, score: number, cast: Array<{ __typename?: 'Credit', id: string, person?: { __typename?: 'Person', name: string } | null, role: { __typename?: 'Cast', character: string } | { __typename?: 'Crew' } }>, poster?: { __typename?: 'Poster', large?: any | null } | null, backdrop?: { __typename?: 'Backdrop', medium?: any | null, large?: any | null } | null, genres: Array<{ __typename?: 'Genre', id: string, name: string }> };
+export type GetSimilarMoviesQueryVariables = Exact<{
+  id: Scalars['ID'];
+  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']>;
+}>;
 
-export type MovieResultsFragment = { __typename?: 'Movie', id: string, name: string, overview: string, releaseDate?: any | null, score: number, genres: Array<{ __typename?: 'Genre', id: string, name: string }>, poster?: { __typename?: 'Poster', small?: any | null, medium?: any | null, large?: any | null, huge?: any | null } | null };
+
+export type GetSimilarMoviesQuery = { __typename?: 'Query', movies: { __typename?: 'Movies', movie: { __typename?: 'Movie', id: string, title: string, similar: { __typename?: 'MovieConnection', totalCount: number, edges?: Array<{ __typename?: 'MovieEdge', node?: { __typename?: 'Movie', id: string, title: string, overview: string, releaseDate?: any | null, rating: number, posterMedium?: any | null, genres: Array<{ __typename?: 'Genre', id: string, name: string }> } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null } } } } };
 
 export type SearchMoviesQueryVariables = Exact<{
-  query: Scalars['String'];
+  term: Scalars['String'];
+  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type SearchMoviesQuery = { __typename?: 'Query', searchMovies: Array<{ __typename?: 'Movie', id: string, name: string, overview: string, releaseDate?: any | null, score: number, genres: Array<{ __typename?: 'Genre', id: string, name: string }>, poster?: { __typename?: 'Poster', small?: any | null, medium?: any | null, large?: any | null, huge?: any | null } | null }> };
+export type SearchMoviesQuery = { __typename?: 'Query', movies: { __typename?: 'Movies', search: { __typename?: 'MovieConnection', totalCount: number, edges?: Array<{ __typename?: 'MovieEdge', node?: { __typename?: 'Movie', id: string, title: string, overview: string, releaseDate?: any | null, rating: number, posterMedium?: any | null, genres: Array<{ __typename?: 'Genre', id: string, name: string }> } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null } } } };
 
-export const MovieDataFragmentDoc = gql`
-    fragment MovieData on Movie {
+export const CastMinFragmentDoc = gql`
+    fragment CastMin on CastCreditWithPerson {
   id
-  name
+  character
+  value {
+    id
+    name
+    profilePicture: profilePicture(size: W185)
+  }
+}
+    `;
+export const CrewMinFragmentDoc = gql`
+    fragment CrewMin on CrewCreditWithPerson {
+  department
+  job
+  id
+  value {
+    id
+    name
+    profilePicture: profilePicture(size: W185)
+  }
+}
+    `;
+export const MovieFragmentDoc = gql`
+    fragment Movie on Movie {
+  id
+  title
   overview
   tagline
-  cast(limit: 5) {
-    id
-    person {
-      name
+  releaseDate
+  rating
+  posterLarge: poster(size: W500)
+  backdropLarge: backdrop(size: W1280)
+  credits {
+    cast {
+      ...CastMin
     }
-    role {
-      ... on Cast {
-        character
+    crew {
+      ...CrewMin
+    }
+  }
+  genres {
+    id
+    name
+  }
+}
+    ${CastMinFragmentDoc}
+${CrewMinFragmentDoc}`;
+export const MovieConnectionInfoFragmentDoc = gql`
+    fragment MovieConnectionInfo on MovieConnection {
+  totalCount
+  pageInfo {
+    endCursor
+    hasNextPage
+    hasPreviousPage
+    startCursor
+  }
+}
+    `;
+export const MovieMinFragmentDoc = gql`
+    fragment MovieMin on Movie {
+  id
+  title
+  overview
+  releaseDate
+  rating
+  genres {
+    id
+    name
+  }
+  posterMedium: poster(size: W342)
+}
+    `;
+export const MovieConnectionMinFragmentDoc = gql`
+    fragment MovieConnectionMin on MovieConnection {
+  ...MovieConnectionInfo
+  edges {
+    node {
+      ... on Movie {
+        ...MovieMin
       }
     }
   }
-  poster {
-    large
-  }
-  backdrop {
-    medium
-    large
-  }
-  genres {
-    id
-    name
-  }
-  releaseDate
-  score
 }
-    `;
-export const MovieResultsFragmentDoc = gql`
-    fragment MovieResults on Movie {
-  id
-  name
-  overview
-  releaseDate
-  score
-  overview
-  genres {
-    id
-    name
-  }
-  poster {
-    small
-    medium
-    large
-    huge
-  }
-}
-    `;
+    ${MovieConnectionInfoFragmentDoc}
+${MovieMinFragmentDoc}`;
 export const FetchPopularMoviesDocument = gql`
-    query FetchPopularMovies($page: PageRange) {
-  movies: popularMovies(page: $page) {
-    ...MovieResults
+    query FetchPopularMovies($last: Int, $after: String, $first: Int, $before: String) {
+  movies {
+    popular(last: $last, after: $after, first: $first, before: $before) {
+      ...MovieConnectionInfo
+      edges {
+        node {
+          ... on Movie {
+            ...MovieMin
+          }
+        }
+      }
+    }
   }
 }
-    ${MovieResultsFragmentDoc}`;
+    ${MovieConnectionInfoFragmentDoc}
+${MovieMinFragmentDoc}`;
 
 /**
  * __useFetchPopularMoviesQuery__
@@ -1305,7 +1668,10 @@ export const FetchPopularMoviesDocument = gql`
  * @example
  * const { data, loading, error } = useFetchPopularMoviesQuery({
  *   variables: {
- *      page: // value for 'page'
+ *      last: // value for 'last'
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      before: // value for 'before'
  *   },
  * });
  */
@@ -1321,12 +1687,22 @@ export type FetchPopularMoviesQueryHookResult = ReturnType<typeof useFetchPopula
 export type FetchPopularMoviesLazyQueryHookResult = ReturnType<typeof useFetchPopularMoviesLazyQuery>;
 export type FetchPopularMoviesQueryResult = Apollo.QueryResult<FetchPopularMoviesQuery, FetchPopularMoviesQueryVariables>;
 export const FetchUpcomingMoviesDocument = gql`
-    query FetchUpcomingMovies {
-  movies: upcomingMovies {
-    ...MovieResults
+    query FetchUpcomingMovies($last: Int, $after: String, $first: Int, $before: String) {
+  movies {
+    upcoming(last: $last, after: $after, first: $first, before: $before) {
+      ...MovieConnectionInfo
+      edges {
+        node {
+          ... on Movie {
+            ...MovieMin
+          }
+        }
+      }
+    }
   }
 }
-    ${MovieResultsFragmentDoc}`;
+    ${MovieConnectionInfoFragmentDoc}
+${MovieMinFragmentDoc}`;
 
 /**
  * __useFetchUpcomingMoviesQuery__
@@ -1340,6 +1716,10 @@ export const FetchUpcomingMoviesDocument = gql`
  * @example
  * const { data, loading, error } = useFetchUpcomingMoviesQuery({
  *   variables: {
+ *      last: // value for 'last'
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      before: // value for 'before'
  *   },
  * });
  */
@@ -1356,11 +1736,13 @@ export type FetchUpcomingMoviesLazyQueryHookResult = ReturnType<typeof useFetchU
 export type FetchUpcomingMoviesQueryResult = Apollo.QueryResult<FetchUpcomingMoviesQuery, FetchUpcomingMoviesQueryVariables>;
 export const GetMovieDocument = gql`
     query GetMovie($id: ID!) {
-  movie(id: $id) {
-    ...MovieData
+  movies {
+    movie(id: $id) {
+      ...Movie
+    }
   }
 }
-    ${MovieDataFragmentDoc}`;
+    ${MovieFragmentDoc}`;
 
 /**
  * __useGetMovieQuery__
@@ -1389,54 +1771,113 @@ export function useGetMovieLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetMovieQueryHookResult = ReturnType<typeof useGetMovieQuery>;
 export type GetMovieLazyQueryHookResult = ReturnType<typeof useGetMovieLazyQuery>;
 export type GetMovieQueryResult = Apollo.QueryResult<GetMovieQuery, GetMovieQueryVariables>;
-export const GetRelatedMoviesDocument = gql`
-    query GetRelatedMovies($id: ID!, $page: PageRange, $limit: Int) {
-  movie(id: $id) {
-    id
-    name
-    recommended(page: $page, limit: $limit) {
-      ...MovieResults
+export const GetRecommendedMoviesDocument = gql`
+    query GetRecommendedMovies($id: ID!, $last: Int, $after: String, $first: Int, $before: String) {
+  movies {
+    movie(id: $id) {
+      id
+      title
+      recommendations(last: $last, after: $after, first: $first, before: $before) @connection(key: $id) {
+        ...MovieConnectionMin
+      }
     }
   }
 }
-    ${MovieResultsFragmentDoc}`;
+    ${MovieConnectionMinFragmentDoc}`;
 
 /**
- * __useGetRelatedMoviesQuery__
+ * __useGetRecommendedMoviesQuery__
  *
- * To run a query within a React component, call `useGetRelatedMoviesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetRelatedMoviesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetRecommendedMoviesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRecommendedMoviesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetRelatedMoviesQuery({
+ * const { data, loading, error } = useGetRecommendedMoviesQuery({
  *   variables: {
  *      id: // value for 'id'
- *      page: // value for 'page'
- *      limit: // value for 'limit'
+ *      last: // value for 'last'
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      before: // value for 'before'
  *   },
  * });
  */
-export function useGetRelatedMoviesQuery(baseOptions: Apollo.QueryHookOptions<GetRelatedMoviesQuery, GetRelatedMoviesQueryVariables>) {
+export function useGetRecommendedMoviesQuery(baseOptions: Apollo.QueryHookOptions<GetRecommendedMoviesQuery, GetRecommendedMoviesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetRelatedMoviesQuery, GetRelatedMoviesQueryVariables>(GetRelatedMoviesDocument, options);
+        return Apollo.useQuery<GetRecommendedMoviesQuery, GetRecommendedMoviesQueryVariables>(GetRecommendedMoviesDocument, options);
       }
-export function useGetRelatedMoviesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRelatedMoviesQuery, GetRelatedMoviesQueryVariables>) {
+export function useGetRecommendedMoviesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRecommendedMoviesQuery, GetRecommendedMoviesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetRelatedMoviesQuery, GetRelatedMoviesQueryVariables>(GetRelatedMoviesDocument, options);
+          return Apollo.useLazyQuery<GetRecommendedMoviesQuery, GetRecommendedMoviesQueryVariables>(GetRecommendedMoviesDocument, options);
         }
-export type GetRelatedMoviesQueryHookResult = ReturnType<typeof useGetRelatedMoviesQuery>;
-export type GetRelatedMoviesLazyQueryHookResult = ReturnType<typeof useGetRelatedMoviesLazyQuery>;
-export type GetRelatedMoviesQueryResult = Apollo.QueryResult<GetRelatedMoviesQuery, GetRelatedMoviesQueryVariables>;
-export const SearchMoviesDocument = gql`
-    query SearchMovies($query: String!) {
-  searchMovies(query: $query) {
-    ...MovieResults
+export type GetRecommendedMoviesQueryHookResult = ReturnType<typeof useGetRecommendedMoviesQuery>;
+export type GetRecommendedMoviesLazyQueryHookResult = ReturnType<typeof useGetRecommendedMoviesLazyQuery>;
+export type GetRecommendedMoviesQueryResult = Apollo.QueryResult<GetRecommendedMoviesQuery, GetRecommendedMoviesQueryVariables>;
+export const GetSimilarMoviesDocument = gql`
+    query GetSimilarMovies($id: ID!, $last: Int, $after: String, $first: Int, $before: String) {
+  movies {
+    movie(id: $id) {
+      id
+      title
+      similar(last: $last, after: $after, first: $first, before: $before) @connection(key: $id) {
+        ...MovieConnectionMin
+      }
+    }
   }
 }
-    ${MovieResultsFragmentDoc}`;
+    ${MovieConnectionMinFragmentDoc}`;
+
+/**
+ * __useGetSimilarMoviesQuery__
+ *
+ * To run a query within a React component, call `useGetSimilarMoviesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSimilarMoviesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSimilarMoviesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      last: // value for 'last'
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      before: // value for 'before'
+ *   },
+ * });
+ */
+export function useGetSimilarMoviesQuery(baseOptions: Apollo.QueryHookOptions<GetSimilarMoviesQuery, GetSimilarMoviesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSimilarMoviesQuery, GetSimilarMoviesQueryVariables>(GetSimilarMoviesDocument, options);
+      }
+export function useGetSimilarMoviesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSimilarMoviesQuery, GetSimilarMoviesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSimilarMoviesQuery, GetSimilarMoviesQueryVariables>(GetSimilarMoviesDocument, options);
+        }
+export type GetSimilarMoviesQueryHookResult = ReturnType<typeof useGetSimilarMoviesQuery>;
+export type GetSimilarMoviesLazyQueryHookResult = ReturnType<typeof useGetSimilarMoviesLazyQuery>;
+export type GetSimilarMoviesQueryResult = Apollo.QueryResult<GetSimilarMoviesQuery, GetSimilarMoviesQueryVariables>;
+export const SearchMoviesDocument = gql`
+    query SearchMovies($term: String!, $last: Int, $after: String, $first: Int, $before: String) {
+  movies {
+    search(term: $term, last: $last, after: $after, first: $first, before: $before) {
+      ...MovieConnectionInfo
+      edges {
+        node {
+          ... on Movie {
+            ...MovieMin
+          }
+        }
+      }
+    }
+  }
+}
+    ${MovieConnectionInfoFragmentDoc}
+${MovieMinFragmentDoc}`;
 
 /**
  * __useSearchMoviesQuery__
@@ -1450,7 +1891,11 @@ export const SearchMoviesDocument = gql`
  * @example
  * const { data, loading, error } = useSearchMoviesQuery({
  *   variables: {
- *      query: // value for 'query'
+ *      term: // value for 'term'
+ *      last: // value for 'last'
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      before: // value for 'before'
  *   },
  * });
  */

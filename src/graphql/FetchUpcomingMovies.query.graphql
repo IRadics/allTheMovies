@@ -1,5 +1,0 @@
-query FetchUpcomingMovies {
-  movies: upcomingMovies {
-    ...MovieResults
-  }
-}

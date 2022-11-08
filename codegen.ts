@@ -1,5 +1,8 @@
 import { CodegenConfig } from "@graphql-codegen/cli";
 
+import * as dotenv from "dotenv";
+dotenv.config();
+
 const config: CodegenConfig = {
   overwrite: true,
   config: {
@@ -10,7 +13,7 @@ const config: CodegenConfig = {
     },
     transformUnderscore: false,
   },
-  schema: "https://tmdb.sandbox.zoosh.ie/dev/grphql",
+  schema: process.env.REACT_APP_TMDB_GQL_URI,
   documents: "src/graphql/**/*.graphql",
   generates: {
     "./src/graphql/generated-types.ts": {

@@ -1,0 +1,9 @@
+fragment MovieConnectionInfo on MovieConnection {
+  totalCount
+  pageInfo {
+    endCursor
+    hasNextPage
+    hasPreviousPage
+    startCursor
+  }
+}

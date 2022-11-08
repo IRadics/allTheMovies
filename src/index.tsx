@@ -6,23 +6,33 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { PageSearchMovies } from "./pages/PageSearchMovies/PageSearchMovies";
 import { PageMovieInfo } from "./pages/PageMovieInfo/PageMovieInfo";
-import { PageListRelatedMovies } from "./pages/PageSearchRelatedMovies.tsx/PageListRelatedMovies";
+import { PageListRelatedMovies } from "./pages/PageSearchRelatedMovies/PageListRelatedMovies";
 import { PagePopularMovies } from "./pages/PagePopularMovies/PagePopularMovies";
 import { PageUpcomingMovies } from "./pages/PageUpcomingMovies/PageUpcomingMovies";
+import { unionBy } from "lodash";
 
 const apolloClient = new ApolloClient({
-  uri: "https://tmdb.sandbox.zoosh.ie/dev/grphql",
+  uri: process.env.REACT_APP_TMDB_GQL_URI,
   cache: new InMemoryCache({
     typePolicies: {
-      Poster: {
-        merge: true,
+      MovieConnection: {
+        fields: {
+          edges: {
+            //merge only unique movies
+            merge(existing = [], incoming: any[], { readField }) {
+              return unionBy(existing, incoming, (v) => {
+                return readField<string>("id", v["node"]);
+              });
+            },
+          },
+        },
       },
+      Movies: { merge: false },
       Movie: {
         keyFields: ["id"],
         fields: {
-          recommended: {
-            keyArgs: ["id"],
-          },
+          similar: { keyArgs: ["@connection", ["key"]], merge: true },
+          recommendations: { keyArgs: ["@connection", ["key"]], merge: true },
         },
       },
     },

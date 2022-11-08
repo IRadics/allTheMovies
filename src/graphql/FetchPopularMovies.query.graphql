@@ -1,5 +1,0 @@
-query FetchPopularMovies($page: PageRange) {
-  movies: popularMovies(page: $page) {
-    ...MovieResults
-  }
-}

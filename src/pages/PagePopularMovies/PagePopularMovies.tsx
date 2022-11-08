@@ -1,10 +1,14 @@
-import { useFetchPopularMoviesQuery } from "../../graphql/generated-types";
+import {
+  MovieMinFragment,
+  useFetchPopularMoviesQuery,
+} from "../../graphql/generated-types";
 import { LoadingAnimation } from "../../components/LoadingAnimation/LoadingAnimation";
 import { MoviesList } from "../../components/MoviesList/MoviesList";
 
 export const PagePopularMovies: React.FC = () => {
   const results = useFetchPopularMoviesQuery();
-  const isResultReturned = results.data && results.data.movies.length > 0;
+  const movies = results.data?.movies?.popular?.edges?.map((e) => e?.node);
+  const isResultReturned = movies && movies.length > 0;
 
   return (
     <>
@@ -13,7 +17,7 @@ export const PagePopularMovies: React.FC = () => {
         {isResultReturned && (
           <>
             <div className="pageHeadText">Popular movies</div>
-            <MoviesList list={results.data!.movies} />
+            <MoviesList list={movies as MovieMinFragment[]} />
           </>
         )}
         {!isResultReturned && !results.loading && (

@@ -1,8 +1,8 @@
 import { MoviesListRow } from "../MoviesListRow/MoviesListRow";
-import { MovieResultsFragment } from "../../graphql/generated-types";
+import { MovieMinFragment } from "../../graphql/generated-types";
 import "./MoviesList.css";
 
-export const MoviesList: React.FC<{ list: MovieResultsFragment[] }> = ({
+export const MoviesList: React.FC<{ list: MovieMinFragment[] }> = ({
   list,
 }) => {
   return (

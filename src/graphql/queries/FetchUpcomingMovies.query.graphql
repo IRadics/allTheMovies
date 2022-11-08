@@ -1,0 +1,19 @@
+query FetchUpcomingMovies(
+  $last: Int
+  $after: String
+  $first: Int
+  $before: String
+) {
+  movies {
+    upcoming(last: $last, after: $after, first: $first, before: $before) {
+      ...MovieConnectionInfo
+      edges {
+        node {
+          ... on Movie {
+            ...MovieMin
+          }
+        }
+      }
+    }
+  }
+}
