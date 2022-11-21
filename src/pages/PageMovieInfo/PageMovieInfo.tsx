@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 import { useBottomReached } from "../../hooks/useBottomReached";
 import ExtendingLineAnimation from "../../components/ExtendingLineAnimation/ExtendingLineAnimation";
 import MovieInfoHeader from "../../components/MovieInfoHeader/MovieInfoHeader";
-import getWikiImdb from "./getWikiImdb";
+import getWikiId from "./getWikiId";
 import { useWikiGetExtract } from "../../REST/wikipedia/hooks/useWikiGetExtract";
 
 export const PageMovieInfo: React.FC = () => {
@@ -22,7 +22,6 @@ export const PageMovieInfo: React.FC = () => {
 
   const fetchMoreDelay = 1500;
 
-  const [imdbUrl, setImdbUrl] = useState<string>("");
   const [wikiPageId, setWikiPageId] = useState<number | undefined>(undefined);
   const [fetchedExternalIds, setfetchedExternalIds] = useState<boolean>(false);
 
@@ -30,17 +29,16 @@ export const PageMovieInfo: React.FC = () => {
   useEffect(() => {
     setfetchedExternalIds(false);
     setWikiPageId(undefined);
-    setImdbUrl("");
   }, [movieId]);
 
   const getExternalInfo = (data: GetMovieQuery) => {
     const releaseDate = new Date(Date.parse(data.movies.movie.releaseDate));
-    getWikiImdb(
+    getWikiId(
       data.movies.movie.title,
       releaseDate.getFullYear(),
-      (wikiPageId, imdbUrl) => {
+      data.movies.movie.imdbID ? data.movies.movie.imdbID : "",
+      (wikiPageId) => {
         setfetchedExternalIds(true);
-        setImdbUrl(imdbUrl);
         setWikiPageId(wikiPageId);
       },
       () => {
@@ -87,7 +85,6 @@ export const PageMovieInfo: React.FC = () => {
     () => {
       relatedFetchmore({
         variables: {
-          /*           id: movieId!, */
           after: relatedNextCursor.current,
         },
       });
@@ -162,7 +159,6 @@ export const PageMovieInfo: React.FC = () => {
             <MovieInfoHeader
               movie={movie as MovieFragment}
               wikiPageId={wikiPageId ? wikiPageId : 0}
-              imdbUrl={imdbUrl}
             ></MovieInfoHeader>
             <div className="movieInfo-body">
               <div className="movieInfo-body-cast">

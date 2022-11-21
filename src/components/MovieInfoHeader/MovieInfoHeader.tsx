@@ -9,10 +9,9 @@ import "./MovieInfoHeader.css";
 
 const MovieInfoHeader: React.FC<{
   movie: MovieFragment;
-  imdbUrl: string;
   wikiPageId: number;
   className?: string;
-}> = ({ movie, imdbUrl, wikiPageId, className = "" }) => {
+}> = ({ movie, wikiPageId, className = "" }) => {
   const navigate = useNavigateIfNew();
 
   const releaseDate = new Date(Date.parse(movie.releaseDate));
@@ -32,9 +31,9 @@ const MovieInfoHeader: React.FC<{
         aria-label="outlined primary button group"
       >
         <Button
-          disabled={imdbUrl === ""}
+          disabled={!movie.imdbID}
           onClick={() => {
-            window.open(imdbUrl, "_blank");
+            window.open("https://imdb.com/title/" + movie.imdbID, "_blank");
           }}
         >
           IMDB

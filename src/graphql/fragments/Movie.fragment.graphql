@@ -5,6 +5,7 @@ fragment Movie on Movie {
   tagline
   releaseDate
   rating
+  imdbID
   posterLarge: poster(size: W500)
   backdropLarge: backdrop(size: W1280)
   credits {

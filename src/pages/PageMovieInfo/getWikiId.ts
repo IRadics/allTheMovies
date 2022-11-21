@@ -14,10 +14,11 @@ type WikiPageCandidate = {
   probability?: number;
 };
 
-export default function getWikiImdb(
+export default function getWikiId(
   searchTerm: string,
   releaseYear: number,
-  onSuccess: (wikiPageId: number, imdbUrl: string) => void,
+  imdbID: string,
+  onSuccess: (wikiPageId: number) => void,
   onError?: () => void
 ) {
   let candidates: WikiPageCandidate[] = [];
@@ -51,6 +52,9 @@ export default function getWikiImdb(
         action: "query",
         formatversion: "latest",
         pageids: pageIdsToSearch,
+        elprotocol: imdbID ? "https" : undefined,
+        elquery: imdbID ? `www.imdb.com/title/${imdbID}/` : undefined,
+        ellimit: 5,
       },
       handleWikiGetExtLinks,
       (e) => {
@@ -68,7 +72,7 @@ export default function getWikiImdb(
         .find((e) => e.includes("imdb.com/title/"));
 
       cand.probability =
-        ((cand.imdbLink ? 1 : 0) +
+        ((cand.imdbLink ? 1.5 : 0) +
           (cand.releaseDateFound ? 1 : 0) +
           Math.max(
             stringSimilarity(cand.title, searchTerm),
@@ -76,11 +80,10 @@ export default function getWikiImdb(
             stringSimilarity(cand.title + " (movie)", searchTerm),
             stringSimilarity(cand.title + ` ${releaseYear}`, searchTerm)
           ) *
-            1.5) /
+            1) /
         3.5;
     });
 
-    let imdbUrl = "";
     let wikiPageId = 0;
     candidates
       .sort((x, b) => {
@@ -88,13 +91,10 @@ export default function getWikiImdb(
       })
       .reverse();
     if (candidates[0].probability! > 0.65) {
-      if (candidates[0].imdbLink) {
-        imdbUrl = candidates[0].imdbLink;
-      }
       wikiPageId = candidates[0].pageId;
     }
 
-    onSuccess(wikiPageId, imdbUrl);
+    onSuccess(wikiPageId);
   };
 
   wikiSearch(
