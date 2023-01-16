@@ -5,6 +5,7 @@ import {
   WikipediaQueryError,
 } from "../types/wikipedia.types";
 import { WikipediaApiPropExtlinks } from "../types/wikipediaApi.interfaces";
+import FetchCache from "../../../utility/fetchCache";
 
 export default async function wikiGetExtLinks(
   params: WikipediaApiPropExtlinks,
@@ -19,8 +20,10 @@ export default async function wikiGetExtLinks(
 
   let data: WikipediaGetExtLinksResults = {};
 
+  const { fetchWithCache } = new FetchCache();
+
   const fetchQuery = async () => {
-    await fetch(
+    await fetchWithCache(
       parseWikiQueryParams("https://en.wikipedia.org/w/api.php?", params)
     )
       .then((response) => response.json())

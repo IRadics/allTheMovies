@@ -10,6 +10,14 @@ import { PageListRelatedMovies } from "./pages/PageSearchRelatedMovies/PageListR
 import { PagePopularMovies } from "./pages/PagePopularMovies/PagePopularMovies";
 import { PageUpcomingMovies } from "./pages/PageUpcomingMovies/PageUpcomingMovies";
 import { unionBy } from "lodash";
+import FetchCache from "./utility/fetchCache";
+import isPageAccessedByReload from "./utility/isPageAccessedByReload";
+
+//clear cache if reload has been used
+const cache = new FetchCache();
+if (isPageAccessedByReload()) {
+  cache.clearCache();
+}
 
 const apolloClient = new ApolloClient({
   uri: process.env.REACT_APP_TMDB_GQL_URI,
