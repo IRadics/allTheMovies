@@ -1,0 +1,24 @@
+fragment Movie on Movie {
+  id
+  title
+  overview
+  tagline
+  releaseDate
+  rating
+  imdbID
+  posterLarge: poster(size: W500)
+  backdropLarge: backdrop(size: W1280)
+  credits {
+    cast {
+      ...CastMin
+    }
+    crew {
+      ...CrewMin
+    }
+  }
+
+  genres {
+    id
+    name
+  }
+}

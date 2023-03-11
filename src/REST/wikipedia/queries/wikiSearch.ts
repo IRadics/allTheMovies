@@ -5,6 +5,7 @@ import {
   WikipediaSearchResults,
 } from "../types/wikipedia.types";
 import { WikipediaApiListSearch } from "../types/wikipediaApi.interfaces";
+import FetchCache from "../../../utility/fetchCache";
 
 export default async function wikiSearch(
   params: WikipediaApiListSearch,
@@ -15,8 +16,10 @@ export default async function wikiSearch(
 
   let data: WikipediaSearchResults = {};
 
+  const { fetchWithCache } = new FetchCache();
+
   const fetchQuery = async () => {
-    await fetch(
+    await fetchWithCache(
       parseWikiQueryParams("https://en.wikipedia.org/w/api.php?", params)
     )
       .then((response) => response.json())

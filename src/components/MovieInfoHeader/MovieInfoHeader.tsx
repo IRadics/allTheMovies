@@ -1,18 +1,17 @@
 import Button from "@mui/material/Button/Button";
 import ButtonGroup from "@mui/material/ButtonGroup/ButtonGroup";
 import BCN from "../../functions/buildCssClassName";
-import { MovieDataFragment } from "../../graphql/generated-types";
+import { MovieFragment } from "../../graphql/generated-types";
 import { useNavigateIfNew } from "../../hooks/useNavigateIfNew";
 import { MoviePoster } from "../MoviePoster/MoviePoster";
 import { MovieScoreBar } from "../MovieScoreBar/MovieScoreBar";
 import "./MovieInfoHeader.css";
 
 const MovieInfoHeader: React.FC<{
-  movie: MovieDataFragment;
-  imdbUrl: string;
+  movie: MovieFragment;
   wikiPageId: number;
   className?: string;
-}> = ({ movie, imdbUrl, wikiPageId, className = "" }) => {
+}> = ({ movie, wikiPageId, className = "" }) => {
   const navigate = useNavigateIfNew();
 
   const releaseDate = new Date(Date.parse(movie.releaseDate));
@@ -32,9 +31,9 @@ const MovieInfoHeader: React.FC<{
         aria-label="outlined primary button group"
       >
         <Button
-          disabled={imdbUrl === ""}
+          disabled={!movie.imdbID}
           onClick={() => {
-            window.open(imdbUrl, "_blank");
+            window.open("https://imdb.com/title/" + movie.imdbID, "_blank");
           }}
         >
           IMDB
@@ -64,11 +63,11 @@ const MovieInfoHeader: React.FC<{
   return (
     <div className={BCN("", "movieInfoHeader", className)}>
       <img
-        src={movie.backdrop?.large}
+        src={movie.backdropLarge}
         className={BCN("-backdrop", "movieInfoHeader", className)}
         alt=""
       ></img>
-      <MoviePoster imgUrl={movie.poster?.large} name={movie.name!} />
+      <MoviePoster imgUrl={movie.posterLarge} name={movie.title!} />
 
       <div className={BCN("-data", "movieInfoHeader", className)}>
         <div className={BCN("-data-title", "movieInfoHeader", className)}>
@@ -77,7 +76,7 @@ const MovieInfoHeader: React.FC<{
               BCN("-data-title-main", "movieInfoHeader", className) + " rtitle1"
             }
           >
-            {movie.name}
+            {movie.title}
           </div>
           {(releaseDateStr || movie?.genres?.length! > 0) && (
             <div
@@ -113,7 +112,7 @@ const MovieInfoHeader: React.FC<{
         </div>
 
         <div className={BCN("-data-footer", "movieInfoHeader", className)}>
-          <MovieScoreBar percentage={movie.score!}></MovieScoreBar>
+          <MovieScoreBar percentage={movie.rating!}></MovieScoreBar>
           {buttons()}
         </div>
       </div>

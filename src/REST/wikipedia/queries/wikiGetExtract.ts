@@ -5,6 +5,7 @@ import {
   WikipediaQueryError,
 } from "../types/wikipedia.types";
 import { WikipediaApiPropExtracts } from "../types/wikipediaApi.interfaces";
+import FetchCache from "../../../utility/fetchCache";
 
 export default async function wikiGetExtract(
   params: WikipediaApiPropExtracts,
@@ -13,8 +14,10 @@ export default async function wikiGetExtract(
 ) {
   let data: WikipediaGetExtractResult = {};
 
+  const { fetchWithCache } = new FetchCache();
+
   const fetchQuery = async () => {
-    await fetch(
+    await fetchWithCache(
       parseWikiQueryParams("https://en.wikipedia.org/w/api.php?", params)
     )
       .then((response) => response.json())
@@ -44,5 +47,6 @@ export default async function wikiGetExtract(
         return;
       });
   };
+
   fetchQuery();
 }

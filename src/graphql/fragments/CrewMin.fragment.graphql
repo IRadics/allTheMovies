@@ -1,0 +1,10 @@
+fragment CrewMin on CrewCreditWithPerson {
+  department
+  job
+  id
+  value {
+    id
+    name
+    profilePicture: profilePicture(size: W185)
+  }
+}

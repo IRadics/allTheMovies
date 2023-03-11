@@ -1,0 +1,18 @@
+query GetSimilarMovies(
+  $id: ID!
+  $last: Int
+  $after: String
+  $first: Int
+  $before: String
+) {
+  movies {
+    movie(id: $id) {
+      id
+      title
+      similar(last: $last, after: $after, first: $first, before: $before)
+        @connection(key: $id) {
+        ...MovieConnectionMin
+      }
+    }
+  }
+}

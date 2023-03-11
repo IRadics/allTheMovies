@@ -1,10 +1,15 @@
-import { useFetchUpcomingMoviesQuery } from "../../graphql/generated-types";
+import {
+  MovieMinFragment,
+  useFetchUpcomingMoviesQuery,
+} from "../../graphql/generated-types";
 import { LoadingAnimation } from "../../components/LoadingAnimation/LoadingAnimation";
 import { MoviesList } from "../../components/MoviesList/MoviesList";
 
 export const PageUpcomingMovies: React.FC = () => {
   const results = useFetchUpcomingMoviesQuery();
-  const isResultReturned = results.data && results.data.movies.length > 0;
+
+  const movies = results?.data?.movies?.upcoming?.edges?.map((e) => e?.node);
+  const isResultReturned = movies && movies.length > 0;
 
   return (
     <>
@@ -13,7 +18,7 @@ export const PageUpcomingMovies: React.FC = () => {
         {isResultReturned && (
           <>
             <div className="pageHeadText">Upcoming Movies</div>
-            <MoviesList list={results.data!.movies} />
+            <MoviesList list={movies as MovieMinFragment[]} />
           </>
         )}
         {!isResultReturned && !results.loading && (

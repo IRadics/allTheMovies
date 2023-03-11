@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { LoadingAnimation } from "../../components/LoadingAnimation/LoadingAnimation";
 import {
-  Cast,
   GetMovieQuery,
-  MovieDataFragment,
+  MovieFragment,
+  MovieMinFragment,
   useGetMovieQuery,
-  useGetRelatedMoviesQuery,
+  useGetRecommendedMoviesQuery,
 } from "../../graphql/generated-types";
 import "./PageMovieInfo.css";
 import { MoviesList } from "../../components/MoviesList/MoviesList";
@@ -13,35 +13,32 @@ import { useParams } from "react-router-dom";
 import { useBottomReached } from "../../hooks/useBottomReached";
 import ExtendingLineAnimation from "../../components/ExtendingLineAnimation/ExtendingLineAnimation";
 import MovieInfoHeader from "../../components/MovieInfoHeader/MovieInfoHeader";
-import getWikiImdb from "./getWikiImdb";
+import getWikiId from "./getWikiId";
 import { useWikiGetExtract } from "../../REST/wikipedia/hooks/useWikiGetExtract";
 
 export const PageMovieInfo: React.FC = () => {
   const { movieId } = useParams();
+  const relatedNextCursor = useRef<string | null | undefined>();
 
   const fetchMoreDelay = 1500;
 
-  const relatedFetchedAll = useRef<boolean>(false);
-  const [imdbUrl, setImdbUrl] = useState<string>("");
   const [wikiPageId, setWikiPageId] = useState<number | undefined>(undefined);
   const [fetchedExternalIds, setfetchedExternalIds] = useState<boolean>(false);
 
   // reset if movieId changes
   useEffect(() => {
-    relatedFetchedAll.current = false;
     setfetchedExternalIds(false);
     setWikiPageId(undefined);
-    setImdbUrl("");
   }, [movieId]);
 
   const getExternalInfo = (data: GetMovieQuery) => {
-    const releaseDate = new Date(Date.parse(data?.movie.releaseDate));
-    getWikiImdb(
-      data.movie.name,
+    const releaseDate = new Date(Date.parse(data.movies.movie.releaseDate));
+    getWikiId(
+      data.movies.movie.title,
       releaseDate.getFullYear(),
-      (wikiPageId, imdbUrl) => {
+      data.movies.movie.imdbID ? data.movies.movie.imdbID : "",
+      (wikiPageId) => {
         setfetchedExternalIds(true);
-        setImdbUrl(imdbUrl);
         setWikiPageId(wikiPageId);
       },
       () => {
@@ -57,31 +54,43 @@ export const PageMovieInfo: React.FC = () => {
       sentenceLimit: 8,
     });
 
-  const { loading, data } = useGetMovieQuery({
+  const { loading, data, error } = useGetMovieQuery({
     variables: { id: movieId! },
     onCompleted: getExternalInfo,
   });
+  const movie = data?.movies.movie;
 
   const {
     fetchMore: relatedFetchmore,
     loading: relatedLoading,
     data: relatedData,
     error: relatedError,
-  } = useGetRelatedMoviesQuery({
+  } = useGetRecommendedMoviesQuery({
     notifyOnNetworkStatusChange: true,
-    variables: { id: movieId!, limit: 3 },
+    variables: { id: movieId!, first: 5 },
+    errorPolicy: "all",
+    onCompleted: (d) => {
+      relatedNextCursor.current =
+        d.movies.movie.recommendations.pageInfo.endCursor;
+    },
   });
+  const relatedMoviesList =
+    relatedData?.movies?.movie?.recommendations?.edges?.map((e) => e?.node);
+
+  const relatedHasNext =
+    relatedData?.movies.movie.recommendations.pageInfo.hasNextPage;
 
   const isOnBottom = useBottomReached(
     document.getElementById("mainBody-parentScroll")!,
     () => {
-      if (!relatedFetchedAll.current) {
-        relatedFetchedAll.current = true;
-        relatedFetchmore({ variables: { limit: undefined, page: undefined } });
-      }
+      relatedFetchmore({
+        variables: {
+          after: relatedNextCursor.current,
+        },
+      });
     },
     fetchMoreDelay,
-    !relatedFetchedAll.current
+    relatedHasNext
   );
 
   const relatedMovies = () => {
@@ -89,17 +98,18 @@ export const PageMovieInfo: React.FC = () => {
       <>
         {relatedData &&
           !relatedError &&
-          relatedData.movie?.recommended?.length > 0 && (
+          relatedMoviesList &&
+          relatedMoviesList.length > 0 && (
             <>
-              <div className="pageHeadText">Similar to {data?.movie.name}</div>
+              <div className="pageHeadText">Similar to {movie?.title}</div>
               <MoviesList
-                list={relatedData.movie.recommended}
+                list={relatedMoviesList as MovieMinFragment[]}
                 key={movieId}
               ></MoviesList>
             </>
           )}
         <div className="movieInfo-footerLoadingContainer">
-          {!relatedFetchedAll.current && !relatedLoading && isOnBottom && (
+          {relatedHasNext && !relatedLoading && isOnBottom && (
             <ExtendingLineAnimation
               animationTime={fetchMoreDelay}
               color={"#FFFFFF"}
@@ -141,28 +151,29 @@ export const PageMovieInfo: React.FC = () => {
     <>
       {loading ? (
         <LoadingAnimation />
+      ) : error ? (
+        <h1>this page does not exist</h1>
       ) : (
         <div className="pageMovieInfo page" key={movieId}>
           <div className="movieInfo componentCard">
             <MovieInfoHeader
-              movie={data?.movie as MovieDataFragment}
+              movie={movie as MovieFragment}
               wikiPageId={wikiPageId ? wikiPageId : 0}
-              imdbUrl={imdbUrl}
             ></MovieInfoHeader>
             <div className="movieInfo-body">
               <div className="movieInfo-body-cast">
-                {data?.movie?.cast && data?.movie?.cast.length > 0 && (
+                {movie?.credits.cast && movie?.credits.cast.length > 0 && (
                   <p>
                     <b>Cast:</b>
                   </p>
                 )}
                 <table>
                   <tbody>
-                    {data?.movie.cast.map((c, index) => {
+                    {movie?.credits.cast.slice(0, 5).map((c, index) => {
                       return (
                         <tr key={c.id}>
-                          <td>{`${c.person?.name}:`}</td>
-                          <td>{(c.role as Cast).character}</td>
+                          <td>{`${c.value.name}:`}</td>
+                          <td>{c.character}</td>
                         </tr>
                       );
                     })}

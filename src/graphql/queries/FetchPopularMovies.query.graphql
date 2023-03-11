@@ -1,0 +1,19 @@
+query FetchPopularMovies(
+  $last: Int
+  $after: String
+  $first: Int
+  $before: String
+) {
+  movies {
+    popular(last: $last, after: $after, first: $first, before: $before) {
+      ...MovieConnectionInfo
+      edges {
+        node {
+          ... on Movie {
+            ...MovieMin
+          }
+        }
+      }
+    }
+  }
+}
